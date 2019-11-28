@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 using Caliburn.Micro;
@@ -46,9 +48,8 @@ namespace EAShow.Core.ViewModels
             set { Set(ref _selected, value); }
         }
 
-        protected override void OnInitialize()
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            base.OnInitialize();
             var view = GetView() as IShellView;
 
             _navigationService = view?.CreateNavigationService(_container);
@@ -63,6 +64,7 @@ namespace EAShow.Core.ViewModels
                 _navigationService.Navigated += NavigationService_Navigated;
                 _navigationView.BackRequested += OnBackRequested;
             }
+            return base.OnInitializeAsync(cancellationToken: cancellationToken);
         }
 
         protected override void OnViewLoaded(object view)

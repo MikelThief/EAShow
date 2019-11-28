@@ -54,7 +54,7 @@ namespace EAShow.Core.Services
 
                         ViewModelBinder.Bind(viewModel, _shell.Value, null);
 
-                        ScreenExtensions.TryActivate(viewModel);
+                        await ScreenExtensions.TryActivateAsync(viewModel);
 
                         NavigationService = _container.GetInstance<INavigationService>();
                         Window.Current.Content = _shell?.Value;

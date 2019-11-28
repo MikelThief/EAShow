@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 using Caliburn.Micro;
@@ -41,11 +43,10 @@ namespace EAShow.Core.ViewModels
         {
         }
 
-        protected override void OnInitialize()
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            base.OnInitialize();
-
             VersionDescription = GetVersionDescription();
+            return base.OnInitializeAsync(cancellationToken: cancellationToken);
         }
 
         private string GetVersionDescription()
