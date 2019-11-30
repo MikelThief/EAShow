@@ -58,6 +58,7 @@ namespace EAShow.Core
             var config = new TypeMappingConfiguration
             {
                 IncludeViewSuffixInViewModelNames = false
+
             };
 
             ViewLocator.ConfigureTypeMappings(config);

@@ -217,7 +217,19 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <value>Ok</value>
     <comment>What's new prompt message primary button text</comment>
   </data>
-  <data name="MutationSection_Entry1.Header" xml:space="preserve">
-    <value>Mutation coefficient 1</value>
+  <data name="MutationSettings_Entry1.Header" xml:space="preserve">
+    <value>Coefficient 1</value>
+  </data>
+  <data name="MutationSettings_MutationSwitch.OffContent" xml:space="preserve">
+    <value>Excluded</value>
+  </data>
+  <data name="MutationSettings_MutationSwitch.OnContent" xml:space="preserve">
+    <value>Included</value>
+  </data>
+  <data name="MutationSettings_Entry2.Header" xml:space="preserve">
+    <value>Coefficient 2</value>
+  </data>
+  <data name="MutationSettings_Title.Text" xml:space="preserve">
+    <value>Mutation</value>
   </data>
 </root>
