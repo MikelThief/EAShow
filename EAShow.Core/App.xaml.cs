@@ -73,6 +73,7 @@ namespace EAShow.Core
             _container.PerRequest<ContentGridViewModel>();
             _container.PerRequest<ChartViewModel>();
             _container.PerRequest<SettingsViewModel>();
+            _container.PerRequest<MutationSettingsViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)

@@ -71,17 +71,19 @@
                             AllowNullValue="True"
                             InputScope="CurrencyAmount"
                             IsEditable="True"
+                            IsEnabled="{x:Bind ViewModel.IsCoefficient1Included, Mode=OneWay}"
                             LargeChange="{StaticResource LargeChange}"
                             Maximum="{StaticResource Maximum}"
                             Minimum="{StaticResource Minimum}"
                             SmallChange="{StaticResource SmallChange}"
                             ValueFormat="{}{0:F2}"
-                            Watermark="{StaticResource Watermark}" />
+                            Watermark="{StaticResource Watermark}"
+                            Value="{x:Bind ViewModel.Coefficient2, Mode=TwoWay}" />
                         <ToggleSwitch
                             x:Uid="MutationSettings_MutationSwitch"
                             Grid.Column="1"
-                            Margin="24,0,0,0" />
-
+                            Margin="24,0,0,0"
+                            IsOn="{x:Bind ViewModel.IsCoefficient1Included, Mode=TwoWay}" />
                     </Grid>
                 </toolkitControls:HeaderedContentControl>
                 <toolkitControls:HeaderedContentControl x:Uid="MutationSettings_Entry2">
@@ -97,16 +99,19 @@
                             AllowNullValue="True"
                             InputScope="CurrencyAmount"
                             IsEditable="True"
+                            IsEnabled="{x:Bind ViewModel.IsCoefficient2Included, Mode=OneWay}"
                             LargeChange="{StaticResource LargeChange}"
                             Maximum="{StaticResource Maximum}"
                             Minimum="{StaticResource Minimum}"
                             SmallChange="{StaticResource SmallChange}"
                             ValueFormat="{}{0:F2}"
-                            Watermark="{StaticResource Watermark}" />
+                            Watermark="{StaticResource Watermark}"
+                            Value="{x:Bind ViewModel.IsCoefficient2Included, Mode=TwoWay}" />
                         <ToggleSwitch
                             x:Uid="MutationSettings_MutationSwitch"
                             Grid.Column="1"
-                            Margin="24,0,0,0" />
+                            Margin="24,0,0,0"
+                            IsOn="{x:Bind ViewModel.IsCoefficient2Included, Mode=TwoWay}" />
 
                     </Grid>
                 </toolkitControls:HeaderedContentControl>

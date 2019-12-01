@@ -167,6 +167,7 @@
     <Compile Include="ViewModels\ContentGridViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MuationSectionViewModel.cs" />
+    <Compile Include="ViewModels\MutationSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\ChartPage.xaml.cs">
