@@ -8,12 +8,13 @@
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+        <StackPanel Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
             <views:MutationSettingsView DataContext="{x:Bind ViewModel.MutationSettingsViewModel}" />
+            <views:PopulationSettingsView DataContext="{x:Bind ViewModel.PopulationSettingsViewModel}" />
             <!--
                 The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content.
                 Place your content here.
             -->
-        </Grid>
+        </StackPanel>
     </Grid>
 </Page>

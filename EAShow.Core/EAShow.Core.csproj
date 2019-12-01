@@ -168,6 +168,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MuationSectionViewModel.cs" />
     <Compile Include="ViewModels\MutationSettingsViewModel.cs" />
+    <Compile Include="ViewModels\PopulationSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\ChartPage.xaml.cs">
@@ -188,6 +189,9 @@
     </Compile>
     <Compile Include="Views\MutationSettingsView.xaml.cs">
       <DependentUpon>MutationSettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PopulationSettingsView.xaml.cs">
+      <DependentUpon>PopulationSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
@@ -257,6 +261,10 @@
     <Page Include="Views\MutationSettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PopulationSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>

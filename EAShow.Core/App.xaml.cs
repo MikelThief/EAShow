@@ -74,6 +74,7 @@ namespace EAShow.Core
             _container.PerRequest<ChartViewModel>();
             _container.PerRequest<SettingsViewModel>();
             _container.PerRequest<MutationSettingsViewModel>();
+            _container.PerRequest<PopulationSettingsViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)

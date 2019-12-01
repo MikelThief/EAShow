@@ -8,11 +8,15 @@ namespace EAShow.Core.ViewModels
 {
     public class MainViewModel : Screen
     {
-        public MainViewModel(MutationSettingsViewModel mutationSettingsViewModel)
+        public MainViewModel(
+            MutationSettingsViewModel mutationSettingsViewModel,
+            PopulationSettingsViewModel populationSettingsViewModel)
         {
             MutationSettingsViewModel = mutationSettingsViewModel;
+            PopulationSettingsViewModel = populationSettingsViewModel;
         }
 
         public MutationSettingsViewModel MutationSettingsViewModel { get; }
+        public PopulationSettingsViewModel PopulationSettingsViewModel { get; }
     }
 }

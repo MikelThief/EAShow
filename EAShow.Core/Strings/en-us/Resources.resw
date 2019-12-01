@@ -232,4 +232,7 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="MutationSettings_Title.Text" xml:space="preserve">
     <value>Mutation</value>
   </data>
+  <data name="PopulationSettings_Title.Text" xml:space="preserve">
+    <value>Population</value>
+  </data>
 </root>
