@@ -75,6 +75,7 @@ namespace EAShow.Core
             _container.PerRequest<SettingsViewModel>();
             _container.PerRequest<MutationSettingsViewModel>();
             _container.PerRequest<PopulationSettingsViewModel>();
+            _container.PerRequest<CrossoverSettingsViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)

@@ -12,7 +12,7 @@
         <controls:WrapPanel HorizontalAlignment="Center" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
             <views:MutationSettingsView DataContext="{x:Bind ViewModel.MutationSettingsViewModel}" />
             <views:PopulationSettingsView DataContext="{x:Bind ViewModel.PopulationSettingsViewModel}" />
-            <views:CrossoverSettingsView DataContext="{x:Bind ViewModel.PopulationSettingsViewModel}" />
+            <views:CrossoverSettingsView DataContext="{x:Bind ViewModel.CrossoverSettingsViewModel}" />
             <!--
                 The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content.
                 Place your content here.

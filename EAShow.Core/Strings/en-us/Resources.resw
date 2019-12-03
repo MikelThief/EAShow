@@ -259,4 +259,13 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="PopulationSettings_Entry2.Header" xml:space="preserve">
     <value>Population no. 2</value>
   </data>
+  <data name="CrossoversEnum_Both" xml:space="preserve">
+    <value>X and Y</value>
+  </data>
+  <data name="CrossoversEnum_OnlyX" xml:space="preserve">
+    <value>Only X</value>
+  </data>
+  <data name="CrossoversEnum_OnlyY" xml:space="preserve">
+    <value>Only Y</value>
+  </data>
 </root>
