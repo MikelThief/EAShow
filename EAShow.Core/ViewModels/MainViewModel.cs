@@ -10,13 +10,16 @@ namespace EAShow.Core.ViewModels
     {
         public MainViewModel(
             MutationSettingsViewModel mutationSettingsViewModel,
-            PopulationSettingsViewModel populationSettingsViewModel)
+            PopulationSettingsViewModel populationSettingsViewModel,
+            CrossoverSettingsViewModel crossoverSettingsViewModel)
         {
             MutationSettingsViewModel = mutationSettingsViewModel;
             PopulationSettingsViewModel = populationSettingsViewModel;
+            CrossoverSettingsViewModel = crossoverSettingsViewModel;
         }
 
         public MutationSettingsViewModel MutationSettingsViewModel { get; }
         public PopulationSettingsViewModel PopulationSettingsViewModel { get; }
+        public CrossoverSettingsViewModel CrossoverSettingsViewModel { get; }
     }
 }

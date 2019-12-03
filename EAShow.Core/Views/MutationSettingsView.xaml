@@ -42,7 +42,7 @@
                     Grid.Column="0"
                     Width="50"
                     Height="50"
-                    Margin="0,0,8,0"
+                    Margin="0,0,12,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Kind="Dna" />
@@ -79,7 +79,7 @@
                             Watermark="{StaticResource Watermark}"
                             Value="{x:Bind ViewModel.Coefficient1, Mode=TwoWay}" />
                         <ToggleSwitch
-                            x:Uid="MutationSettings_MutationSwitch"
+                            x:Uid="ArbitrarySettings_Switch"
                             Grid.Column="1"
                             Margin="24,0,0,0"
                             IsOn="{x:Bind ViewModel.IsCoefficient1Included, Mode=TwoWay}" />
@@ -107,7 +107,7 @@
                             Watermark="{StaticResource Watermark}"
                             Value="{x:Bind ViewModel.Coefficient2, Mode=TwoWay}" />
                         <ToggleSwitch
-                            x:Uid="MutationSettings_MutationSwitch"
+                            x:Uid="ArbitrarySettings_Switch"
                             Grid.Column="1"
                             Margin="24,0,0,0"
                             IsOn="{x:Bind ViewModel.IsCoefficient2Included, Mode=TwoWay}" />

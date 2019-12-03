@@ -218,21 +218,45 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <comment>What's new prompt message primary button text</comment>
   </data>
   <data name="MutationSettings_Entry1.Header" xml:space="preserve">
-    <value>Coefficient 1</value>
+    <value>Coefficient no. 1</value>
   </data>
-  <data name="MutationSettings_MutationSwitch.OffContent" xml:space="preserve">
+  <data name="ArbitrarySettings_Switch.OffContent" xml:space="preserve">
     <value>Excluded</value>
   </data>
-  <data name="MutationSettings_MutationSwitch.OnContent" xml:space="preserve">
+  <data name="ArbitrarySettings_Switch.OnContent" xml:space="preserve">
     <value>Included</value>
   </data>
   <data name="MutationSettings_Entry2.Header" xml:space="preserve">
-    <value>Coefficient 2</value>
+    <value>Coefficient no. 2</value>
   </data>
   <data name="MutationSettings_Title.Text" xml:space="preserve">
     <value>Mutation</value>
   </data>
   <data name="PopulationSettings_Title.Text" xml:space="preserve">
     <value>Population</value>
+  </data>
+  <data name="CrossoverSettings_Entry1.Header" xml:space="preserve">
+    <value>Crossover no. 1</value>
+  </data>
+  <data name="CrossoverSettings_Entry2.Header" xml:space="preserve">
+    <value>Crossover no. 2</value>
+  </data>
+  <data name="CrossoverSettings_Title.Text" xml:space="preserve">
+    <value>Crossover</value>
+  </data>
+  <data name="Crossovers_Enum_Both" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="Crossovers_Enum_OnlyX" xml:space="preserve">
+    <value>Only X</value>
+  </data>
+  <data name="Crossovers_Enum_OnlyY" xml:space="preserve">
+    <value>Only Y</value>
+  </data>
+  <data name="PopulationSettings_Entry1.Header" xml:space="preserve">
+    <value>Population no. 1</value>
+  </data>
+  <data name="PopulationSettings_Entry2.Header" xml:space="preserve">
+    <value>Population no. 2</value>
   </data>
 </root>
