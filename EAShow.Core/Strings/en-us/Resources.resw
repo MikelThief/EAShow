@@ -244,15 +244,6 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="CrossoverSettings_Title.Text" xml:space="preserve">
     <value>Crossover</value>
   </data>
-  <data name="Crossovers_Enum_Both" xml:space="preserve">
-    <value>Both</value>
-  </data>
-  <data name="Crossovers_Enum_OnlyX" xml:space="preserve">
-    <value>Only X</value>
-  </data>
-  <data name="Crossovers_Enum_OnlyY" xml:space="preserve">
-    <value>Only Y</value>
-  </data>
   <data name="PopulationSettings_Entry1.Header" xml:space="preserve">
     <value>Population no. 1</value>
   </data>
@@ -267,5 +258,23 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   </data>
   <data name="CrossoversEnum_OnlyY" xml:space="preserve">
     <value>Only Y</value>
+  </data>
+  <data name="SelectionsEnum_Elite" xml:space="preserve">
+    <value>Elite</value>
+  </data>
+  <data name="SelectionsEnum_Roulette" xml:space="preserve">
+    <value>Roulette</value>
+  </data>
+  <data name="SelectionSettings_Entry1.Header" xml:space="preserve">
+    <value>Selection no. 1</value>
+  </data>
+  <data name="SelectionSettings_Entry2.Header" xml:space="preserve">
+    <value>Selection no. 2</value>
+  </data>
+  <data name="SelectionSettings_Title.Text" xml:space="preserve">
+    <value>Selection</value>
+  </data>
+  <data name="MainPage_Management_Title.Text" xml:space="preserve">
+    <value>Presets management</value>
   </data>
 </root>

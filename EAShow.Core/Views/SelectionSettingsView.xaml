@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="EAShow.Core.Views.CrossoverSettingsView"
+    x:Class="EAShow.Core.Views.SelectionSettingsView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -12,7 +12,7 @@
     d:DesignWidth="350"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:IntToCrossoversEnumConverter x:Key="IntToCrossoversEnumConverter" />
+        <converters:IntToSelectionsEnumConverter x:Key="IntToSelectionsEnumConverter" />
     </UserControl.Resources>
     <Border
         BorderBrush="DarkGray"
@@ -36,9 +36,9 @@
                     Margin="0,0,12,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Kind="SwapHorizontalVariant" />
+                    Kind="FilterOutline" />
                 <TextBlock
-                    x:Uid="CrossoverSettings_Title"
+                    x:Uid="SelectionSettings_Title"
                     Grid.Column="1"
                     VerticalAlignment="Center"
                     Style="{StaticResource SubheaderTextBlockStyle}" />
@@ -48,7 +48,7 @@
                 HorizontalAlignment="Center"
                 Orientation="Vertical"
                 Spacing="12">
-                <controls:HeaderedContentControl x:Uid="CrossoverSettings_Entry1">
+                <controls:HeaderedContentControl x:Uid="SelectionSettings_Entry1">
                     <Grid Margin="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -57,12 +57,12 @@
                         <ComboBox
                             Grid.Column="0"
                             MinWidth="180"
-                            IsEnabled="{x:Bind ViewModel.IsCrossover1Included, Mode=OneWay}"
-                            ItemsSource="{x:Bind ViewModel.CrossoverInts}"
-                            SelectedItem="{x:Bind ViewModel.Crossover1, Mode=TwoWay}">
+                            IsEnabled="{x:Bind ViewModel.IsSelection1Included, Mode=OneWay}"
+                            ItemsSource="{x:Bind ViewModel.SelectionInts}"
+                            SelectedItem="{x:Bind ViewModel.Selection1, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource IntToCrossoversEnumConverter}}" />
+                                    <TextBlock Text="{Binding Converter={StaticResource IntToSelectionsEnumConverter}}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -70,10 +70,10 @@
                             x:Uid="ArbitrarySettings_Switch"
                             Grid.Column="1"
                             Margin="24,0,0,0"
-                            IsOn="{x:Bind ViewModel.IsCrossover1Included, Mode=TwoWay}" />
+                            IsOn="{x:Bind ViewModel.IsSelection1Included, Mode=TwoWay}" />
                     </Grid>
                 </controls:HeaderedContentControl>
-                <controls:HeaderedContentControl x:Uid="CrossoverSettings_Entry2">
+                <controls:HeaderedContentControl x:Uid="SelectionSettings_Entry2">
                     <Grid Margin="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -82,11 +82,11 @@
                         <ComboBox
                             Grid.Column="0"
                             MinWidth="180"
-                            IsEnabled="{x:Bind ViewModel.IsCrossover2Included, Mode=OneWay}"
-                            SelectedItem="{x:Bind ViewModel.Crossover2, Mode=TwoWay}">
+                            IsEnabled="{x:Bind ViewModel.IsSelection2Included, Mode=OneWay}"
+                            SelectedItem="{x:Bind ViewModel.Selection2, Mode=TwoWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource IntToCrossoversEnumConverter}}" />
+                                    <TextBlock Text="{Binding Converter={StaticResource IntToSelectionsEnumConverter}}" />
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
@@ -94,7 +94,7 @@
                             x:Uid="ArbitrarySettings_Switch"
                             Grid.Column="1"
                             Margin="24,0,0,0"
-                            IsOn="{x:Bind ViewModel.IsCrossover2Included, Mode=TwoWay}" />
+                            IsOn="{x:Bind ViewModel.IsSelection2Included, Mode=TwoWay}" />
                     </Grid>
                 </controls:HeaderedContentControl>
             </StackPanel>

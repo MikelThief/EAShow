@@ -50,7 +50,7 @@ namespace EAShow.Core.ViewModels
 
         public CrossoverSettingsViewModel()
         {
-            CrossoverInts = new List<Crossovers>(collection: EnumHelper.AllCrossoversValues());
+            CrossoverInts = new List<Crossovers>(collection: EnumHelper.GetValuesAsReadOnlyCollection<Crossovers>());
         }
     }
 }

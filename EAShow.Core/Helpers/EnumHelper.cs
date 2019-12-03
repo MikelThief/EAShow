@@ -10,9 +10,6 @@ namespace EAShow.Core.Helpers
 {
     public class EnumHelper
     {
-        public static ReadOnlyCollection<Crossovers> AllCrossoversValues()
-        {
-            return Array.AsReadOnly((Crossovers[])Enum.GetValues(typeof(Crossovers)));
-        }
+        public static ReadOnlyCollection<T> GetValuesAsReadOnlyCollection<T>() where T : struct, IConvertible => Array.AsReadOnly(array: (T[])Enum.GetValues(enumType: typeof(T)));
     }
 }

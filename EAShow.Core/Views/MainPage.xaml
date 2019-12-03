@@ -8,15 +8,44 @@
     xmlns:views="using:EAShow.Core.Views"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <controls:WrapPanel HorizontalAlignment="Center" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+    <Grid
+        x:Name="ContentArea"
+        Margin="{StaticResource MediumLeftRightMargin}"
+        Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <controls:WrapPanel
+            x:Name="SettingsSectionsPanel"
+            Grid.Row="0"
+            HorizontalAlignment="Left"
+            HorizontalSpacing="8"
+            VerticalSpacing="8">
             <views:MutationSettingsView DataContext="{x:Bind ViewModel.MutationSettingsViewModel}" />
             <views:PopulationSettingsView DataContext="{x:Bind ViewModel.PopulationSettingsViewModel}" />
             <views:CrossoverSettingsView DataContext="{x:Bind ViewModel.CrossoverSettingsViewModel}" />
+            <views:SelectionSettingsView DataContext="{x:Bind ViewModel.SelectionSettingsViewModel}" />
+
+
             <!--
                 The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content.
                 Place your content here.
             -->
         </controls:WrapPanel>
+        <Border
+            Grid.Row="1"
+            Width="{Binding Path=ActualWidth, ElementName=SettingsSectionsPanel}"
+            Margin="0,8,8,0"
+            HorizontalAlignment="Left"
+            BorderBrush="DarkGray"
+            BorderThickness="1"
+            CornerRadius="10">
+            <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
+                <Grid>
+                    <TextBlock x:Uid="MainPage_Management_Title" Style="{StaticResource SubheaderTextBlockStyle}" />
+                </Grid>
+            </Grid>
+        </Border>
     </Grid>
 </Page>

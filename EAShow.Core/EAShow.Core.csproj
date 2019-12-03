@@ -150,6 +150,7 @@
   <ItemGroup>
     <Compile Include="Activation\ActivationHandler.cs" />
     <Compile Include="Converters\IntToCrossoversEnumConverter.cs" />
+    <Compile Include="Converters\IntToSelectionsEnumConverter.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
@@ -201,7 +202,10 @@
     <Compile Include="Views\PopulationSettingsView.xaml.cs">
       <DependentUpon>PopulationSettingsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SelectionSettingsView.cs" />
+    <Compile Include="ViewModels\SelectionSettingsViewModel.cs" />
+    <Compile Include="Views\SelectionSettingsView.xaml.cs">
+      <DependentUpon>SelectionSettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -276,6 +280,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PopulationSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectionSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
