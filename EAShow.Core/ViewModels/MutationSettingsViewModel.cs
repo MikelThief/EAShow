@@ -15,8 +15,8 @@ namespace EAShow.Core.ViewModels
     {
         private bool _isMutation1Included;
         private bool _isMutation2Included;
-        private double? _coefficient1;
-        private double? _coefficient2;
+        private double? _mutation1;
+        private double? _mutation2;
 
         private readonly IEventAggregator _eventAggregator;
 
@@ -45,16 +45,16 @@ namespace EAShow.Core.ViewModels
             }
         }
 
-        public double? Coefficient1
+        public double? Mutation1
         {
-            get => _coefficient1;
-            set => Set(oldValue: ref _coefficient1, newValue: value, nameof(Coefficient1));
+            get => _mutation1;
+            set => Set(oldValue: ref _mutation1, newValue: value, nameof(Mutation1));
         }
 
-        public double? Coefficient2
+        public double? Mutation2
         {
-            get => _coefficient2;
-            set => Set(oldValue: ref _coefficient2, newValue: value, nameof(Coefficient2));
+            get => _mutation2;
+            set => Set(oldValue: ref _mutation2, newValue: value, nameof(Mutation2));
         }
 
         public async Task PublishEnabledCount()

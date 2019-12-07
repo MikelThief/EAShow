@@ -72,7 +72,7 @@
                         SmallChange="{StaticResource SmallChange}"
                         ValueFormat="{}{0:F2}"
                         Watermark="{StaticResource Watermark}"
-                        Value="{x:Bind ViewModel.Coefficient1, Mode=TwoWay}" />
+                        Value="{x:Bind ViewModel.Mutation1, Mode=TwoWay}" />
                     <ToggleSwitch
                         x:Uid="ArbitrarySettings_Switch"
                         Grid.Column="1"
@@ -100,7 +100,7 @@
                         SmallChange="{StaticResource SmallChange}"
                         ValueFormat="{}{0:F2}"
                         Watermark="{StaticResource Watermark}"
-                        Value="{x:Bind ViewModel.Coefficient2, Mode=TwoWay}" />
+                        Value="{x:Bind ViewModel.Mutation2, Mode=TwoWay}" />
                     <ToggleSwitch
                         x:Uid="ArbitrarySettings_Switch"
                         Grid.Column="1"

@@ -119,6 +119,9 @@
     <PackageReference Include="Caliburn.Micro">
       <Version>4.0.102-alpha</Version>
     </PackageReference>
+    <PackageReference Include="LiteDB">
+      <Version>4.1.4</Version>
+    </PackageReference>
     <PackageReference Include="MahApps.Metro.IconPacks.Material">
       <Version>2.3.0</Version>
     </PackageReference>
@@ -146,6 +149,9 @@
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
       <Version>1.0.1.7</Version>
     </PackageReference>
+    <PackageReference Include="ValueOf">
+      <Version>1.0.14</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />
@@ -156,6 +162,7 @@
     <Compile Include="Converters\IntToSelectionsEnumConverter.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\EnumToBooleanConverter.cs" />
+    <Compile Include="Helpers\LiteDBConnectionStringHelper.cs" />
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\ResourceLoaderHelper.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
