@@ -274,10 +274,13 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="SelectionSettings_Title.Text" xml:space="preserve">
     <value>Selection</value>
   </data>
-  <data name="MainPage_Management_Title.Text" xml:space="preserve">
-    <value>Save</value>
+  <data name="MainPage_Profile_Title.Text" xml:space="preserve">
+    <value>Profile</value>
   </data>
   <data name="MainPage_Presets_Title.Text" xml:space="preserve">
     <value>Presets</value>
+  </data>
+  <data name="MainPage_Profile_Description.Text" xml:space="preserve">
+    <value>Your profile consists of:</value>
   </data>
 </root>

@@ -67,6 +67,8 @@ namespace EAShow.Core
             _container = new WinRTContainer();
             _container.RegisterWinRTServices();
 
+            _container.EnablePropertyInjection = true;
+
             _container.PerRequest<ShellViewModel>();
             _container.PerRequest<MainViewModel>();
             _container.PerRequest<ContentGridDetailViewModel>();

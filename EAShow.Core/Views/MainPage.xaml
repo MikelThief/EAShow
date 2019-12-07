@@ -14,6 +14,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock
                 x:Uid="MainPage_Presets_Title"
@@ -39,10 +40,25 @@
                 -->
             </controls:WrapPanel>
             <TextBlock
-                x:Uid="MainPage_Management_Title"
+                x:Uid="MainPage_Profile_Title"
                 Grid.Row="2"
                 Margin="0,0,0,12"
                 Style="{StaticResource HeaderTextBlockStyle}" />
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    x:Uid="MainPage_Profile_Description"
+                    Grid.Row="0"
+                    Style="{StaticResource BodyTextBlockStyle}" />
+                <controls:WrapPanel Grid.Row="1" HorizontalSpacing="8">
+                    <TextBlock>
+                        <Run Text="" />
+                    </TextBlock>
+                </controls:WrapPanel>
+            </Grid>
         </Grid>
     </ScrollViewer>
 </Page>

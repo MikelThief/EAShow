@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using EAShow.Core.Core.Events;
 using EAShow.Core.Core.Models;
 using EAShow.Core.Helpers;
+using Nito.Mvvm;
 
 namespace EAShow.Core.ViewModels
 {
@@ -17,16 +19,27 @@ namespace EAShow.Core.ViewModels
         private Selections _Selection1;
         private Selections _Selection2;
 
+        private readonly IEventAggregator _eventAggregator;
+
         public bool IsSelection1Included
         {
             get => _isSelection1Included;
-            set => Set(oldValue: ref _isSelection1Included, newValue: value, propertyName: nameof(IsSelection1Included));
+            set
+            {
+                Set(oldValue: ref _isSelection1Included, newValue: value, propertyName: nameof(IsSelection1Included));
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
+
+            }
         }
 
         public bool IsSelection2Included
         {
             get => _isSelection2Included;
-            set => Set(oldValue: ref _isSelection2Included, newValue: value, propertyName: nameof(IsSelection2Included));
+            set
+            {
+                Set(oldValue: ref _isSelection2Included, newValue: value, propertyName: nameof(IsSelection2Included));
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
+            }
         }
 
         public Selections Selection1
@@ -47,9 +60,26 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _SelectionInts, newValue: value, propertyName: nameof(SelectionInts));
         }
 
-        public SelectionSettingsViewModel()
+        public SelectionSettingsViewModel(IEventAggregator eventAggregator)
         {
+            _eventAggregator = eventAggregator;
             SelectionInts = new List<Selections>(collection: EnumHelper.GetValuesAsReadOnlyCollection<Selections>());
+        }
+
+        public async Task PublishEnabledCount()
+        {
+            byte count = default;
+
+            if (IsSelection1Included)
+                count++;
+            if (IsSelection2Included)
+                count++;
+
+            await _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
+            {
+                Preset = Presets.Selection,
+                Count = count
+            });
         }
     }
 }

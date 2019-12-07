@@ -140,6 +140,9 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Nito.Mvvm.Async">
+      <Version>1.0.0-pre-03</Version>
+    </PackageReference>
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
       <Version>1.0.1.7</Version>
     </PackageReference>
@@ -172,7 +175,6 @@
     <Compile Include="ViewModels\ContentGridViewModel.cs" />
     <Compile Include="ViewModels\CrossoverSettingsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\MuationSectionViewModel.cs" />
     <Compile Include="ViewModels\MutationSettingsViewModel.cs" />
     <Compile Include="ViewModels\PopulationSettingsViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

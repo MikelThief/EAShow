@@ -65,7 +65,7 @@
                         AllowNullValue="True"
                         InputScope="CurrencyAmount"
                         IsEditable="True"
-                        IsEnabled="{x:Bind ViewModel.IsCoefficient1Included, Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.IsMutation1Included, Mode=OneWay}"
                         LargeChange="{StaticResource LargeChange}"
                         Maximum="{StaticResource Maximum}"
                         Minimum="{StaticResource Minimum}"
@@ -77,7 +77,7 @@
                         x:Uid="ArbitrarySettings_Switch"
                         Grid.Column="1"
                         Margin="24,0,0,0"
-                        IsOn="{x:Bind ViewModel.IsCoefficient1Included, Mode=TwoWay}" />
+                        IsOn="{x:Bind ViewModel.IsMutation1Included, Mode=TwoWay}" />
                 </Grid>
             </toolkitControls:HeaderedContentControl>
             <toolkitControls:HeaderedContentControl x:Uid="MutationSettings_Entry2">
@@ -93,7 +93,7 @@
                         AllowNullValue="True"
                         InputScope="CurrencyAmount"
                         IsEditable="True"
-                        IsEnabled="{x:Bind ViewModel.IsCoefficient2Included, Mode=OneWay}"
+                        IsEnabled="{x:Bind ViewModel.IsMutation2Included, Mode=OneWay}"
                         LargeChange="{StaticResource LargeChange}"
                         Maximum="{StaticResource Maximum}"
                         Minimum="{StaticResource Minimum}"
@@ -105,7 +105,7 @@
                         x:Uid="ArbitrarySettings_Switch"
                         Grid.Column="1"
                         Margin="24,0,0,0"
-                        IsOn="{x:Bind ViewModel.IsCoefficient2Included, Mode=TwoWay}" />
+                        IsOn="{x:Bind ViewModel.IsMutation2Included, Mode=TwoWay}" />
                 </Grid>
             </toolkitControls:HeaderedContentControl>
         </StackPanel>
