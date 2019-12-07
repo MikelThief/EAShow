@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using EAShow.Core.Core.Abstractions.Interfaces;
 using EAShow.Core.Core.Events;
 using EAShow.Core.Core.Models;
 using Nito.Mvvm;
 
 namespace EAShow.Core.ViewModels
 {
-    public class PopulationSettingsViewModel : Screen
+    public class PopulationSettingsViewModel : Screen, IPreset
     {
         private bool _isPopulation1Included;
         private bool _isPopulation2Included;
@@ -55,6 +56,7 @@ namespace EAShow.Core.ViewModels
             get => _population2;
             set => Set(oldValue: ref _population2, newValue: value, nameof(Population2));
         }
+
         public async Task PublishEnabledCount()
         {
             byte count = default;

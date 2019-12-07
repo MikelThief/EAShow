@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using EAShow.Core.Core.Abstractions.Interfaces;
 using EAShow.Core.Core.Events;
 using EAShow.Core.Core.Models;
 using Nito.Mvvm;
 
 namespace EAShow.Core.ViewModels
 {
-    public class MutationSettingsViewModel : Screen
+    public class MutationSettingsViewModel : Screen, IPreset
     {
         private bool _isMutation1Included;
         private bool _isMutation2Included;

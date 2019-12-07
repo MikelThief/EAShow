@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using EAShow.Core.Core.Abstractions.Interfaces;
 using EAShow.Core.Core.Events;
 using EAShow.Core.Core.Models;
 using EAShow.Core.Helpers;
@@ -12,7 +13,7 @@ using Nito.Mvvm;
 
 namespace EAShow.Core.ViewModels
 {
-    public class CrossoverSettingsViewModel : Screen
+    public class CrossoverSettingsViewModel : Screen, IPreset
     {
         private bool _isCrossover1Included;
         private bool _isCrossover2Included;
