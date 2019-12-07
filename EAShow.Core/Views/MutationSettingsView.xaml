@@ -22,99 +22,94 @@
         <x:String x:Key="Watermark">0.2</x:String>
     </UserControl.Resources>
 
-    <Border
-        BorderBrush="DarkGray"
-        BorderThickness="1"
-        CornerRadius="10">
-        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid Margin="4,16,4,32" HorizontalAlignment="Left">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <materialIconPack:PackIconMaterial
-                    x:Name="SettingsIcon"
-                    Grid.Column="0"
-                    Width="50"
-                    Height="50"
-                    Margin="0,0,12,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Kind="Dna" />
-                <TextBlock
-                    x:Uid="MutationSettings_Title"
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource SubheaderTextBlockStyle}" />
-            </Grid>
-            <StackPanel
-                Grid.Row="1"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Margin="0,0,0,12" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <materialIconPack:PackIconMaterial
+                x:Name="SettingsIcon"
+                Grid.Column="0"
+                Width="35"
+                Height="35"
+                Margin="0,0,12,0"
                 HorizontalAlignment="Center"
-                Orientation="Vertical"
-                Spacing="12">
-                <toolkitControls:HeaderedContentControl x:Uid="MutationSettings_Entry1">
-                    <Grid Margin="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <telerikControls:RadNumericBox
-                            x:Name="Mutation1Coefficient"
-                            Grid.Column="0"
-                            AcceptsDecimalSeparator="True"
-                            AllowNullValue="True"
-                            InputScope="CurrencyAmount"
-                            IsEditable="True"
-                            IsEnabled="{x:Bind ViewModel.IsCoefficient1Included, Mode=OneWay}"
-                            LargeChange="{StaticResource LargeChange}"
-                            Maximum="{StaticResource Maximum}"
-                            Minimum="{StaticResource Minimum}"
-                            SmallChange="{StaticResource SmallChange}"
-                            ValueFormat="{}{0:F2}"
-                            Watermark="{StaticResource Watermark}"
-                            Value="{x:Bind ViewModel.Coefficient1, Mode=TwoWay}" />
-                        <ToggleSwitch
-                            x:Uid="ArbitrarySettings_Switch"
-                            Grid.Column="1"
-                            Margin="24,0,0,0"
-                            IsOn="{x:Bind ViewModel.IsCoefficient1Included, Mode=TwoWay}" />
-                    </Grid>
-                </toolkitControls:HeaderedContentControl>
-                <toolkitControls:HeaderedContentControl x:Uid="MutationSettings_Entry2">
-                    <Grid Margin="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <telerikControls:RadNumericBox
-                            x:Name="Mutation2Coefficient"
-                            Grid.Column="0"
-                            AcceptsDecimalSeparator="True"
-                            AllowNullValue="True"
-                            InputScope="CurrencyAmount"
-                            IsEditable="True"
-                            IsEnabled="{x:Bind ViewModel.IsCoefficient2Included, Mode=OneWay}"
-                            LargeChange="{StaticResource LargeChange}"
-                            Maximum="{StaticResource Maximum}"
-                            Minimum="{StaticResource Minimum}"
-                            SmallChange="{StaticResource SmallChange}"
-                            ValueFormat="{}{0:F2}"
-                            Watermark="{StaticResource Watermark}"
-                            Value="{x:Bind ViewModel.Coefficient2, Mode=TwoWay}" />
-                        <ToggleSwitch
-                            x:Uid="ArbitrarySettings_Switch"
-                            Grid.Column="1"
-                            Margin="24,0,0,0"
-                            IsOn="{x:Bind ViewModel.IsCoefficient2Included, Mode=TwoWay}" />
-                    </Grid>
-                </toolkitControls:HeaderedContentControl>
-            </StackPanel>
+                VerticalAlignment="Center"
+                Kind="Dna" />
+            <TextBlock
+                x:Uid="MutationSettings_Title"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Style="{StaticResource TitleTextBlockStyle}" />
         </Grid>
-    </Border>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Orientation="Vertical"
+            Spacing="12">
+            <toolkitControls:HeaderedContentControl x:Uid="MutationSettings_Entry1">
+                <Grid Margin="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <telerikControls:RadNumericBox
+                        x:Name="Mutation1Coefficient"
+                        Grid.Column="0"
+                        AcceptsDecimalSeparator="True"
+                        AllowNullValue="True"
+                        InputScope="CurrencyAmount"
+                        IsEditable="True"
+                        IsEnabled="{x:Bind ViewModel.IsCoefficient1Included, Mode=OneWay}"
+                        LargeChange="{StaticResource LargeChange}"
+                        Maximum="{StaticResource Maximum}"
+                        Minimum="{StaticResource Minimum}"
+                        SmallChange="{StaticResource SmallChange}"
+                        ValueFormat="{}{0:F2}"
+                        Watermark="{StaticResource Watermark}"
+                        Value="{x:Bind ViewModel.Coefficient1, Mode=TwoWay}" />
+                    <ToggleSwitch
+                        x:Uid="ArbitrarySettings_Switch"
+                        Grid.Column="1"
+                        Margin="24,0,0,0"
+                        IsOn="{x:Bind ViewModel.IsCoefficient1Included, Mode=TwoWay}" />
+                </Grid>
+            </toolkitControls:HeaderedContentControl>
+            <toolkitControls:HeaderedContentControl x:Uid="MutationSettings_Entry2">
+                <Grid Margin="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <telerikControls:RadNumericBox
+                        x:Name="Mutation2Coefficient"
+                        Grid.Column="0"
+                        AcceptsDecimalSeparator="True"
+                        AllowNullValue="True"
+                        InputScope="CurrencyAmount"
+                        IsEditable="True"
+                        IsEnabled="{x:Bind ViewModel.IsCoefficient2Included, Mode=OneWay}"
+                        LargeChange="{StaticResource LargeChange}"
+                        Maximum="{StaticResource Maximum}"
+                        Minimum="{StaticResource Minimum}"
+                        SmallChange="{StaticResource SmallChange}"
+                        ValueFormat="{}{0:F2}"
+                        Watermark="{StaticResource Watermark}"
+                        Value="{x:Bind ViewModel.Coefficient2, Mode=TwoWay}" />
+                    <ToggleSwitch
+                        x:Uid="ArbitrarySettings_Switch"
+                        Grid.Column="1"
+                        Margin="24,0,0,0"
+                        IsOn="{x:Bind ViewModel.IsCoefficient2Included, Mode=TwoWay}" />
+                </Grid>
+            </toolkitControls:HeaderedContentControl>
+        </StackPanel>
+    </Grid>
 
 
 </UserControl>

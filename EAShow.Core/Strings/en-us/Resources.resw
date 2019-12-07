@@ -275,6 +275,9 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <value>Selection</value>
   </data>
   <data name="MainPage_Management_Title.Text" xml:space="preserve">
-    <value>Presets management</value>
+    <value>Save</value>
+  </data>
+  <data name="MainPage_Presets_Title.Text" xml:space="preserve">
+    <value>Presets</value>
   </data>
 </root>

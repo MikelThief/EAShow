@@ -14,90 +14,85 @@
     <UserControl.Resources>
         <converters:IntToCrossoversEnumConverter x:Key="IntToCrossoversEnumConverter" />
     </UserControl.Resources>
-    <Border
-        BorderBrush="DarkGray"
-        BorderThickness="1"
-        CornerRadius="10">
-        <Grid Padding="12" Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid Margin="4,16,4,32" HorizontalAlignment="Left">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <iconPacks:PackIconMaterial
-                    x:Name="SettingsIcon"
-                    Grid.Column="0"
-                    Width="50"
-                    Height="50"
-                    Margin="0,0,12,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Kind="SwapHorizontalVariant" />
-                <TextBlock
-                    x:Uid="CrossoverSettings_Title"
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Style="{StaticResource SubheaderTextBlockStyle}" />
-            </Grid>
-            <StackPanel
-                Grid.Row="1"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Margin="0,0,0,12" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <iconPacks:PackIconMaterial
+                x:Name="SettingsIcon"
+                Grid.Column="0"
+                Width="35"
+                Height="35"
+                Margin="0,0,12,0"
                 HorizontalAlignment="Center"
-                Orientation="Vertical"
-                Spacing="12">
-                <controls:HeaderedContentControl x:Uid="CrossoverSettings_Entry1">
-                    <Grid Margin="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <ComboBox
-                            Grid.Column="0"
-                            MinWidth="180"
-                            IsEnabled="{x:Bind ViewModel.IsCrossover1Included, Mode=OneWay}"
-                            ItemsSource="{x:Bind ViewModel.CrossoverInts}"
-                            SelectedItem="{x:Bind ViewModel.Crossover1, Mode=TwoWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource IntToCrossoversEnumConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ToggleSwitch
-                            x:Uid="ArbitrarySettings_Switch"
-                            Grid.Column="1"
-                            Margin="24,0,0,0"
-                            IsOn="{x:Bind ViewModel.IsCrossover1Included, Mode=TwoWay}" />
-                    </Grid>
-                </controls:HeaderedContentControl>
-                <controls:HeaderedContentControl x:Uid="CrossoverSettings_Entry2">
-                    <Grid Margin="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <ComboBox
-                            Grid.Column="0"
-                            MinWidth="180"
-                            IsEnabled="{x:Bind ViewModel.IsCrossover2Included, Mode=OneWay}"
-                            SelectedItem="{x:Bind ViewModel.Crossover2, Mode=TwoWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Converter={StaticResource IntToCrossoversEnumConverter}}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ToggleSwitch
-                            x:Uid="ArbitrarySettings_Switch"
-                            Grid.Column="1"
-                            Margin="24,0,0,0"
-                            IsOn="{x:Bind ViewModel.IsCrossover2Included, Mode=TwoWay}" />
-                    </Grid>
-                </controls:HeaderedContentControl>
-            </StackPanel>
+                VerticalAlignment="Center"
+                Kind="SwapHorizontalVariant" />
+            <TextBlock
+                x:Uid="CrossoverSettings_Title"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Style="{StaticResource TitleTextBlockStyle}" />
         </Grid>
-    </Border>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Center"
+            Orientation="Vertical"
+            Spacing="12">
+            <controls:HeaderedContentControl x:Uid="CrossoverSettings_Entry1">
+                <Grid Margin="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox
+                        Grid.Column="0"
+                        MinWidth="180"
+                        IsEnabled="{x:Bind ViewModel.IsCrossover1Included, Mode=OneWay}"
+                        ItemsSource="{x:Bind ViewModel.CrossoverInts}"
+                        SelectedItem="{x:Bind ViewModel.Crossover1, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource IntToCrossoversEnumConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ToggleSwitch
+                        x:Uid="ArbitrarySettings_Switch"
+                        Grid.Column="1"
+                        Margin="24,0,0,0"
+                        IsOn="{x:Bind ViewModel.IsCrossover1Included, Mode=TwoWay}" />
+                </Grid>
+            </controls:HeaderedContentControl>
+            <controls:HeaderedContentControl x:Uid="CrossoverSettings_Entry2">
+                <Grid Margin="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <ComboBox
+                        Grid.Column="0"
+                        MinWidth="180"
+                        IsEnabled="{x:Bind ViewModel.IsCrossover2Included, Mode=OneWay}"
+                        SelectedItem="{x:Bind ViewModel.Crossover2, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource IntToCrossoversEnumConverter}}" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ToggleSwitch
+                        x:Uid="ArbitrarySettings_Switch"
+                        Grid.Column="1"
+                        Margin="24,0,0,0"
+                        IsOn="{x:Bind ViewModel.IsCrossover2Included, Mode=TwoWay}" />
+                </Grid>
+            </controls:HeaderedContentControl>
+        </StackPanel>
+    </Grid>
 </UserControl>
