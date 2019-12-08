@@ -14,6 +14,7 @@ namespace EAShow.Core.ViewModels
 {
     public class SelectionSettingsViewModel : Screen, IPreset
     {
+        private byte _enabledCount;
         private bool _isSelection1Included;
         private bool _isSelection2Included;
         private List<Selections> _SelectionInts;
@@ -30,6 +31,10 @@ namespace EAShow.Core.ViewModels
                 Set(oldValue: ref _isSelection1Included, newValue: value, propertyName: nameof(IsSelection1Included));
                 NotifyTask.Create(asyncAction: PublishEnabledCount);
 
+                if (value)
+                    EnabledCount++;
+                else
+                    EnabledCount--;
             }
         }
 
@@ -40,6 +45,11 @@ namespace EAShow.Core.ViewModels
             {
                 Set(oldValue: ref _isSelection2Included, newValue: value, propertyName: nameof(IsSelection2Included));
                 NotifyTask.Create(asyncAction: PublishEnabledCount);
+
+                if (value)
+                    EnabledCount++;
+                else
+                    EnabledCount--;
             }
         }
 
@@ -59,6 +69,12 @@ namespace EAShow.Core.ViewModels
         {
             get => _SelectionInts;
             set => Set(oldValue: ref _SelectionInts, newValue: value, propertyName: nameof(SelectionInts));
+        }
+
+        public byte EnabledCount
+        {
+            get => _enabledCount;
+            private set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
         }
 
         public SelectionSettingsViewModel(IEventAggregator eventAggregator)

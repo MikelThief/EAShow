@@ -9,7 +9,9 @@ using EAShow.Core.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using EAShow.Shared;
 using EAShow.Shared.Helpers;
+using Syncfusion.Licensing;
 
 namespace EAShow.Core
 {
@@ -29,7 +31,7 @@ namespace EAShow.Core
 
             EnteredBackground += App_EnteredBackground;
             Resuming += App_Resuming;
-
+            RegisterLicences();
             Initialize();
 
             // Deferred execution until used. Check https://msdn.microsoft.com/library/dd642331(v=vs.110).aspx for further info on Lazy<T> class.
@@ -118,6 +120,11 @@ namespace EAShow.Core
         private void App_Resuming(object sender, object e)
         {
             Singleton<SuspendAndResumeService>.Instance.ResumeApp();
+        }
+
+        private void RegisterLicences()
+        {
+            SyncfusionLicenseProvider.RegisterLicense(Secrets.SYNCFUSION_SECRET);
         }
     }
 }

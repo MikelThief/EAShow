@@ -111,6 +111,12 @@ namespace EAShow.Core.ViewModels
             }
         }
 
+        public bool CanSave() =>
+            CrossoverSettingsViewModel.EnabledCount > 0 &&
+            SelectionSettingsViewModel.EnabledCount > 0 &&
+            PopulationSettingsViewModel.EnabledCount > 0 &&
+            MutationSettingsViewModel.EnabledCount > 0;
+
         private IEnumerable<Mutation> GetMutations()
         {
             if (MutationSettingsViewModel.IsMutation1Included)

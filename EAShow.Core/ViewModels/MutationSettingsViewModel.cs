@@ -13,6 +13,7 @@ namespace EAShow.Core.ViewModels
 {
     public class MutationSettingsViewModel : Screen, IPreset
     {
+        private byte _enabledCount;
         private bool _isMutation1Included;
         private bool _isMutation2Included;
         private double? _mutation1;
@@ -25,6 +26,12 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
         }
 
+        public byte EnabledCount
+        {
+            get => _enabledCount;
+            set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+        }
+
         public bool IsMutation1Included
         {
             get => _isMutation1Included;
@@ -32,6 +39,11 @@ namespace EAShow.Core.ViewModels
             {
                 Set(oldValue: ref _isMutation1Included, newValue: value, nameof(IsMutation1Included));
                 NotifyTask.Create(asyncAction: PublishEnabledCount);
+
+                if (value)
+                    EnabledCount++;
+                else
+                    EnabledCount--;
             }
         }
 
@@ -42,6 +54,11 @@ namespace EAShow.Core.ViewModels
             {
                 Set(oldValue: ref _isMutation2Included, newValue: value, nameof(IsMutation2Included));
                 NotifyTask.Create(asyncAction: PublishEnabledCount);
+
+                if (value)
+                    EnabledCount++;
+                else
+                    EnabledCount--;
             }
         }
 

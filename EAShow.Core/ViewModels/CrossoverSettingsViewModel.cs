@@ -15,6 +15,7 @@ namespace EAShow.Core.ViewModels
 {
     public class CrossoverSettingsViewModel : Screen, IPreset
     {
+        private byte _enabledCount;
         private bool _isCrossover1Included;
         private bool _isCrossover2Included;
         private List<Crossovers> _crossoverInts;
@@ -23,6 +24,12 @@ namespace EAShow.Core.ViewModels
 
         private readonly IEventAggregator _eventAggregator;
 
+        public byte EnabledCount
+        {
+            get => _enabledCount;
+            private set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+        }
+
         public bool IsCrossover1Included
         {
             get => _isCrossover1Included;
@@ -30,6 +37,11 @@ namespace EAShow.Core.ViewModels
             {
                 Set(oldValue: ref _isCrossover1Included, newValue: value, propertyName: nameof(IsCrossover1Included));
                 NotifyTask.Create(asyncAction: PublishEnabledCount);
+
+                if (value)
+                    EnabledCount++;
+                else
+                    EnabledCount--;
             }
         }
 
@@ -40,6 +52,11 @@ namespace EAShow.Core.ViewModels
             {
                 Set(oldValue: ref _isCrossover2Included, newValue: value, propertyName: nameof(IsCrossover2Included));
                 NotifyTask.Create(asyncAction: PublishEnabledCount);
+
+                if (value)
+                    EnabledCount++;
+                else
+                    EnabledCount--;
             }
         }
 
@@ -69,17 +86,10 @@ namespace EAShow.Core.ViewModels
 
         public async Task PublishEnabledCount()
         {
-            byte count = default;
-
-            if (IsCrossover1Included)
-                count++;
-            if (IsCrossover2Included)
-                count++;
-
             await _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
             {
                 Preset = Presets.Crossover,
-                Count = count
+                Count = EnabledCount
             });
         }
     }
