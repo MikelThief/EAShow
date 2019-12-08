@@ -53,7 +53,10 @@
             Orientation="Vertical"
             Spacing="12">
             <controls:HeaderedContentControl x:Uid="PopulationSettings_Entry1">
-                <Grid Margin="4">
+                <Grid
+                    x:Name="SelectorsGrid"
+                    Margin="4"
+                    Loaded="SelectorsGrid_OnLoaded">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -72,7 +75,6 @@
                         IsEditable="True"
                         IsEnabled="{x:Bind ViewModel.IsPopulation1Included, Mode=OneWay}"
                         LargeChange="{StaticResource LargeChange}"
-                        Loaded="Population1NumericUpDown_OnLoaded"
                         LostFocus="Population1NumericUpDown_OnLostFocus"
                         Maximum="{StaticResource Maximum}"
                         MaximumNumberDecimalDigits="0"
@@ -109,7 +111,6 @@
                         IsEditable="True"
                         IsEnabled="{x:Bind ViewModel.IsPopulation2Included, Mode=OneWay}"
                         LargeChange="{StaticResource LargeChange}"
-                        Loaded="Population1NumericUpDown_OnLoaded"
                         LostFocus="Population1NumericUpDown_OnLostFocus"
                         Maximum="{StaticResource Maximum}"
                         MaximumNumberDecimalDigits="0"

@@ -29,11 +29,6 @@ namespace EAShow.Core.Views
             this.InitializeComponent();
         }
 
-        private void Population1NumericUpDown_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            Population1NumericUpDown.Culture = CultureInfo.CurrentUICulture;
-        }
-
         private void Population1NumericUpDown_OnLostFocus(object sender, RoutedEventArgs e)
         {
             if ((decimal) Population1NumericUpDown.Value < 2)
@@ -42,8 +37,14 @@ namespace EAShow.Core.Views
 
         private void Population2NumericUpDown_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            if ((decimal)Population2NumericUpDown.Value < 2)
+            if ((decimal)Population2NumericUpDown.Value < 2M)
                 Population2Switch.IsOn = false;
+        }
+
+        private void SelectorsGrid_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Population1NumericUpDown.Culture = CultureInfo.CurrentUICulture;
+            Population2NumericUpDown.Culture = CultureInfo.CurrentUICulture;
         }
     }
 }

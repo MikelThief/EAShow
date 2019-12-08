@@ -120,9 +120,9 @@ namespace EAShow.Core.ViewModels
         private IEnumerable<Mutation> GetMutations()
         {
             if (MutationSettingsViewModel.IsMutation1Included)
-                yield return Mutation.From(item: MutationSettingsViewModel.Mutation1.Value);
+                yield return Mutation.From(item: MutationSettingsViewModel.Mutation1);
             if (MutationSettingsViewModel.IsMutation2Included)
-                yield return Mutation.From(item: MutationSettingsViewModel.Mutation2.Value);
+                yield return Mutation.From(item: MutationSettingsViewModel.Mutation2);
         }
 
         private IEnumerable<Selection> GetSelections()

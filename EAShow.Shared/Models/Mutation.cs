@@ -5,5 +5,5 @@ using ValueOf;
 
 namespace EAShow.Core.Core.Models
 {
-    public class Mutation : ValueOf<double, Mutation>{}
+    public class Mutation : ValueOf<decimal, Mutation>{}
 }

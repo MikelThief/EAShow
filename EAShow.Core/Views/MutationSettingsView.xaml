@@ -8,6 +8,7 @@
     xmlns:local="using:EAShow.Core.Views"
     xmlns:materialIconPack="using:MahApps.Metro.IconPacks"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:syncfusionControls="using:Syncfusion.UI.Xaml.Controls.Input"
     xmlns:telerikControls="using:Telerik.UI.Xaml.Controls.Input"
     xmlns:toolkitControls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     d:DesignHeight="400"
@@ -53,27 +54,38 @@
             Orientation="Vertical"
             Spacing="12">
             <toolkitControls:HeaderedContentControl x:Uid="MutationSettings_Entry1">
-                <Grid Margin="4">
+                <Grid
+                    x:Name="SelectorsGrid"
+                    Margin="4"
+                    Loaded="SelectorsGrid_OnLoaded">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <telerikControls:RadNumericBox
-                        x:Name="Mutation1Coefficient"
+                    <syncfusionControls:SfNumericUpDown
+                        x:Name="Mutation1NumericUpDown"
                         Grid.Column="0"
-                        AcceptsDecimalSeparator="True"
-                        AllowNullValue="True"
-                        InputScope="CurrencyAmount"
+                        MinWidth="180"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        AllowNull="False"
+                        AllowSpinOnMouseWheel="True"
+                        EnableGroupSeparator="False"
+                        FormatString="N2"
                         IsEditable="True"
                         IsEnabled="{x:Bind ViewModel.IsMutation1Included, Mode=OneWay}"
                         LargeChange="{StaticResource LargeChange}"
+                        LostFocus="Mutation1NumericUpDown_OnLostFocus"
                         Maximum="{StaticResource Maximum}"
+                        MaximumNumberDecimalDigits="0"
                         Minimum="{StaticResource Minimum}"
+                        ParsingMode="Decimal"
                         SmallChange="{StaticResource SmallChange}"
-                        ValueFormat="{}{0:F2}"
+                        SpinButtonsAlignment="Right"
                         Watermark="{StaticResource Watermark}"
                         Value="{x:Bind ViewModel.Mutation1, Mode=TwoWay}" />
                     <ToggleSwitch
+                        x:Name="Mutation1Switch"
                         x:Uid="ArbitrarySettings_Switch"
                         Grid.Column="1"
                         Margin="24,0,0,0"
@@ -86,22 +98,30 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <telerikControls:RadNumericBox
-                        x:Name="Mutation2Coefficient"
+                    <syncfusionControls:SfNumericUpDown
+                        x:Name="Mutation2NumericUpDown"
                         Grid.Column="0"
-                        AcceptsDecimalSeparator="True"
-                        AllowNullValue="True"
-                        InputScope="CurrencyAmount"
+                        MinWidth="180"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
+                        AllowNull="False"
+                        AllowSpinOnMouseWheel="True"
+                        EnableGroupSeparator="False"
+                        FormatString="N2"
                         IsEditable="True"
                         IsEnabled="{x:Bind ViewModel.IsMutation2Included, Mode=OneWay}"
                         LargeChange="{StaticResource LargeChange}"
+                        LostFocus="Mutation2NumericUpDown_OnLostFocus"
                         Maximum="{StaticResource Maximum}"
+                        MaximumNumberDecimalDigits="0"
                         Minimum="{StaticResource Minimum}"
+                        ParsingMode="Decimal"
                         SmallChange="{StaticResource SmallChange}"
-                        ValueFormat="{}{0:F2}"
+                        SpinButtonsAlignment="Right"
                         Watermark="{StaticResource Watermark}"
                         Value="{x:Bind ViewModel.Mutation2, Mode=TwoWay}" />
                     <ToggleSwitch
+                        x:Name="Mutation2Switch"
                         x:Uid="ArbitrarySettings_Switch"
                         Grid.Column="1"
                         Margin="24,0,0,0"

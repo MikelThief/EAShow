@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,6 +29,24 @@ namespace EAShow.Core.Views
         public MutationSettingsView()
         {
             this.InitializeComponent();
+        }
+
+        private void Mutation1NumericUpDown_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((decimal) Mutation1NumericUpDown.Value < 0.01M)
+                Mutation1Switch.IsOn = false;
+        }
+
+        private void SelectorsGrid_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            Mutation1NumericUpDown.Culture = CultureInfo.CurrentUICulture;
+            Mutation2NumericUpDown.Culture = CultureInfo.CurrentUICulture;
+        }
+
+        private void Mutation2NumericUpDown_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if ((decimal)Mutation2NumericUpDown.Value < 0.01M)
+                Mutation2Switch.IsOn = false;
         }
     }
 }
