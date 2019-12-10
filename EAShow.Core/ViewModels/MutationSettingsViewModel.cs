@@ -24,6 +24,9 @@ namespace EAShow.Core.ViewModels
         public MutationSettingsViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
+
+            Mutation1 = 0.1M;
+            Mutation2 = 0.1M;
         }
 
         public short EnabledCount
@@ -38,12 +41,12 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isMutation1Included, newValue: value, nameof(IsMutation1Included));
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
-
                 if (value)
                     EnabledCount++;
                 else
                     EnabledCount--;
+
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -53,12 +56,12 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isMutation2Included, newValue: value, nameof(IsMutation2Included));
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
-
                 if (value)
                     EnabledCount++;
                 else
                     EnabledCount--;
+
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 

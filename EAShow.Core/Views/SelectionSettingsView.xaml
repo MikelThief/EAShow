@@ -79,6 +79,7 @@
                         Grid.Column="0"
                         MinWidth="180"
                         IsEnabled="{x:Bind ViewModel.IsSelection2Included, Mode=OneWay}"
+                        ItemsSource="{x:Bind ViewModel.SelectionInts}"
                         SelectedItem="{x:Bind ViewModel.Selection2, Mode=TwoWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>

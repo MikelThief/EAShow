@@ -61,6 +61,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <TextBlock
                     x:Uid="MainPage_Profile_Description"
@@ -86,6 +87,10 @@
                     </TextBlock>
                 </controls:WrapPanel>
                 <TextBlock x:Uid="MainPage_Profile_SaveProfileHint" Grid.Row="2" />
+                <Button
+                    Grid.Row="3"
+                    Command="{x:Bind ViewModel.SaveProfileCommand}"
+                    Content="TEST" />
             </Grid>
         </Grid>
         <VisualStateManager.VisualStateGroups>

@@ -29,12 +29,12 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isSelection1Included, newValue: value, propertyName: nameof(IsSelection1Included));
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
-
                 if (value)
                     EnabledCount++;
                 else
                     EnabledCount--;
+
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -44,12 +44,12 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isSelection2Included, newValue: value, propertyName: nameof(IsSelection2Included));
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
-
                 if (value)
                     EnabledCount++;
                 else
                     EnabledCount--;
+
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -81,6 +81,9 @@ namespace EAShow.Core.ViewModels
         {
             _eventAggregator = eventAggregator;
             SelectionInts = new List<Selections>(collection: EnumHelper.GetValuesAsReadOnlyCollection<Selections>());
+
+            Selection1 = SelectionInts[0];
+            Selection2 = SelectionInts[0];
         }
 
         public async Task PublishEnabledCount()

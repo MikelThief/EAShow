@@ -132,5 +132,20 @@ namespace EAShow.Infrastructure.Commands
             ObservesPropertyInternal(propertyExpression: canExecuteExpression);
             return this;
         }
+
+        /// <summary>
+        /// Observes a collection of properties that is used to determine if this command can execute, and if they implement INotifyPropertyChanged they will automatically call DelegateCommandBase.RaiseCanExecuteChanged on property changed notifications.
+        /// </summary>
+        /// <param name="canExecuteExpression">The property expression. Example: ObservesCanExecute(() => PropertyName).</param>
+        /// <returns>The current instance of DelegateCommand</returns>
+        public DelegateCommand ObservesCanExecute(params Expression<Func<bool>>[] canExecuteExpressions)
+        {
+            foreach (var canExecuteExpression in canExecuteExpressions)
+            {
+                _canExecuteMethod = canExecuteExpression.Compile();
+                ObservesPropertyInternal(propertyExpression: canExecuteExpression);
+            }
+            return this;
+        }
     }
 }

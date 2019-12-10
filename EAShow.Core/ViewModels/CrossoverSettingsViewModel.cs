@@ -36,12 +36,12 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isCrossover1Included, newValue: value, propertyName: nameof(IsCrossover1Included));
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
-
                 if (value)
                     EnabledCount++;
                 else
                     EnabledCount--;
+
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -51,12 +51,12 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isCrossover2Included, newValue: value, propertyName: nameof(IsCrossover2Included));
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
-
                 if (value)
                     EnabledCount++;
                 else
                     EnabledCount--;
+
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -82,6 +82,9 @@ namespace EAShow.Core.ViewModels
         {
             CrossoverInts = new List<Crossovers>(collection: EnumHelper.GetValuesAsReadOnlyCollection<Crossovers>());
             _eventAggregator = eventAggregator;
+
+            Crossover1 = CrossoverInts[0];
+            Crossover2 = CrossoverInts[0];
         }
 
         public async Task PublishEnabledCount()

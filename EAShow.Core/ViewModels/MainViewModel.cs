@@ -22,6 +22,7 @@ namespace EAShow.Core.ViewModels
         private short _populationsCount;
         private short _selectionsCount;
         private short _crossoversCount;
+        private bool _canSaveProfile;
 
         public MainViewModel(
             MutationSettingsViewModel mutationSettingsViewModel,
@@ -37,8 +38,8 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
             _eventAggregator.SubscribeOnUIThread(subscriber: this);
 
-            SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSave);
-            SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => SelectionsCount, () => CrossoversCount);
+            SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSaveProfileInternal);
+            SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => CrossoversCount, () => SelectionsCount);
         }
 
         public MutationSettingsViewModel MutationSettingsViewModel { get; }
@@ -92,6 +93,7 @@ namespace EAShow.Core.ViewModels
                     throw new ArgumentOutOfRangeException(paramName: nameof(message.Preset),
                         actualValue: message.Preset, message: "Presets doesn't contain this value");
             }
+
             return Task.CompletedTask;
         }
 
@@ -116,7 +118,12 @@ namespace EAShow.Core.ViewModels
             }
         }
 
-        public bool CanSave() =>
+        public bool CanSaveProfile {
+            get => _canSaveProfile;
+            set => Set(oldValue: ref _canSaveProfile, newValue: value, propertyName: nameof(CanSaveProfile));
+        }
+
+        private bool CanSaveProfileInternal() =>
             CrossoversCount > 0 &&
             SelectionsCount > 0 &&
             PopulationsCount > 0 &&
@@ -141,9 +148,9 @@ namespace EAShow.Core.ViewModels
         private IEnumerable<Population> GetPopulations()
         {
             if (PopulationSettingsViewModel.IsPopulation1Included)
-                yield return Population.From(item: (int) PopulationSettingsViewModel.Population1);
+                yield return Population.From(item: (int)PopulationSettingsViewModel.Population1);
             if (PopulationSettingsViewModel.IsPopulation2Included)
-                yield return Population.From(item: (int) PopulationSettingsViewModel.Population2);
+                yield return Population.From(item: (int)PopulationSettingsViewModel.Population2);
         }
 
         private IEnumerable<Crossover> GetCrossovers()

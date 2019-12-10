@@ -24,6 +24,9 @@ namespace EAShow.Core.ViewModels
         public PopulationSettingsViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
+
+            Population1 = 100;
+            Population2 = 100;
         }
 
         public short EnabledCount
@@ -38,12 +41,12 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isPopulation1Included, newValue: value, nameof(IsPopulation1Included));
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
-
                 if (value)
                     EnabledCount++;
                 else
                     EnabledCount--;
+
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -53,12 +56,12 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isPopulation2Included, newValue: value, nameof(IsPopulation2Included));
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
-
                 if (value)
                     EnabledCount++;
                 else
                     EnabledCount--;
+
+                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 

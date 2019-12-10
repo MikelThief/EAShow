@@ -14,8 +14,6 @@ namespace EAShow.Infrastructure.Commands
     /// <remarks>Source: https://github.com/PrismLibrary/Prism/blob/2ecbf13ed59b288d8d88446b535780bdc211b6e1/Source/Prism/Commands/DelegateCommandBase.cs</remarks>
     public abstract class DelegateCommandBase : ICommand
     {
-        private bool _isActive;
-
         private SynchronizationContext _synchronizationContext;
         private readonly HashSet<string> _observedPropertiesExpressions = new HashSet<string>();
 
@@ -100,39 +98,5 @@ namespace EAShow.Infrastructure.Commands
                 PropertyObserver.Observes(propertyExpression: propertyExpression, action: RaiseCanExecuteChanged);
             }
         }
-
-        #region IsActive
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the object is active.
-        /// </summary>
-        /// <value><see langword="true" /> if the object is active; otherwise <see langword="false" />.</value>
-        public bool IsActive
-        {
-            get { return _isActive; }
-            set
-            {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    OnIsActiveChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Fired if the <see cref="IsActive"/> property changes.
-        /// </summary>
-        public virtual event EventHandler IsActiveChanged;
-
-        /// <summary>
-        /// This raises the <see cref="DelegateCommandBase.IsActiveChanged"/> event.
-        /// </summary>
-        protected virtual void OnIsActiveChanged()
-        {
-            IsActiveChanged?.Invoke(sender: this, e: EventArgs.Empty);
-        }
-
-        #endregion
     }
 }
