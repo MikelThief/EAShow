@@ -19,7 +19,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Margin="0,0,0,12" HorizontalAlignment="Left">
+        <Grid
+            Grid.Row="0"
+            Margin="2,0,0,8"
+            HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />

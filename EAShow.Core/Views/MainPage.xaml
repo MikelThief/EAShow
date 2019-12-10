@@ -31,7 +31,7 @@
             <TextBlock
                 x:Uid="MainPage_Presets_Title"
                 Grid.Row="0"
-                Margin="0,0,0,12"
+                Margin="0,8,0,12"
                 Style="{StaticResource SubheaderTextBlockStyle}" />
             <controls:WrapPanel
                 x:Name="SettingsSectionsPanel"
@@ -39,7 +39,7 @@
                 Margin="0,0,0,44"
                 HorizontalAlignment="Left"
                 HorizontalSpacing="36"
-                VerticalSpacing="28">
+                VerticalSpacing="16">
                 <views:MutationSettingsView DataContext="{x:Bind ViewModel.MutationSettingsViewModel}" />
                 <views:PopulationSettingsView DataContext="{x:Bind ViewModel.PopulationSettingsViewModel}" />
                 <views:CrossoverSettingsView DataContext="{x:Bind ViewModel.CrossoverSettingsViewModel}" />
@@ -66,9 +66,12 @@
                 <TextBlock
                     x:Uid="MainPage_Profile_Description"
                     Grid.Row="0"
-                    Margin="0,0,0,8"
+                    Margin="0,0,0,4"
                     Style="{StaticResource BodyTextBlockStyle}" />
-                <controls:WrapPanel Grid.Row="1" HorizontalSpacing="8">
+                <controls:WrapPanel
+                    Grid.Row="1"
+                    Margin="0,0,0,8"
+                    HorizontalSpacing="8">
                     <TextBlock>
                         <Run Text="{x:Bind ViewModel.MutationSettingsViewModel.EnabledCount, Mode=OneWay, Converter={StaticResource StringFormatWithXConverter}, ConverterParameter='{}{0}'}" />
                         <Run x:Uid="MainPage_Profile_Mutations" />
@@ -86,11 +89,25 @@
                         <Run x:Uid="MainPage_Profile_Selections" />
                     </TextBlock>
                 </controls:WrapPanel>
-                <TextBlock x:Uid="MainPage_Profile_SaveProfileHint" Grid.Row="2" />
-                <Button
-                    Grid.Row="3"
-                    Command="{x:Bind ViewModel.SaveProfileCommand}"
-                    Content="TEST" />
+                <controls:HeaderedContentControl x:Uid="MainPage_Profile_TextBoxDescription" Grid.Row="2">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            x:Uid="MainPage_Profile_TextBox"
+                            Grid.Column="0"
+                            MinWidth="200"
+                            Margin="0,0,4,0"
+                            AcceptsReturn="False"
+                            MaxLength="50" />
+                        <Button
+                            x:Uid="MainPage_Profile_SaveProfileButton"
+                            Grid.Column="1"
+                            Command="{x:Bind ViewModel.SaveProfileCommand}" />
+                    </Grid>
+                </controls:HeaderedContentControl>
             </Grid>
         </Grid>
         <VisualStateManager.VisualStateGroups>

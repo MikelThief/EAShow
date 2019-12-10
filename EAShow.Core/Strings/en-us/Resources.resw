@@ -126,7 +126,7 @@
     <comment>Application description</comment>
   </data>
   <data name="Shell_Main.Content" xml:space="preserve">
-    <value>Main</value>
+    <value>Presets</value>
     <comment>Navigation view item name for Main</comment>
   </data>
   <data name="Shell_ContentGrid.Content" xml:space="preserve">
@@ -295,7 +295,13 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="MainPage_Profile_Selections.Text" xml:space="preserve">
     <value>selections</value>
   </data>
-  <data name="MainPage_Profile_SaveProfileHint.Text" xml:space="preserve">
-    <value>You need to set at least one element from each of the presets.</value>
+  <data name="MainPage_Profile_SaveProfileButton.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MainPage_Profile_TextBox.PlaceholderText" xml:space="preserve">
+    <value>Profile1</value>
+  </data>
+  <data name="MainPage_Profile_TextBoxDescription.Header" xml:space="preserve">
+    <value>Name of the profile</value>
   </data>
 </root>

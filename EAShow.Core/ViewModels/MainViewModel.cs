@@ -22,7 +22,7 @@ namespace EAShow.Core.ViewModels
         private short _populationsCount;
         private short _selectionsCount;
         private short _crossoversCount;
-        private bool _canSaveProfile;
+        private string _profileName;
 
         public MainViewModel(
             MutationSettingsViewModel mutationSettingsViewModel,
@@ -38,7 +38,7 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
             _eventAggregator.SubscribeOnUIThread(subscriber: this);
 
-            SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSaveProfileInternal);
+            SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSaveProfile);
             SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => CrossoversCount, () => SelectionsCount);
         }
 
@@ -71,6 +71,15 @@ namespace EAShow.Core.ViewModels
         {
             get => _crossoversCount;
             private set => Set(oldValue: ref _crossoversCount, newValue: value, propertyName: nameof(CrossoversCount));
+        }
+
+        public string ProfileName
+        {
+            get => _profileName;
+            set
+            {
+                Set(oldValue: ref _profileName, newValue: value.Trim(), propertyName: nameof(ProfileName));
+            }
         }
 
         public Task HandleAsync(PresetEnabledCountChangedEvent message, CancellationToken cancellationToken)
@@ -116,14 +125,11 @@ namespace EAShow.Core.ViewModels
 
                 db.Insert<Profile>(entity: profile);
             }
+
+            ProfileName = string.Empty;
         }
 
-        public bool CanSaveProfile {
-            get => _canSaveProfile;
-            set => Set(oldValue: ref _canSaveProfile, newValue: value, propertyName: nameof(CanSaveProfile));
-        }
-
-        private bool CanSaveProfileInternal() =>
+        private bool CanSaveProfile() =>
             CrossoversCount > 0 &&
             SelectionsCount > 0 &&
             PopulationsCount > 0 &&
