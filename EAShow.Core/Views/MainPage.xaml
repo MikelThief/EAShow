@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:converters="using:EAShow.Core.Converters"
-    xmlns:convertersMSTollkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:convertersMSToolkit="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:views="using:EAShow.Core.Views"
@@ -13,7 +13,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <converters:StringFormatWithXConverter x:Key="StringFormatWithXConverter" />
-            <convertersMSTollkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <convertersMSToolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///ResourceDictionaries/Margin.xaml" />
                 <ResourceDictionary Source="ms-appx:///ResourceDictionaries/SnapPoints.xaml" />

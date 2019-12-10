@@ -10,6 +10,7 @@ using EAShow.Core.Core.Events;
 using EAShow.Core.Core.Models;
 using EAShow.Core.Helpers;
 using EAShow.Infrastructure.Commands;
+using EAShow.Infrastructure.Commands.DelegateCommand;
 using LiteDB;
 
 namespace EAShow.Core.ViewModels

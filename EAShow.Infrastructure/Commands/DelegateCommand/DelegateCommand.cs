@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Windows.Input;
 
-namespace EAShow.Infrastructure.Commands
+namespace EAShow.Infrastructure.Commands.DelegateCommand
+
 {
     /// <summary>
     /// An <see cref="ICommand"/> whose delegates do not take any parameters for <see cref="Execute()"/> and <see cref="CanExecute()"/>.

@@ -133,8 +133,8 @@
     <value>ContentGrid</value>
     <comment>Navigation view item name for ContentGrid</comment>
   </data>
-  <data name="Shell_Chart.Content" xml:space="preserve">
-    <value>Chart</value>
+  <data name="Shell_Runner.Content" xml:space="preserve">
+    <value>Runner</value>
     <comment>Navigation view item name for Chart</comment>
   </data>
   <data name="ExceptionSettingsStorageExtensionsFileNameIsNullOrEmpty" xml:space="preserve">

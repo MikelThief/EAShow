@@ -147,10 +147,7 @@
       <Version>1.0.0-pre-03</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfInput.UWP">
-      <Version>17.3.0.33</Version>
-    </PackageReference>
-    <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
-      <Version>1.0.1.7</Version>
+      <Version>17.3.0.34</Version>
     </PackageReference>
     <PackageReference Include="ValueOf">
       <Version>1.0.14</Version>
@@ -186,9 +183,11 @@
     <Compile Include="ViewModels\ContentGridDetailViewModel.cs" />
     <Compile Include="ViewModels\ContentGridViewModel.cs" />
     <Compile Include="ViewModels\CrossoverSettingsViewModel.cs" />
+    <Compile Include="ViewModels\EAViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MutationSettingsViewModel.cs" />
     <Compile Include="ViewModels\PopulationSettingsViewModel.cs" />
+    <Compile Include="ViewModels\RunnerViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\ChartPage.xaml.cs">
@@ -217,6 +216,9 @@
       <DependentUpon>PopulationSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SelectionSettingsViewModel.cs" />
+    <Compile Include="Views\RunnerPage.xaml.cs">
+      <DependentUpon>RunnerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SelectionSettingsView.xaml.cs">
       <DependentUpon>SelectionSettingsView.xaml</DependentUpon>
     </Compile>
@@ -294,6 +296,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\PopulationSettingsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RunnerPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

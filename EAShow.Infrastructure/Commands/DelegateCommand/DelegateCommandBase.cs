@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Windows.Input;
 
-namespace EAShow.Infrastructure.Commands
+namespace EAShow.Infrastructure.Commands.DelegateCommand
 {
     /// <summary>
     /// An <see cref="ICommand"/> whose delegates can be attached for <see cref="Execute"/> and <see cref="CanExecute"/>.

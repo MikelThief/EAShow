@@ -3,16 +3,21 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:controls1="using:Syncfusion.UI.Xaml.Controls"
     xmlns:converters="using:EAShow.Core.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="using:MahApps.Metro.IconPacks"
-    xmlns:input="using:Telerik.UI.Xaml.Controls.Input"
     xmlns:local="using:EAShow.Core.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:syncfusionControls="using:Syncfusion.UI.Xaml.Controls.Input"
+    xmlns:micro="using:Caliburn.Micro"
+    xmlns:syncfusionControls="using:Syncfusion.UI.Xaml.Controls"
+    xmlns:syncfusionControlsInput="using:Syncfusion.UI.Xaml.Controls.Input"
+    xmlns:syncfusionXaml="using:Syncfusion.UI.Xaml"
+    xmlns:viewModels="using:EAShow.Core.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewModels:PopulationSettingsViewModel,
+                                     IsDesignTimeCreatable=True}"
     d:DesignHeight="400"
     d:DesignWidth="350"
+    micro:Bind.AtDesignTime="True"
     mc:Ignorable="d">
     <UserControl.Resources>
         <x:Double x:Key="SmallChange">100</x:Double>
@@ -65,7 +70,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <syncfusionControls:SfNumericUpDown
+                    <syncfusionControlsInput:SfNumericUpDown
                         x:Name="Population1NumericUpDown"
                         Grid.Column="0"
                         MinWidth="180"
@@ -101,7 +106,7 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <syncfusionControls:SfNumericUpDown
+                    <syncfusionControlsInput:SfNumericUpDown
                         x:Name="Population2NumericUpDown"
                         Grid.Column="0"
                         MinWidth="180"

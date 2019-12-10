@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EAShow.Infrastructure.Commands
+namespace EAShow.Infrastructure.Commands.DelegateCommand
 {
     /// <summary>
     /// Represents each node of nested properties expression and takes care of

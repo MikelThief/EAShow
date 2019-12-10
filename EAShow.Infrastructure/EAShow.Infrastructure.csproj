@@ -120,17 +120,22 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Commands\DelegateCommand.cs" />
-    <Compile Include="Commands\DelegateCommandBase.cs" />
-    <Compile Include="Commands\DelegateCommand{T}.cs" />
-    <Compile Include="Commands\PropertyObserver.cs" />
-    <Compile Include="Commands\PropertyObserverNode.cs" />
+    <Compile Include="Abstractions\Interfaces\IAsyncCommand{T}.cs" />
+    <Compile Include="Commands\AsyncCommand\AsyncCommand{T}.cs" />
+    <Compile Include="Commands\DelegateCommand\DelegateCommand.cs" />
+    <Compile Include="Commands\DelegateCommand\DelegateCommandBase.cs" />
+    <Compile Include="Commands\DelegateCommand\DelegateCommand{T}.cs" />
+    <Compile Include="Commands\DelegateCommand\PropertyObserver.cs" />
+    <Compile Include="Commands\DelegateCommand\PropertyObserverNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EAShow.Infrastructure.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="Nito.Mvvm.Async">
+      <Version>1.0.0-pre-03</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
