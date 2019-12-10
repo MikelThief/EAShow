@@ -15,7 +15,7 @@ namespace EAShow.Core.ViewModels
 {
     public class CrossoverSettingsViewModel : Screen, IPreset
     {
-        private byte _enabledCount;
+        private short _enabledCount;
         private bool _isCrossover1Included;
         private bool _isCrossover2Included;
         private List<Crossovers> _crossoverInts;
@@ -24,7 +24,7 @@ namespace EAShow.Core.ViewModels
 
         private readonly IEventAggregator _eventAggregator;
 
-        public byte EnabledCount
+        public short EnabledCount
         {
             get => _enabledCount;
             private set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));

@@ -37,7 +37,7 @@
                 x:Uid="SelectionSettings_Title"
                 Grid.Column="1"
                 VerticalAlignment="Center"
-                Style="{StaticResource TitleTextBlockStyle}" />
+                Style="{StaticResource SubtitleTextBlockStyle}" />
         </Grid>
         <StackPanel
             Grid.Row="1"

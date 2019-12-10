@@ -283,4 +283,19 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="MainPage_Profile_Description.Text" xml:space="preserve">
     <value>Your profile consists of:</value>
   </data>
+  <data name="MainPage_Profile_Crossovers.Text" xml:space="preserve">
+    <value>crossovers</value>
+  </data>
+  <data name="MainPage_Profile_Mutations.Text" xml:space="preserve">
+    <value>mutations</value>
+  </data>
+  <data name="MainPage_Profile_Populations.Text" xml:space="preserve">
+    <value>populations</value>
+  </data>
+  <data name="MainPage_Profile_Selections.Text" xml:space="preserve">
+    <value>selections</value>
+  </data>
+  <data name="MainPage_Profile_SaveProfileHint.Text" xml:space="preserve">
+    <value>You need to set at least one element from each of the presets.</value>
+  </data>
 </root>

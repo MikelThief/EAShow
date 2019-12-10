@@ -14,7 +14,7 @@ namespace EAShow.Core.ViewModels
 {
     public class SelectionSettingsViewModel : Screen, IPreset
     {
-        private byte _enabledCount;
+        private short _enabledCount;
         private bool _isSelection1Included;
         private bool _isSelection2Included;
         private List<Selections> _SelectionInts;
@@ -71,7 +71,7 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _SelectionInts, newValue: value, propertyName: nameof(SelectionInts));
         }
 
-        public byte EnabledCount
+        public short EnabledCount
         {
             get => _enabledCount;
             private set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));

@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.Core.Core.Events;
 using EAShow.Core.Core.Models;
 using EAShow.Core.Helpers;
+using EAShow.Infrastructure.Commands;
 using LiteDB;
 
 namespace EAShow.Core.ViewModels
@@ -16,10 +18,10 @@ namespace EAShow.Core.ViewModels
     {
         private readonly IEventAggregator _eventAggregator;
 
-        private byte _mutationsCount;
-        private byte _populationsCount;
-        private byte _selectionsCount;
-        private byte _crossoversCount;
+        private short _mutationsCount;
+        private short _populationsCount;
+        private short _selectionsCount;
+        private short _crossoversCount;
 
         public MainViewModel(
             MutationSettingsViewModel mutationSettingsViewModel,
@@ -34,6 +36,9 @@ namespace EAShow.Core.ViewModels
             SelectionSettingsViewModel = selectionSettingsViewModel;
             _eventAggregator = eventAggregator;
             _eventAggregator.SubscribeOnUIThread(subscriber: this);
+
+            SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSave);
+            SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => SelectionsCount, () => CrossoversCount);
         }
 
         public MutationSettingsViewModel MutationSettingsViewModel { get; }
@@ -41,30 +46,31 @@ namespace EAShow.Core.ViewModels
         public CrossoverSettingsViewModel CrossoverSettingsViewModel { get; }
         public SelectionSettingsViewModel SelectionSettingsViewModel { get; }
 
-        public byte MutationsCount
+        public DelegateCommand SaveProfileCommand { get; private set; }
+
+        public short MutationsCount
         {
             get => _mutationsCount;
             private set => Set(oldValue: ref _mutationsCount, newValue: value, propertyName: nameof(MutationsCount));
         }
 
-        public byte SelectionsCount
+        public short SelectionsCount
         {
             get => _selectionsCount;
             private set => Set(oldValue: ref _selectionsCount, newValue: value, propertyName: nameof(SelectionsCount));
         }
 
-        public byte PopulationsCount
+        public short PopulationsCount
         {
             get => _populationsCount;
             private set => Set(oldValue: ref _populationsCount, newValue: value, propertyName: nameof(PopulationsCount));
         }
 
-        public byte CrossoversCount
+        public short CrossoversCount
         {
             get => _crossoversCount;
             private set => Set(oldValue: ref _crossoversCount, newValue: value, propertyName: nameof(CrossoversCount));
         }
-
 
         public Task HandleAsync(PresetEnabledCountChangedEvent message, CancellationToken cancellationToken)
         {
@@ -86,7 +92,6 @@ namespace EAShow.Core.ViewModels
                     throw new ArgumentOutOfRangeException(paramName: nameof(message.Preset),
                         actualValue: message.Preset, message: "Presets doesn't contain this value");
             }
-
             return Task.CompletedTask;
         }
 
@@ -112,10 +117,10 @@ namespace EAShow.Core.ViewModels
         }
 
         public bool CanSave() =>
-            CrossoverSettingsViewModel.EnabledCount > 0 &&
-            SelectionSettingsViewModel.EnabledCount > 0 &&
-            PopulationSettingsViewModel.EnabledCount > 0 &&
-            MutationSettingsViewModel.EnabledCount > 0;
+            CrossoversCount > 0 &&
+            SelectionsCount > 0 &&
+            PopulationsCount > 0 &&
+            MutationsCount > 0;
 
         private IEnumerable<Mutation> GetMutations()
         {

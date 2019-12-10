@@ -9,6 +9,6 @@ namespace EAShow.Core.Core.Events
     {
         public Presets Preset { get; set; }
 
-        public byte Count { get; set; }
+        public short Count { get; set; }
     }
 }

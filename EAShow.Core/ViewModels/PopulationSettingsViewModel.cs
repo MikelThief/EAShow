@@ -13,7 +13,7 @@ namespace EAShow.Core.ViewModels
 {
     public class PopulationSettingsViewModel : Screen, IPreset
     {
-        private byte _enabledCount;
+        private short _enabledCount;
         private bool _isPopulation1Included;
         private bool _isPopulation2Included;
         private decimal _population1;
@@ -26,7 +26,7 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
         }
 
-        public byte EnabledCount
+        public short EnabledCount
         {
             get => _enabledCount;
             private set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
