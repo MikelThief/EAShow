@@ -28,7 +28,7 @@
             -->
             <winui:NavigationViewItem x:Uid="Shell_Main" helpers:NavHelper.NavigateTo="views:MainPage" />
             <winui:NavigationViewItem x:Uid="Shell_ContentGrid" helpers:NavHelper.NavigateTo="views:ContentGridPage" />
-            <winui:NavigationViewItem x:Uid="Shell_Runner" helpers:NavHelper.NavigateTo="views:RunnerPage" />
+            <winui:NavigationViewItem x:Uid="Shell_Runner" helpers:NavHelper.NavigateTo="views:RunnerSetPage" />
         </winui:NavigationView.MenuItems>
         <Grid>
             <Frame x:Name="shellFrame" DataContext="{x:Null}" />

@@ -18,8 +18,16 @@ namespace EAShow.Core.ViewModels
         private short _index;
         private string _header;
         private string _profileName;
+        private bool _isProfileLoaded;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
+
+
+        public bool IsProfileLoaded
+        {
+            get => _isProfileLoaded;
+            set => Set(oldValue: ref _isProfileLoaded, newValue: value, propertyName: nameof(IsProfileLoaded));
+        }
 
         public short Index
         {
@@ -41,9 +49,9 @@ namespace EAShow.Core.ViewModels
 
         public CustomAsyncCommand OpenProfileCommand { get; set; }
 
-        public RunnerInstanceViewModel(CancellationTokenSource cancellationTokenSource)
+        public RunnerInstanceViewModel()
         {
-            _cancellationTokenSource = cancellationTokenSource;
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         private async Task OpenProfile()
@@ -58,7 +66,7 @@ namespace EAShow.Core.ViewModels
                 }
                 else
                 {
-                    await ActivateItemAsync(item: new EAViewModel(), _cancellationTokenSource.Token);
+
                 }
             }
         }

@@ -183,7 +183,6 @@
     <Compile Include="ViewModels\ContentGridDetailViewModel.cs" />
     <Compile Include="ViewModels\ContentGridViewModel.cs" />
     <Compile Include="ViewModels\CrossoverSettingsViewModel.cs" />
-    <Compile Include="ViewModels\EAViewModel.cs" />
     <Compile Include="ViewModels\RunnerInstanceViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MutationSettingsViewModel.cs" />
@@ -217,8 +216,8 @@
       <DependentUpon>PopulationSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SelectionSettingsViewModel.cs" />
-    <Compile Include="Views\RunnerPage.xaml.cs">
-      <DependentUpon>RunnerPage.xaml</DependentUpon>
+    <Compile Include="Views\RunnerSetPage.xaml.cs">
+      <DependentUpon>RunnerSetPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SelectionSettingsView.xaml.cs">
       <DependentUpon>SelectionSettingsView.xaml</DependentUpon>
@@ -300,7 +299,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RunnerPage.xaml">
+    <Page Include="Views\RunnerSetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

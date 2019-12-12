@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.Infrastructure.Commands.AsyncCommand;
@@ -11,17 +12,14 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace EAShow.Core.ViewModels
 {
-    public class RunnersSetViewModel : Screen
+    public class RunnersSetViewModel : Conductor<IScreen>.Collection.OneActive
     {
-        public BindableCollection<RunnerInstanceViewModel> Tabs { get; }
-
         public DelegateCommand<TabClosingEventArgs> CloseTabCommand { get; }
 
         public DelegateCommand AddTabCommand { get; }
 
         public RunnersSetViewModel()
         {
-            Tabs = new BindableCollection<RunnerInstanceViewModel>();
             CloseTabCommand = new DelegateCommand<TabClosingEventArgs>(executeMethod: CloseTab);
             AddTabCommand = new DelegateCommand(executeMethod: AddTab);
 
@@ -30,13 +28,16 @@ namespace EAShow.Core.ViewModels
         {
             if (args.Item is RunnerInstanceViewModel item)
             {
-                Tabs.Remove(item);
+                Items.Remove(item);
             }
         }
 
         private void AddTab()
         {
-            var newIndex = Tabs.Any() ? Tabs.Max(t => t.Index) + 1 : 1;
+            var newIndex = Items.Any() ? Items.Max((IScreen screen) => (screen as RunnerInstanceViewModel).Index) + 1 : 1;
+
+            Items.Add(new RunnerInstanceViewModel());
+
             //Tabs.Add(new TabViewItemData()
             //{
             //    Index = newIndex,

@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="EAShow.Core.Views.RunnerPage"
+    x:Class="EAShow.Core.Views.RunnerSetPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controlsMSToolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -28,7 +28,7 @@
             CanCloseTabs="True"
             CanDragItems="False"
             CanReorderItems="True"
-            ItemsSource="{x:Bind ViewModel.Tabs}"
+            ItemsSource="{x:Bind ViewModel.Items}"
             SelectedTabWidth="{StaticResource TabViewItemHeaderMaxWidth}"
             TabWidthBehavior="Actual">
             <controlsMSToolkit:TabView.Resources />

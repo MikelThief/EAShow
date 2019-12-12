@@ -54,11 +54,6 @@ namespace EAShow.Core.ViewModels
         public CrossoverSettingsViewModel CrossoverSettingsViewModel { get; }
         public SelectionSettingsViewModel SelectionSettingsViewModel { get; }
 
-        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
-        {
-            return base.OnInitializeAsync(cancellationToken);
-        }
-
         public DelegateCommand SaveProfileCommand { get; private set; }
 
         public short MutationsCount
