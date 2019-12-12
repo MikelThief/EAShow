@@ -32,6 +32,7 @@ namespace EAShow.Core.ViewModels
             SelectionSettingsViewModel selectionSettingsViewModel,
             IEventAggregator eventAggregator)
         {
+
             MutationSettingsViewModel = mutationSettingsViewModel;
             PopulationSettingsViewModel = populationSettingsViewModel;
             CrossoverSettingsViewModel = crossoverSettingsViewModel;
@@ -41,12 +42,22 @@ namespace EAShow.Core.ViewModels
 
             SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSaveProfile);
             SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => CrossoversCount, () => SelectionsCount);
+
+            MutationSettingsViewModel.ConductWith(parent: this);
+            CrossoverSettingsViewModel.ConductWith(parent: this);
+            CrossoverSettingsViewModel.ConductWith(parent: this);
+            SelectionSettingsViewModel.ConductWith(parent: this);
         }
 
         public MutationSettingsViewModel MutationSettingsViewModel { get; }
         public PopulationSettingsViewModel PopulationSettingsViewModel { get; }
         public CrossoverSettingsViewModel CrossoverSettingsViewModel { get; }
         public SelectionSettingsViewModel SelectionSettingsViewModel { get; }
+
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
+            return base.OnInitializeAsync(cancellationToken);
+        }
 
         public DelegateCommand SaveProfileCommand { get; private set; }
 
