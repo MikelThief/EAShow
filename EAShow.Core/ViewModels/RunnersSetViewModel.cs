@@ -11,24 +11,24 @@ using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace EAShow.Core.ViewModels
 {
-    public class RunnerViewModel : Screen
+    public class RunnersSetViewModel : Screen
     {
-        public BindableCollection<EAViewModel> Tabs { get; }
+        public BindableCollection<RunnerInstanceViewModel> Tabs { get; }
 
         public DelegateCommand<TabClosingEventArgs> CloseTabCommand { get; }
 
         public DelegateCommand AddTabCommand { get; }
 
-        public RunnerViewModel()
+        public RunnersSetViewModel()
         {
-            Tabs = new BindableCollection<EAViewModel>();
+            Tabs = new BindableCollection<RunnerInstanceViewModel>();
             CloseTabCommand = new DelegateCommand<TabClosingEventArgs>(executeMethod: CloseTab);
             AddTabCommand = new DelegateCommand(executeMethod: AddTab);
 
         }
         private void CloseTab(TabClosingEventArgs args)
         {
-            if (args.Item is EAViewModel item)
+            if (args.Item is RunnerInstanceViewModel item)
             {
                 Tabs.Remove(item);
             }

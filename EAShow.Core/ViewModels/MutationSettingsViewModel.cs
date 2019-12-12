@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.Core.Core.Abstractions.Interfaces;
@@ -24,9 +25,14 @@ namespace EAShow.Core.ViewModels
         public MutationSettingsViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
+        }
 
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
             Mutation1 = 0.1M;
             Mutation2 = 0.1M;
+
+            return base.OnInitializeAsync(cancellationToken: cancellationToken);
         }
 
         public short EnabledCount

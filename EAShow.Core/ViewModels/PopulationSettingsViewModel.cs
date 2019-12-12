@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.Core.Core.Abstractions.Interfaces;
@@ -24,9 +25,14 @@ namespace EAShow.Core.ViewModels
         public PopulationSettingsViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
+        }
 
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
             Population1 = 100;
             Population2 = 100;
+
+            return base.OnInitializeAsync(cancellationToken: cancellationToken);
         }
 
         public short EnabledCount

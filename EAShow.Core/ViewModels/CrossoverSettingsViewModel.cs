@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.Core.Core.Abstractions.Interfaces;
@@ -82,9 +83,14 @@ namespace EAShow.Core.ViewModels
         {
             CrossoverInts = new List<Crossovers>(collection: EnumHelper.GetValuesAsReadOnlyCollection<Crossovers>());
             _eventAggregator = eventAggregator;
+        }
 
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
             Crossover1 = CrossoverInts[0];
             Crossover2 = CrossoverInts[0];
+
+            return base.OnInitializeAsync(cancellationToken);
         }
 
         public async Task PublishEnabledCount()

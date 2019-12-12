@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.Core.Core.Abstractions.Interfaces;
@@ -81,9 +82,14 @@ namespace EAShow.Core.ViewModels
         {
             _eventAggregator = eventAggregator;
             SelectionInts = new List<Selections>(collection: EnumHelper.GetValuesAsReadOnlyCollection<Selections>());
+        }
 
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
             Selection1 = SelectionInts[0];
             Selection2 = SelectionInts[0];
+
+            return base.OnInitializeAsync(cancellationToken: cancellationToken);
         }
 
         public async Task PublishEnabledCount()

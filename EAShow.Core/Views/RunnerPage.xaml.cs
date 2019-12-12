@@ -23,7 +23,7 @@ namespace EAShow.Core.Views
     /// </summary>
     public sealed partial class RunnerPage : Page
     {
-        public RunnerViewModel ViewModel => DataContext as RunnerViewModel;
+        public RunnersSetViewModel ViewModel => DataContext as RunnersSetViewModel;
 
         public RunnerPage()
         {
