@@ -36,7 +36,11 @@ namespace EAShow.Core.ViewModels
         {
             var newIndex = Items.Any() ? Items.Max((IScreen screen) => (screen as RunnerInstanceViewModel).Index) + 1 : 1;
 
-            Items.Add(new RunnerInstanceViewModel());
+
+            Items.Add(new RunnerInstanceViewModel
+            {
+                Index = (short) newIndex
+            });
 
             //Tabs.Add(new TabViewItemData()
             //{

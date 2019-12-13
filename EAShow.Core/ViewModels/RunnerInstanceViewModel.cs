@@ -17,7 +17,7 @@ namespace EAShow.Core.ViewModels
     {
         private short _index;
         private string _header;
-        private string _profileName;
+        private Profile _selectedProfile;
         private bool _isProfileLoaded;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
@@ -41,10 +41,10 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _header, newValue: value, nameof(Header));
         }
 
-        public string ProfileName
+        public Profile SelectedProfile
         {
-            get => _profileName;
-            set => Set(oldValue: ref _profileName, newValue: value.Trim(), propertyName: nameof(ProfileName));
+            get => _selectedProfile;
+            set => Set(oldValue: ref _selectedProfile, newValue: value, propertyName: nameof(SelectedProfile));
         }
 
         public CustomAsyncCommand OpenProfileCommand { get; set; }
@@ -54,11 +54,11 @@ namespace EAShow.Core.ViewModels
             _cancellationTokenSource = new CancellationTokenSource();
         }
 
-        private async Task OpenProfile()
+        private async Task LoadProfile()
         {
             using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
             {
-                var queryResult = db.Query<Profile>().SingleOrDefault();
+                var queryResult = db.Query<Profile>().Where(x => x.Id == SelectedProfile.Id).Single();
 
                 if (queryResult == null)
                 {
@@ -66,11 +66,11 @@ namespace EAShow.Core.ViewModels
                 }
                 else
                 {
-
+                    // load profile
                 }
             }
         }
 
-        private bool CanOpenProfile => string.IsNullOrEmpty(value: ProfileName);
+        private bool CanOpenProfile => SelectedProfile != null;
     }
 }
