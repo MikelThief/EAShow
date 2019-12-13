@@ -216,8 +216,8 @@
       <DependentUpon>PopulationSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SelectionSettingsViewModel.cs" />
-    <Compile Include="Views\RunnerSetPage.xaml.cs">
-      <DependentUpon>RunnerSetPage.xaml</DependentUpon>
+    <Compile Include="Views\RunnersSetPage.xaml.cs">
+      <DependentUpon>RunnersSetPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SelectionSettingsView.xaml.cs">
       <DependentUpon>SelectionSettingsView.xaml</DependentUpon>
@@ -299,7 +299,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\RunnerSetPage.xaml">
+    <Page Include="Views\RunnersSetPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
