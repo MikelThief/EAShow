@@ -2,6 +2,7 @@
     x:Class="EAShow.Core.Views.RunnersSetPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.caliburnproject.org"
     xmlns:controlsMSToolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,6 +10,7 @@
     xmlns:local="using:EAShow.Core.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:EAShow.Core.ViewModels"
+    xmlns:views="using:EAShow.Core.Views"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Page.Resources>
@@ -24,11 +26,11 @@
     </Page.Resources>
     <Grid>
         <controlsMSToolkit:TabView
+            x:Name="Items"
             AllowDrop="True"
             CanCloseTabs="True"
             CanDragItems="False"
             CanReorderItems="True"
-            ItemsSource="{x:Bind ViewModel.Items}"
             SelectedTabWidth="{StaticResource TabViewItemHeaderMaxWidth}"
             TabWidthBehavior="Actual">
             <controlsMSToolkit:TabView.Resources />
@@ -41,12 +43,11 @@
             </controlsMSToolkit:TabView.Header>
             <controlsMSToolkit:TabView.TabActionHeader>
                 <Button
-                    x:Name="AddTabButtonUpper"
                     Width="{StaticResource TabViewItemHeaderMinWidth}"
                     Height="{StaticResource TabViewItemHeaderMinHeight}"
-                    Margin="-1,0,0,0"
                     Background="Transparent"
-                    BorderThickness="1">
+                    BorderThickness="1"
+                    Command="{x:Bind ViewModel.AddTabCommand}">
                     <Viewbox MaxWidth="16" MaxHeight="16">
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" />
                     </Viewbox>
@@ -58,12 +59,16 @@
                     <core:InvokeCommandAction Command="{x:Bind ViewModel.CloseTabCommand}" />
                 </core:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
-            <!--<controlsMSToolkit:TabView.ItemHeaderTemplate>
-                <DataTemplate x:DataType="viewModels:RunnerInstanceViewModel" />
+            <controlsMSToolkit:TabView.ItemHeaderTemplate>
+                <DataTemplate x:DataType="viewModels:RunnerInstanceViewModel">
+                    <TextBlock Text="{x:Bind Header, Mode=OneWay}" />
+                </DataTemplate>
             </controlsMSToolkit:TabView.ItemHeaderTemplate>
             <controlsMSToolkit:TabView.ItemTemplate>
-                <DataTemplate x:DataType="viewModels:RunnerInstanceViewModel" />
-            </controlsMSToolkit:TabView.ItemTemplate>-->
+                <DataTemplate x:DataType="viewModels:RunnerInstanceViewModel">
+                    <views:RunnerInstanceView />
+                </DataTemplate>
+            </controlsMSToolkit:TabView.ItemTemplate>
         </controlsMSToolkit:TabView>
     </Grid>
 </Page>

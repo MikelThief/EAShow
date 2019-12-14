@@ -304,4 +304,7 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="MainPage_Profile_TextBoxDescription.Header" xml:space="preserve">
     <value>Name of the profile</value>
   </data>
+  <data name="RunnerInstance_EmptyHeader" xml:space="preserve">
+    <value>Empty Profile</value>
+  </data>
 </root>

@@ -13,7 +13,7 @@ using Nito.Mvvm;
 
 namespace EAShow.Core.ViewModels
 {
-    public class RunnerInstanceViewModel : Conductor<IScreen>.Collection.OneActive
+    public class RunnerInstanceViewModel : Screen
     {
         private short _index;
         private string _header;

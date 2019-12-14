@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using EAShow.Core.Helpers;
 using EAShow.Infrastructure.Commands.AsyncCommand;
 using EAShow.Infrastructure.Commands.DelegateCommand;
 using Microsoft.Toolkit.Uwp.UI.Controls;
@@ -22,8 +23,8 @@ namespace EAShow.Core.ViewModels
         {
             CloseTabCommand = new DelegateCommand<TabClosingEventArgs>(executeMethod: CloseTab);
             AddTabCommand = new DelegateCommand(executeMethod: AddTab);
-
         }
+
         private void CloseTab(TabClosingEventArgs args)
         {
             if (args.Item is RunnerInstanceViewModel item)
@@ -36,18 +37,11 @@ namespace EAShow.Core.ViewModels
         {
             var newIndex = Items.Any() ? Items.Max((IScreen screen) => (screen as RunnerInstanceViewModel).Index) + 1 : 1;
 
-
             Items.Add(new RunnerInstanceViewModel
             {
-                Index = (short) newIndex
+                Index = (short) newIndex,
+                Header = "RunnerInstance_EmptyHeader".GetLocalized()
             });
-
-            //Tabs.Add(new TabViewItemData()
-            //{
-            //    Index = newIndex,
-            //    Header = $"Item {newIndex}",
-            //    Content = $"This is the content for Item {newIndex}"
-            //});
         }
     }
 }
