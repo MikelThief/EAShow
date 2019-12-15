@@ -75,9 +75,11 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _population2, newValue: value, nameof(Population2));
         }
 
-        public async Task PublishEnabledCountAsync()
+        // ReSharper disable once RedundantAwait
+        // Do not remove async/await. This somehow causes HandleAsync<> not to fire.
+        public Task PublishEnabledCountAsync()
         {
-            await _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
+            return _eventAggregator.PublishOnBackgroundThreadAsync(message: new PresetEnabledCountChangedEvent
             {
                 Preset = Presets.Population,
                 Count = EnabledCount
@@ -115,7 +117,7 @@ namespace EAShow.Core.ViewModels
 
         public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
         {
-            return RestoreDefaultsAsync();
+            return Execute.OnUIThreadAsync(RestoreDefaultsAsync);
         }
 
         private void RefreshEnabledCount()

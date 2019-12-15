@@ -53,10 +53,10 @@ namespace EAShow.Core.ViewModels
             return base.OnInitializeAsync(cancellationToken);
         }
 
-        protected override async Task OnActivateAsync(CancellationToken cancellationToken)
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
         {
-            _eventAggregator.SubscribeOnUIThread(subscriber: this);
-            await base.OnActivateAsync(cancellationToken);
+            _eventAggregator.SubscribeOnBackgroundThread(subscriber: this);
+            return base.OnActivateAsync(cancellationToken);
         }
 
         public MutationSettingsViewModel MutationSettingsViewModel { get; }
@@ -101,24 +101,28 @@ namespace EAShow.Core.ViewModels
 
         public Task HandleAsync(PresetEnabledCountChangedEvent message, CancellationToken cancellationToken)
         {
-            switch (message.Preset)
+
+            OnUIThread(() =>
             {
-                case Presets.Mutation:
-                    MutationsCount = message.Count;
-                    break;
-                case Presets.Crossover:
-                    CrossoversCount = message.Count;
-                    break;
-                case Presets.Selection:
-                    SelectionsCount = message.Count;
-                    break;
-                case Presets.Population:
-                    PopulationsCount = message.Count;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(paramName: nameof(message.Preset),
-                        actualValue: message.Preset, message: "Presets doesn't contain this value");
-            }
+                switch (message.Preset)
+                {
+                    case Presets.Mutation:
+                        MutationsCount = message.Count;
+                        break;
+                    case Presets.Crossover:
+                        CrossoversCount = message.Count;
+                        break;
+                    case Presets.Selection:
+                        SelectionsCount = message.Count;
+                        break;
+                    case Presets.Population:
+                        PopulationsCount = message.Count;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(paramName: nameof(message.Preset),
+                            actualValue: message.Preset, message: "Presets doesn't contain this value");
+                }
+            });
 
             return Task.CompletedTask;
         }
@@ -144,7 +148,7 @@ namespace EAShow.Core.ViewModels
                 db.Insert(entity: profile);
             }
 
-            _eventAggregator.PublishOnUIThreadAsync(message: new PresetResetRequestedEvent(), CancellationToken.None);
+            _eventAggregator.PublishOnBackgroundThreadAsync(message: new PresetResetRequestedEvent(), CancellationToken.None);
             ProfileName = string.Empty;
         }
 
