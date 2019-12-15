@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EAShow.Core.Core.Models
+namespace EAShow.Shared.Models
 {
     public enum Selections
     {

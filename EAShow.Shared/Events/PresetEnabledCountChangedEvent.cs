@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using EAShow.Core.Core.Models;
+using EAShow.Shared.Models;
 
-namespace EAShow.Core.Core.Events
+namespace EAShow.Shared.Events
 {
     public class PresetEnabledCountChangedEvent
     {

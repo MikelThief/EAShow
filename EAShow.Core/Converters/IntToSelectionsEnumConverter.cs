@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Data;
-using EAShow.Core.Core.Models;
+using EAShow.Shared.Models;
 
 namespace EAShow.Core.Converters
 {

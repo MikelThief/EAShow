@@ -117,7 +117,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro">
-      <Version>4.0.102-alpha</Version>
+      <Version>4.0.104-alpha</Version>
     </PackageReference>
     <PackageReference Include="LiteDB">
       <Version>4.1.4</Version>

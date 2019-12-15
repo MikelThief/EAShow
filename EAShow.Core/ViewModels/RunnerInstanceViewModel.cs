@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using EAShow.Core.Core.Models;
+using EAShow.Shared.Models;
 using EAShow.Core.Helpers;
 using EAShow.Infrastructure.Commands.DelegateCommand;
 using LiteDB;
@@ -47,6 +47,8 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _selectedProfile, newValue: value, propertyName: nameof(SelectedProfile));
         }
 
+        public BindableCollection<Profile> Profiles { get; private set; }
+
         public CustomAsyncCommand OpenProfileCommand { get; set; }
 
         public RunnerInstanceViewModel()
@@ -72,5 +74,16 @@ namespace EAShow.Core.ViewModels
         }
 
         private bool CanOpenProfile => SelectedProfile != null;
+
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
+            using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
+            {
+                var queryResult = db.Query<Profile>().ToEnumerable();
+                Profiles = new BindableCollection<Profile>(queryResult);
+            }
+
+            return base.OnInitializeAsync(cancellationToken);
+        }
     }
 }

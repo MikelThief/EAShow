@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using LiteDB;
 
-namespace EAShow.Core.Core.Models
+namespace EAShow.Shared.Models
 {
     [DebuggerDisplay(value: "Mutations={Mutations.Count}, Crossovers={Crossovers.Count}, Selections={Selections.Count}, Populations={CrosPopulationssovers.Count}",
         Name = "Profile {Name}")]

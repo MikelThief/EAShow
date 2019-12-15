@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EAShow.Core.Core.Models;
+using EAShow.Shared.Models;
 
 namespace EAShow.Core.Helpers
 {

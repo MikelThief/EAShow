@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EAShow.Core.Core.Abstractions.Interfaces
+namespace EAShow.Shared.Abstractions.Interfaces
 {
     public interface IPreset
     {

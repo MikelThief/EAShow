@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using EAShow.Core.ViewModels;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -19,6 +20,8 @@ namespace EAShow.Core.Views
 {
     public sealed partial class RunnerInstanceView : UserControl
     {
+        public RunnerInstanceViewModel ViewModel => DataContext as RunnerInstanceViewModel;
+
         public RunnerInstanceView()
         {
             this.InitializeComponent();

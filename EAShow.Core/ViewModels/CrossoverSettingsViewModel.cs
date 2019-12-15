@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using EAShow.Core.Core.Abstractions.Interfaces;
-using EAShow.Core.Core.Events;
-using EAShow.Core.Core.Models;
+using EAShow.Shared.Abstractions.Interfaces;
+using EAShow.Shared.Events;
+using EAShow.Shared.Models;
 using EAShow.Core.Helpers;
 using Nito.Mvvm;
 
