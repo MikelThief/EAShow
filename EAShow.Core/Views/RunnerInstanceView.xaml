@@ -6,12 +6,15 @@
     xmlns:local="using:EAShow.Core.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:EAShow.Shared.Models"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
+    d:DesignHeight="200"
+    d:DesignWidth="500"
     mc:Ignorable="d">
 
     <Grid>
-        <ListView>
+        <ListView
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            ItemsSource="{x:Bind ViewModel.Profiles}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Profile">
                     <Grid>
@@ -19,7 +22,7 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <TextBlock Text="{x:Bind Name}" />
+                        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind Name}" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

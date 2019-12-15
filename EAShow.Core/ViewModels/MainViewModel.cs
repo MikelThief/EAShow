@@ -39,18 +39,24 @@ namespace EAShow.Core.ViewModels
             SelectionSettingsViewModel = selectionSettingsViewModel;
             _eventAggregator = eventAggregator;
             SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSaveProfile);
-        }
 
-        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
-        {
-            _eventAggregator.SubscribeOnUIThread(subscriber: this);
-            SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => CrossoversCount, () => SelectionsCount);
+
             SelectionSettingsViewModel.ConductWith(parent: this);
             CrossoverSettingsViewModel.ConductWith(parent: this);
             PopulationSettingsViewModel.ConductWith(parent: this);
             MutationSettingsViewModel.ConductWith(parent: this);
+        }
 
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
+            SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => CrossoversCount, () => SelectionsCount);
             return base.OnInitializeAsync(cancellationToken);
+        }
+
+        protected override async Task OnActivateAsync(CancellationToken cancellationToken)
+        {
+            _eventAggregator.SubscribeOnUIThread(subscriber: this);
+            await base.OnActivateAsync(cancellationToken);
         }
 
         public MutationSettingsViewModel MutationSettingsViewModel { get; }
@@ -128,13 +134,14 @@ namespace EAShow.Core.ViewModels
 
                 var profile = new Profile
                 {
+                    Name = ProfileName,
                     Mutations = mutations.ToList(),
                     Selections = selections.ToList(),
                     Crossovers = crossovers.ToList(),
                     Populations = populations.ToList()
                 };
 
-                db.Insert<Profile>(entity: profile);
+                db.Insert(entity: profile);
             }
 
             _eventAggregator.PublishOnUIThreadAsync(message: new PresetResetRequestedEvent(), CancellationToken.None);

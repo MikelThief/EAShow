@@ -6,7 +6,7 @@ using LiteDB;
 
 namespace EAShow.Shared.Models
 {
-    [DebuggerDisplay(value: "Mutations={Mutations.Count}, Crossovers={Crossovers.Count}, Selections={Selections.Count}, Populations={CrosPopulationssovers.Count}",
+    [DebuggerDisplay(value: "Mutations={Mutations.Count}, Crossovers={Crossovers.Count}, Selections={Selections.Count}, Populations={Populations.Count}",
         Name = "Profile {Name}")]
     public class Profile
     {

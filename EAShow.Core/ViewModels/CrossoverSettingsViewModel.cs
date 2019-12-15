@@ -112,7 +112,6 @@ namespace EAShow.Core.ViewModels
             Crossover2 = CrossoverInts[0];
             IsCrossover1Included = false;
             IsCrossover2Included = false;
-
             return Task.CompletedTask;
         }
 

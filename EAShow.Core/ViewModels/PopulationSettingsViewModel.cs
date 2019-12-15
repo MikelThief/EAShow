@@ -27,10 +27,10 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
         }
 
-        protected override async Task OnInitializeAsync(CancellationToken cancellationToken)
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            await RestoreDefaultsAsync();
-            await base.OnInitializeAsync(cancellationToken: cancellationToken);
+            RestoreDefaults();
+            return base.OnInitializeAsync(cancellationToken: cancellationToken);
         }
 
         public short EnabledCount
@@ -75,9 +75,9 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _population2, newValue: value, nameof(Population2));
         }
 
-        public Task PublishEnabledCountAsync()
+        public async Task PublishEnabledCountAsync()
         {
-            return _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
+            await _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
             {
                 Preset = Presets.Population,
                 Count = EnabledCount
@@ -88,13 +88,17 @@ namespace EAShow.Core.ViewModels
         {
             Population1 = 100;
             Population2 = 100;
-            /* Compared to Mutation, some shit is going on here. There are no differences!
-               This is not expected to work, but it does! */
-
             IsPopulation1Included = false;
             IsPopulation2Included = false;
-            RefreshEnabledCount();
             return Task.CompletedTask;
+        }
+
+        public void RestoreDefaults()
+        {
+            Population1 = 100;
+            Population2 = 100;
+            IsPopulation1Included = false;
+            IsPopulation2Included = false;
         }
 
         protected override Task OnActivateAsync(CancellationToken cancellationToken)

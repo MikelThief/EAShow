@@ -41,8 +41,8 @@
                 HorizontalSpacing="36"
                 VerticalSpacing="16">
                 <views:MutationSettingsView DataContext="{x:Bind ViewModel.MutationSettingsViewModel}" />
-                <views:PopulationSettingsView DataContext="{x:Bind ViewModel.PopulationSettingsViewModel}" />
                 <views:CrossoverSettingsView DataContext="{x:Bind ViewModel.CrossoverSettingsViewModel}" />
+                <views:PopulationSettingsView DataContext="{x:Bind ViewModel.PopulationSettingsViewModel}" />
                 <views:SelectionSettingsView DataContext="{x:Bind ViewModel.SelectionSettingsViewModel}" />
 
 
@@ -101,7 +101,8 @@
                             MinWidth="200"
                             Margin="0,0,4,0"
                             AcceptsReturn="False"
-                            MaxLength="50" />
+                            MaxLength="50"
+                            Text="{x:Bind ViewModel.ProfileName, Mode=TwoWay}" />
                         <Button
                             x:Uid="MainPage_Profile_SaveProfileButton"
                             Grid.Column="1"

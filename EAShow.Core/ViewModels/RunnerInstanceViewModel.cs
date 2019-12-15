@@ -54,6 +54,7 @@ namespace EAShow.Core.ViewModels
         public RunnerInstanceViewModel()
         {
             _cancellationTokenSource = new CancellationTokenSource();
+            Profiles = new BindableCollection<Profile>();
         }
 
         private async Task LoadProfile()
@@ -80,7 +81,7 @@ namespace EAShow.Core.ViewModels
             using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
             {
                 var queryResult = db.Query<Profile>().ToEnumerable();
-                Profiles = new BindableCollection<Profile>(queryResult);
+                Profiles.AddRange(items: queryResult);
             }
 
             return base.OnInitializeAsync(cancellationToken);
