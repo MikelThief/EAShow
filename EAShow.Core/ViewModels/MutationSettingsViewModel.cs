@@ -49,10 +49,7 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isMutation1Included, newValue: value, nameof(IsMutation1Included));
-                if (value)
-                    EnabledCount++;
-                else
-                    EnabledCount--;
+                RefreshEnabledCount();
             }
         }
 
@@ -62,10 +59,7 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isMutation2Included, newValue: value, nameof(IsMutation2Included));
-                if (value)
-                    EnabledCount++;
-                else
-                    EnabledCount--;
+                RefreshEnabledCount();
             }
         }
 
@@ -106,8 +100,6 @@ namespace EAShow.Core.ViewModels
         {
             Mutation1 = 0.1M;
             Mutation2 = 0.1M;
-            EnabledCount = 2;   // required not to end up with negative value.
-                                // The number should be equal to the number of entries
             IsMutation1Included = false;
             IsMutation2Included = false;
             return Task.CompletedTask;
@@ -116,6 +108,17 @@ namespace EAShow.Core.ViewModels
         public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
         {
             return RestoreDefaultsAsync();
+        }
+
+        private void RefreshEnabledCount()
+        {
+            short count = default;
+            if (IsMutation1Included)
+                count++;
+            if (IsMutation2Included)
+                count++;
+
+            EnabledCount = count;
         }
     }
 }

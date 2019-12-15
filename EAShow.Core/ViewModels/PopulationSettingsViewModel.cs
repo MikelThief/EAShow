@@ -49,10 +49,7 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isPopulation1Included, newValue: value, nameof(IsPopulation1Included));
-                if (value)
-                    EnabledCount++;
-                else
-                    EnabledCount--;
+                RefreshEnabledCount();
             }
         }
 
@@ -62,10 +59,7 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isPopulation2Included, newValue: value, nameof(IsPopulation2Included));
-                if (value)
-                    EnabledCount++;
-                else
-                    EnabledCount--;
+                RefreshEnabledCount();
             }
         }
 
@@ -92,13 +86,14 @@ namespace EAShow.Core.ViewModels
 
         public Task RestoreDefaultsAsync()
         {
-            Population1 = 10;
-            Population2 = 10;
+            Population1 = 100;
+            Population2 = 100;
             /* Compared to Mutation, some shit is going on here. There are no differences!
                This is not expected to work, but it does! */
-            EnabledCount = 0;
+
             IsPopulation1Included = false;
             IsPopulation2Included = false;
+            RefreshEnabledCount();
             return Task.CompletedTask;
         }
 
@@ -117,6 +112,17 @@ namespace EAShow.Core.ViewModels
         public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
         {
             return RestoreDefaultsAsync();
+        }
+
+        private void RefreshEnabledCount()
+        {
+            short count = default;
+            if (IsPopulation1Included)
+                count++;
+            if (IsPopulation2Included)
+                count++;
+
+            EnabledCount = count;
         }
     }
 }

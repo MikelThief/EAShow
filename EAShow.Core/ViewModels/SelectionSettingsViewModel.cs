@@ -30,10 +30,7 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isSelection1Included, newValue: value, propertyName: nameof(IsSelection1Included));
-                if (value)
-                    EnabledCount++;
-                else
-                    EnabledCount--;
+                RefreshEnabledCount();
             }
         }
 
@@ -43,10 +40,7 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isSelection2Included, newValue: value, propertyName: nameof(IsSelection2Included));
-                if (value)
-                    EnabledCount++;
-                else
-                    EnabledCount--;
+                RefreshEnabledCount();
             }
         }
 
@@ -127,6 +121,17 @@ namespace EAShow.Core.ViewModels
         public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
         {
             return RestoreDefaultsAsync();
+        }
+
+        private void RefreshEnabledCount()
+        {
+            short count = default;
+            if (IsSelection1Included)
+                count++;
+            if (IsSelection2Included)
+                count++;
+
+            EnabledCount = count;
         }
     }
 }

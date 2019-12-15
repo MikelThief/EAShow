@@ -41,10 +41,7 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isCrossover1Included, newValue: value, propertyName: nameof(IsCrossover1Included));
-                if (value)
-                    EnabledCount++;
-                else
-                    EnabledCount--;
+               RefreshEnabledCount();
             }
         }
 
@@ -54,10 +51,7 @@ namespace EAShow.Core.ViewModels
             set
             {
                 Set(oldValue: ref _isCrossover2Included, newValue: value, propertyName: nameof(IsCrossover2Included));
-                if (value)
-                    EnabledCount++;
-                else
-                    EnabledCount--;
+                RefreshEnabledCount();
             }
         }
 
@@ -116,8 +110,6 @@ namespace EAShow.Core.ViewModels
         {
             Crossover1 = CrossoverInts[0];
             Crossover2 = CrossoverInts[0];
-            EnabledCount = 2;   // required not to end up with negative value.
-                                // The number should be equal to the number of entries
             IsCrossover1Included = false;
             IsCrossover2Included = false;
 
@@ -127,6 +119,17 @@ namespace EAShow.Core.ViewModels
         public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
         {
             return RestoreDefaultsAsync();
+        }
+
+        private void RefreshEnabledCount()
+        {
+            short count = default;
+            if (IsCrossover1Included)
+                count++;
+            if (IsCrossover2Included)
+                count++;
+
+            EnabledCount = count;
         }
     }
 }
