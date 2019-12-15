@@ -27,18 +27,20 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
         }
 
-        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        protected override async Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            Mutation1 = 0.1M;
-            Mutation2 = 0.1M;
-
-            return base.OnInitializeAsync(cancellationToken: cancellationToken);
+            await RestoreDefaultsAsync();
+            await base.OnInitializeAsync(cancellationToken: cancellationToken);
         }
 
         public short EnabledCount
         {
             get => _enabledCount;
-            set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+            private set
+            {
+                Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+                NotifyTask.Create(asyncAction: PublishEnabledCountAsync);
+            }
         }
 
         public bool IsMutation1Included
@@ -51,8 +53,6 @@ namespace EAShow.Core.ViewModels
                     EnabledCount++;
                 else
                     EnabledCount--;
-
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -66,8 +66,6 @@ namespace EAShow.Core.ViewModels
                     EnabledCount++;
                 else
                     EnabledCount--;
-
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -83,20 +81,41 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _mutation2, newValue: value, nameof(Mutation2));
         }
 
-        public async Task PublishEnabledCount()
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
         {
-            byte count = default;
+            _eventAggregator.SubscribeOnUIThread(subscriber: this);
+            return base.OnActivateAsync(cancellationToken);
+        }
 
-            if (IsMutation1Included)
-                count++;
-            if (IsMutation2Included)
-                count++;
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
+        {
+            _eventAggregator.Unsubscribe(subscriber: this);
+            return base.OnDeactivateAsync(close, cancellationToken);
+        }
 
+        public async Task PublishEnabledCountAsync()
+        {
             await _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
             {
                 Preset = Presets.Mutation,
-                Count = count
+                Count = EnabledCount
             });
+        }
+
+        public Task RestoreDefaultsAsync()
+        {
+            Mutation1 = 0.1M;
+            Mutation2 = 0.1M;
+            EnabledCount = 2;   // required not to end up with negative value.
+                                // The number should be equal to the number of entries
+            IsMutation1Included = false;
+            IsMutation2Included = false;
+            return Task.CompletedTask;
+        }
+
+        public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
+        {
+            return RestoreDefaultsAsync();
         }
     }
 }

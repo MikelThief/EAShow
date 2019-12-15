@@ -38,15 +38,19 @@ namespace EAShow.Core.ViewModels
             CrossoverSettingsViewModel = crossoverSettingsViewModel;
             SelectionSettingsViewModel = selectionSettingsViewModel;
             _eventAggregator = eventAggregator;
-            _eventAggregator.SubscribeOnUIThread(subscriber: this);
-
             SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSaveProfile);
-            SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => CrossoversCount, () => SelectionsCount);
+        }
 
-            MutationSettingsViewModel.ConductWith(parent: this);
-            CrossoverSettingsViewModel.ConductWith(parent: this);
-            CrossoverSettingsViewModel.ConductWith(parent: this);
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
+            _eventAggregator.SubscribeOnUIThread(subscriber: this);
+            SaveProfileCommand.ObservesProperty(() => MutationsCount, () => PopulationsCount, () => CrossoversCount, () => SelectionsCount);
             SelectionSettingsViewModel.ConductWith(parent: this);
+            CrossoverSettingsViewModel.ConductWith(parent: this);
+            PopulationSettingsViewModel.ConductWith(parent: this);
+            MutationSettingsViewModel.ConductWith(parent: this);
+
+            return base.OnInitializeAsync(cancellationToken);
         }
 
         public MutationSettingsViewModel MutationSettingsViewModel { get; }
@@ -133,6 +137,7 @@ namespace EAShow.Core.ViewModels
                 db.Insert<Profile>(entity: profile);
             }
 
+            _eventAggregator.PublishOnUIThreadAsync(message: new PresetResetRequestedEvent(), CancellationToken.None);
             ProfileName = string.Empty;
         }
 

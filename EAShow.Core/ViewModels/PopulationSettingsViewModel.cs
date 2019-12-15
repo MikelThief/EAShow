@@ -27,18 +27,20 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
         }
 
-        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        protected override async Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            Population1 = 100;
-            Population2 = 100;
-
-            return base.OnInitializeAsync(cancellationToken: cancellationToken);
+            await RestoreDefaultsAsync();
+            await base.OnInitializeAsync(cancellationToken: cancellationToken);
         }
 
         public short EnabledCount
         {
             get => _enabledCount;
-            private set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+            private set
+            {
+                Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+                NotifyTask.Create(asyncAction: PublishEnabledCountAsync);
+            }
         }
 
         public bool IsPopulation1Included
@@ -51,8 +53,6 @@ namespace EAShow.Core.ViewModels
                     EnabledCount++;
                 else
                     EnabledCount--;
-
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -66,8 +66,6 @@ namespace EAShow.Core.ViewModels
                     EnabledCount++;
                 else
                     EnabledCount--;
-
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -83,20 +81,42 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _population2, newValue: value, nameof(Population2));
         }
 
-        public async Task PublishEnabledCount()
+        public Task PublishEnabledCountAsync()
         {
-            byte count = default;
-
-            if (IsPopulation1Included)
-                count++;
-            if (IsPopulation2Included)
-                count++;
-
-            await _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
+            return _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
             {
                 Preset = Presets.Population,
-                Count = count
+                Count = EnabledCount
             });
+        }
+
+        public Task RestoreDefaultsAsync()
+        {
+            Population1 = 10;
+            Population2 = 10;
+            /* Compared to Mutation, some shit is going on here. There are no differences!
+               This is not expected to work, but it does! */
+            EnabledCount = 0;
+            IsPopulation1Included = false;
+            IsPopulation2Included = false;
+            return Task.CompletedTask;
+        }
+
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
+        {
+            _eventAggregator.SubscribeOnUIThread(subscriber: this);
+            return base.OnActivateAsync(cancellationToken);
+        }
+
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
+        {
+            _eventAggregator.Unsubscribe(subscriber: this);
+            return base.OnDeactivateAsync(close, cancellationToken);
+        }
+
+        public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
+        {
+            return RestoreDefaultsAsync();
         }
     }
 }

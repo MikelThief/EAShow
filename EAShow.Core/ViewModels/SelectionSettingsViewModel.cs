@@ -34,8 +34,6 @@ namespace EAShow.Core.ViewModels
                     EnabledCount++;
                 else
                     EnabledCount--;
-
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -49,8 +47,6 @@ namespace EAShow.Core.ViewModels
                     EnabledCount++;
                 else
                     EnabledCount--;
-
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -75,37 +71,62 @@ namespace EAShow.Core.ViewModels
         public short EnabledCount
         {
             get => _enabledCount;
-            private set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+            private set
+            {
+                Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+                NotifyTask.Create(asyncAction: PublishEnabledCountAsync);
+            }
         }
 
         public SelectionSettingsViewModel(IEventAggregator eventAggregator)
         {
-            _eventAggregator = eventAggregator;
             SelectionInts = new List<Selections>(collection: EnumHelper.GetValuesAsReadOnlyCollection<Selections>());
+            _eventAggregator = eventAggregator;
         }
 
-        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        protected override async Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
+            await RestoreDefaultsAsync();
+            await base.OnInitializeAsync(cancellationToken: cancellationToken);
+        }
+
+        public Task PublishEnabledCountAsync()
+        {
+            return _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
+            {
+                Preset = Presets.Selection,
+                Count = EnabledCount
+            });
+        }
+
+        public Task RestoreDefaultsAsync()
         {
             Selection1 = SelectionInts[0];
             Selection2 = SelectionInts[0];
 
-            return base.OnInitializeAsync(cancellationToken: cancellationToken);
+            /* Compared to Crossovers, some shit is going on here. There are no differences!
+               This is not expected to work, but it does! */
+            EnabledCount = 0;
+            IsSelection1Included = false;
+            IsSelection2Included = false;
+            return Task.CompletedTask;
         }
 
-        public async Task PublishEnabledCount()
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
         {
-            byte count = default;
+            _eventAggregator.SubscribeOnUIThread(subscriber: this);
+            return base.OnActivateAsync(cancellationToken);
+        }
 
-            if (IsSelection1Included)
-                count++;
-            if (IsSelection2Included)
-                count++;
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
+        {
+            _eventAggregator.Unsubscribe(subscriber: this);
+            return base.OnDeactivateAsync(close, cancellationToken);
+        }
 
-            await _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
-            {
-                Preset = Presets.Selection,
-                Count = count
-            });
+        public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
+        {
+            return RestoreDefaultsAsync();
         }
     }
 }

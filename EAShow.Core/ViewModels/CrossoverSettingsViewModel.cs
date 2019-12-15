@@ -28,7 +28,11 @@ namespace EAShow.Core.ViewModels
         public short EnabledCount
         {
             get => _enabledCount;
-            private set => Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+            private set
+            {
+                Set(oldValue: ref _enabledCount, newValue: value, nameof(EnabledCount));
+                NotifyTask.Create(asyncAction: PublishEnabledCountAsync);
+            }
         }
 
         public bool IsCrossover1Included
@@ -41,8 +45,6 @@ namespace EAShow.Core.ViewModels
                     EnabledCount++;
                 else
                     EnabledCount--;
-
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -56,8 +58,6 @@ namespace EAShow.Core.ViewModels
                     EnabledCount++;
                 else
                     EnabledCount--;
-
-                NotifyTask.Create(asyncAction: PublishEnabledCount);
             }
         }
 
@@ -76,7 +76,7 @@ namespace EAShow.Core.ViewModels
         public List<Crossovers> CrossoverInts
         {
             get => _crossoverInts;
-            set => Set(oldValue: ref _crossoverInts, newValue: value, propertyName: nameof(CrossoverInts));
+            private set => Set(oldValue: ref _crossoverInts, newValue: value, propertyName: nameof(CrossoverInts));
         }
 
         public CrossoverSettingsViewModel(IEventAggregator eventAggregator)
@@ -85,21 +85,48 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
         }
 
-        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        protected override async Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            Crossover1 = CrossoverInts[0];
-            Crossover2 = CrossoverInts[0];
-
-            return base.OnInitializeAsync(cancellationToken);
+            await RestoreDefaultsAsync();
+            await base.OnInitializeAsync(cancellationToken);
         }
 
-        public async Task PublishEnabledCount()
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
+        {
+            _eventAggregator.SubscribeOnUIThread(subscriber: this);
+            return base.OnActivateAsync(cancellationToken);
+        }
+
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
+        {
+            _eventAggregator.Unsubscribe(subscriber: this);
+            return base.OnDeactivateAsync(close, cancellationToken);
+        }
+
+        public async Task PublishEnabledCountAsync()
         {
             await _eventAggregator.PublishOnUIThreadAsync(message: new PresetEnabledCountChangedEvent
             {
                 Preset = Presets.Crossover,
                 Count = EnabledCount
             });
+        }
+
+        public Task RestoreDefaultsAsync()
+        {
+            Crossover1 = CrossoverInts[0];
+            Crossover2 = CrossoverInts[0];
+            EnabledCount = 2;   // required not to end up with negative value.
+                                // The number should be equal to the number of entries
+            IsCrossover1Included = false;
+            IsCrossover2Included = false;
+
+            return Task.CompletedTask;
+        }
+
+        public Task HandleAsync(PresetResetRequestedEvent message, CancellationToken cancellationToken)
+        {
+            return RestoreDefaultsAsync();
         }
     }
 }
