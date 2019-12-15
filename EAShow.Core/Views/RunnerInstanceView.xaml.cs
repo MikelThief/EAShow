@@ -26,5 +26,42 @@ namespace EAShow.Core.Views
         {
             this.InitializeComponent();
         }
+
+        /// <summary>
+        /// Handler for the pointer entered event.
+        /// Displays the delete item "hover" buttons.
+        /// </summary>
+        /// <param name="sender">Source of the pointer entered event</param>
+        /// <param name="e">Event args for the pointer entered event</param>
+        private void ProfileItem_OnPointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (e.Pointer.PointerDeviceType ==
+                Windows.Devices.Input.PointerDeviceType.Mouse ||
+                e.Pointer.PointerDeviceType ==
+                Windows.Devices.Input.PointerDeviceType.Pen)
+            {
+                VisualStateManager.GoToState(
+                    sender as Control, stateName: "HoverButtonsShown", useTransitions: true);
+            }
+        }
+
+        /// <summary>
+        /// Handler for the pointer exited event.
+        /// Hides the delete item "hover" buttons.
+        /// </summary>
+        /// <param name="sender">Source of the pointer exited event</param>
+        /// <param name="e">Event args for the pointer exited event</param>
+        private void ProfileItem_OnPointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (e.Pointer.PointerDeviceType ==
+                Windows.Devices.Input.PointerDeviceType.Mouse ||
+                e.Pointer.PointerDeviceType ==
+                Windows.Devices.Input.PointerDeviceType.Pen)
+            {
+                VisualStateManager.GoToState(
+                    sender as Control, stateName: "HoverButtonsHidden", useTransitions: true);
+            }
+
+        }
     }
 }

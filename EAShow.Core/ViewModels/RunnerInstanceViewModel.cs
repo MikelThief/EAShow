@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.Shared.Models;
 using EAShow.Core.Helpers;
+using EAShow.Infrastructure.Commands.AsyncCommand;
 using EAShow.Infrastructure.Commands.DelegateCommand;
 using LiteDB;
 using Nito.Mvvm;
@@ -49,34 +50,25 @@ namespace EAShow.Core.ViewModels
 
         public BindableCollection<Profile> Profiles { get; private set; }
 
-        public CustomAsyncCommand OpenProfileCommand { get; set; }
+        public AsyncCommand<Profile> OpenProfileCommand { get; set; }
+
+        public DelegateCommand<Profile> DeleteProfileCommand { get; set; }
 
         public RunnerInstanceViewModel()
         {
             _cancellationTokenSource = new CancellationTokenSource();
             Profiles = new BindableCollection<Profile>();
+            DeleteProfileCommand = new DelegateCommand<Profile>(executeMethod: DeleteProfile);
+            OpenProfileCommand = new AsyncCommand<Profile>(executeAsync: OpenProfile);
         }
 
-        private async Task LoadProfile()
+        private Task OpenProfile(Profile selectedProfile)
         {
-            using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
-            {
-                var queryResult = db.Query<Profile>().Where(x => x.Id == SelectedProfile.Id).Single();
-
-                if (queryResult == null)
-                {
-                    // raise some notification
-                }
-                else
-                {
-                    // load profile
-                }
-            }
+            // load profile. switch to charts and start fun
+            return Task.CompletedTask;
         }
 
-        private bool CanOpenProfile => SelectedProfile != null;
-
-        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        protected override Task OnActivateAsync(CancellationToken cancellationToken)
         {
             using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
             {
@@ -84,7 +76,23 @@ namespace EAShow.Core.ViewModels
                 Profiles.AddRange(items: queryResult);
             }
 
-            return base.OnInitializeAsync(cancellationToken);
+            return base.OnActivateAsync(cancellationToken);
+        }
+
+        protected override Task OnDeactivateAsync(bool close, CancellationToken cancellationToken)
+        {
+            Profiles.Clear();
+            return base.OnDeactivateAsync(close, cancellationToken);
+        }
+
+        private void DeleteProfile(Profile selectedProfile)
+        {
+            using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
+            {
+                db.Delete<Profile>(predicate: x => x.Id == selectedProfile.Id);
+                var profileToDelete = Profiles.Single(x => x.Id == selectedProfile.Id);
+                Profiles.Remove(item: profileToDelete);
+            }
         }
     }
 }

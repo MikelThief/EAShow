@@ -36,10 +36,9 @@
             <controlsMSToolkit:TabView.Resources />
             <controlsMSToolkit:TabView.Header>
                 <TextBlock
+                    x:Uid="RunnerSet_TabView_Header"
                     Padding="16,8,0,8"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Text="TabView Control Header" />
+                    Style="{StaticResource SubtitleTextBlockStyle}" />
             </controlsMSToolkit:TabView.Header>
             <controlsMSToolkit:TabView.TabActionHeader>
                 <Button

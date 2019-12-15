@@ -307,4 +307,19 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="RunnerInstance_EmptyHeader" xml:space="preserve">
     <value>Empty Profile</value>
   </data>
+  <data name="RunnerInstance_List_ContextDelete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="RunnerInstance_List_ContextOpen.Text" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="RunnerInstance_List_HoverDelete.Label" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="RunnerInstance_List_HoverOpen.Label" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="RunnerSet_TabView_Header.Text" xml:space="preserve">
+    <value>Your saved profiles</value>
+  </data>
 </root>

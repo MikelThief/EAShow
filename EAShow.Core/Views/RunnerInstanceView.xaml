@@ -12,18 +12,84 @@
 
     <Grid>
         <ListView
+            x:Name="ProfileList"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             ItemsSource="{x:Bind ViewModel.Profiles}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Profile">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind Name}" />
-                    </Grid>
+                    <UserControl
+                        x:Name="ProfileItem"
+                        PointerEntered="ProfileItem_OnPointerEntered"
+                        PointerExited="ProfileItem_OnPointerExited">
+                        <UserControl.ContextFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem
+                                    x:Uid="RunnerInstance_List_ContextDelete"
+                                    Command="{Binding ElementName=ProfileList, Path=DataContext.OpenProfileCommand}"
+                                    CommandParameter="{Binding}"
+                                    Icon="Play" />
+                                <MenuFlyoutItem
+                                    x:Uid="RunnerInstance_List_ContextOpen"
+                                    Command="{Binding ElementName=ProfileList, Path=DataContext.DeleteProfileCommand}"
+                                    CommandParameter="{Binding}"
+                                    Icon="Delete" />
+                            </MenuFlyout>
+                        </UserControl.ContextFlyout>
+                        <Grid>
+                            <SwipeControl>
+                                <Grid>
+                                    <TextBlock
+                                        HorizontalAlignment="Left"
+                                        Style="{StaticResource SubtitleTextBlockStyle}"
+                                        Text="{x:Bind Name}" />
+                                    <StackPanel
+                                        x:Name="ButtonsPanel"
+                                        MinHeight="56"
+                                        HorizontalAlignment="Right"
+                                        Orientation="Horizontal">
+                                        <AppBarButton
+                                            x:Name="OpenProfileHoverButton"
+                                            x:Uid="RunnerInstance_List_HoverOpen"
+                                            Command="{Binding ElementName=ProfileList, Path=DataContext.OpenProfileCommand}"
+                                            CommandParameter="{Binding}"
+                                            Icon="Play"
+                                            IsTabStop="False"
+                                            Visibility="Collapsed" />
+                                        <AppBarButton
+                                            x:Name="DeleteProfileHoverButton"
+                                            x:Uid="RunnerInstance_List_HoverDelete"
+                                            Command="{Binding ElementName=ProfileList, Path=DataContext.DeleteProfileCommand}"
+                                            CommandParameter="{Binding}"
+                                            Icon="Delete"
+                                            IsTabStop="False"
+                                            Visibility="Collapsed" />
+                                    </StackPanel>
+                                </Grid>
+                            </SwipeControl>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="HoveringStates">
+                                    <VisualState x:Name="HoverButtonsHidden">
+                                        <VisualState.Setters>
+                                            <Setter Target="DeleteProfileHoverButton.Visibility" Value="Collapsed" />
+                                            <Setter Target="OpenProfileHoverButton.Visibility" Value="Collapsed" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="HoverButtonsShown">
+                                        <VisualState.Setters>
+                                            <Setter Target="DeleteProfileHoverButton.Visibility" Value="Visible" />
+                                            <Setter Target="OpenProfileHoverButton.Visibility" Value="Visible" />
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </Grid>
+                    </UserControl>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
