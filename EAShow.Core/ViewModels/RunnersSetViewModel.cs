@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,8 @@ using Caliburn.Micro;
 using EAShow.Core.Helpers;
 using EAShow.Infrastructure.Commands.AsyncCommand;
 using EAShow.Infrastructure.Commands.DelegateCommand;
+using EAShow.Shared.Models;
+using LiteDB;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 
 namespace EAShow.Core.ViewModels
@@ -18,7 +21,6 @@ namespace EAShow.Core.ViewModels
         public DelegateCommand<TabClosingEventArgs> CloseTabCommand { get; }
 
         public DelegateCommand AddTabCommand { get; }
-
         public RunnersSetViewModel()
         {
             CloseTabCommand = new DelegateCommand<TabClosingEventArgs>(executeMethod: CloseTab);

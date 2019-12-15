@@ -48,7 +48,7 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _selectedProfile, newValue: value, propertyName: nameof(SelectedProfile));
         }
 
-        public BindableCollection<Profile> Profiles { get; private set; }
+        public BindableCollection<Profile> Profiles { get; set; }
 
         public AsyncCommand<Profile> OpenProfileCommand { get; set; }
 
@@ -70,10 +70,13 @@ namespace EAShow.Core.ViewModels
 
         protected override Task OnActivateAsync(CancellationToken cancellationToken)
         {
-            using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
+            if (!IsProfileLoaded)
             {
-                var queryResult = db.Query<Profile>().ToEnumerable();
-                Profiles.AddRange(items: queryResult);
+                using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
+                {
+                    var queryResult = db.Query<Profile>().ToEnumerable();
+                    Profiles.AddRange(items: queryResult);
+                }
             }
 
             return base.OnActivateAsync(cancellationToken);

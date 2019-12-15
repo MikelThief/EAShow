@@ -25,8 +25,13 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <controlsMSToolkit:TabView
             x:Name="Items"
+            Grid.Row="0"
             AllowDrop="True"
             CanCloseTabs="True"
             CanDragItems="False"
@@ -51,7 +56,6 @@
                         <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;" />
                     </Viewbox>
                 </Button>
-
             </controlsMSToolkit:TabView.TabActionHeader>
             <interactivity:Interaction.Behaviors>
                 <core:EventTriggerBehavior EventName="TabClosing">
@@ -64,10 +68,12 @@
                 </DataTemplate>
             </controlsMSToolkit:TabView.ItemHeaderTemplate>
             <controlsMSToolkit:TabView.ItemTemplate>
-                <DataTemplate x:DataType="viewModels:RunnerInstanceViewModel">
-                    <views:RunnerInstanceView />
-                </DataTemplate>
+                <DataTemplate />
             </controlsMSToolkit:TabView.ItemTemplate>
         </controlsMSToolkit:TabView>
+        <ContentControl
+            x:Name="ActiveItem"
+            Grid.Row="1"
+            Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
     </Grid>
 </Page>
