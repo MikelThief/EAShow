@@ -2,7 +2,7 @@
     x:Class="EAShow.Core.Views.RunnersSetPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:cal="http://www.caliburnproject.org"
+    xmlns:cal="using:Caliburn.Micro"
     xmlns:controlsMSToolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -68,12 +68,14 @@
                 </DataTemplate>
             </controlsMSToolkit:TabView.ItemHeaderTemplate>
             <controlsMSToolkit:TabView.ItemTemplate>
-                <DataTemplate />
+                <DataTemplate>
+                    <ContentControl cal:View.Model="{Binding}" />
+                </DataTemplate>
             </controlsMSToolkit:TabView.ItemTemplate>
         </controlsMSToolkit:TabView>
-        <ContentControl
+        <!--<ContentControl
             x:Name="ActiveItem"
             Grid.Row="1"
-            Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
+            Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />-->
     </Grid>
 </Page>
