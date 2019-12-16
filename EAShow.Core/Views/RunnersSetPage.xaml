@@ -25,13 +25,8 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
         <controlsMSToolkit:TabView
             x:Name="Items"
-            Grid.Row="0"
             AllowDrop="True"
             CanCloseTabs="True"
             CanDragItems="False"
@@ -73,9 +68,5 @@
                 </DataTemplate>
             </controlsMSToolkit:TabView.ItemTemplate>
         </controlsMSToolkit:TabView>
-        <!--<ContentControl
-            x:Name="ActiveItem"
-            Grid.Row="1"
-            Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />-->
     </Grid>
 </Page>
