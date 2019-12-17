@@ -127,6 +127,7 @@
     <Compile Include="Commands\DelegateCommand\DelegateCommand{T}.cs" />
     <Compile Include="Commands\DelegateCommand\PropertyObserver.cs" />
     <Compile Include="Commands\DelegateCommand\PropertyObserverNode.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EAShow.Infrastructure.rd.xml" />
   </ItemGroup>

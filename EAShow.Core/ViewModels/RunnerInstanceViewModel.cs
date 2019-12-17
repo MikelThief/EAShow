@@ -18,16 +18,14 @@ namespace EAShow.Core.ViewModels
     {
         private short _index;
         private string _header;
-        private Profile _selectedProfile;
-        private bool _isProfileLoaded;
 
         private readonly CancellationTokenSource _cancellationTokenSource;
+        private ProfileViewModel _loadedProfile;
 
-
-        public bool IsProfileLoaded
+        public ProfileViewModel LoadedProfile
         {
-            get => _isProfileLoaded;
-            set => Set(oldValue: ref _isProfileLoaded, newValue: value, propertyName: nameof(IsProfileLoaded));
+            get => _loadedProfile;
+            set => Set(oldValue: ref _loadedProfile, newValue: value, propertyName: nameof(LoadedProfile));
         }
 
         public short Index
@@ -42,35 +40,31 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _header, newValue: value, nameof(Header));
         }
 
-        public Profile SelectedProfile
-        {
-            get => _selectedProfile;
-            set => Set(oldValue: ref _selectedProfile, newValue: value, propertyName: nameof(SelectedProfile));
-        }
+        public BindableCollection<Profile> Profiles { get; }
 
-        public BindableCollection<Profile> Profiles { get; set; }
+        public DelegateCommand<Profile> OpenProfileCommand { get; }
 
-        public AsyncCommand<Profile> OpenProfileCommand { get; set; }
-
-        public DelegateCommand<Profile> DeleteProfileCommand { get; set; }
+        public DelegateCommand<Profile> DeleteProfileCommand { get; }
 
         public RunnerInstanceViewModel()
         {
             _cancellationTokenSource = new CancellationTokenSource();
             Profiles = new BindableCollection<Profile>();
             DeleteProfileCommand = new DelegateCommand<Profile>(executeMethod: DeleteProfile);
-            OpenProfileCommand = new AsyncCommand<Profile>(executeAsync: OpenProfile);
+            OpenProfileCommand = new DelegateCommand<Profile>(executeMethod: OpenProfile);
         }
 
-        private Task OpenProfile(Profile selectedProfile)
+        private void OpenProfile(Profile selectedProfile)
         {
             // load profile. switch to charts and start fun
-            return Task.CompletedTask;
+            LoadedProfile = new ProfileViewModel(profile: selectedProfile);
+            Header = selectedProfile.Name;
+            Profiles.Clear();
         }
 
         protected override Task OnActivateAsync(CancellationToken cancellationToken)
         {
-            if (!IsProfileLoaded)
+            if (LoadedProfile == null)
             {
                 using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
                 {

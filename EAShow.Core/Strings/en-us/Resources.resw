@@ -320,6 +320,6 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <value>Load</value>
   </data>
   <data name="RunnerSet_TabView_Header.Text" xml:space="preserve">
-    <value>Your saved profiles</value>
+    <value>Currently opened runners</value>
   </data>
 </root>

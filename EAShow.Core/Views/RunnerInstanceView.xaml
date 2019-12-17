@@ -2,6 +2,8 @@
     x:Class="EAShow.Core.Views.RunnerInstanceView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:EAShow.Infrastructure.Converters"
+    xmlns:convertersMS="using:Microsoft.Toolkit.Uwp.UI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:EAShow.Core.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,13 +11,16 @@
     d:DesignHeight="200"
     d:DesignWidth="500"
     mc:Ignorable="d">
-
+    <UserControl.Resources>
+        <converters:NullVisibilityConverter x:Key="NullVisibilityConverter" />
+    </UserControl.Resources>
     <Grid>
         <ListView
             x:Name="ProfileList"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            ItemsSource="{x:Bind ViewModel.Profiles}">
+            ItemsSource="{x:Bind ViewModel.Profiles}"
+            Visibility="{x:Bind ViewModel.LoadedProfile, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}, ConverterParameter='true'}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -71,6 +76,15 @@
                                             Visibility="Collapsed" />
                                     </StackPanel>
                                 </Grid>
+                                <SwipeControl.LeftItems>
+                                    <SwipeItems Mode="Execute">
+                                        <SwipeItem Command="{Binding ElementName=ProfileList, Path=DataContext.OpenProfileCommand}" Text="Delete">
+                                            <SwipeItem.IconSource>
+                                                <SymbolIconSource Symbol="Delete" />
+                                            </SwipeItem.IconSource>
+                                        </SwipeItem>
+                                    </SwipeItems>
+                                </SwipeControl.LeftItems>
                             </SwipeControl>
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="HoveringStates">
@@ -93,5 +107,22 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <ScrollViewer
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Visibility="{x:Bind ViewModel.LoadedProfile, Mode=OneWay, Converter={StaticResource NullVisibilityConverter}, ConverterParameter='false'}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid
+                    Grid.Row="0"
+                    BorderBrush="DarkGray"
+                    BorderThickness="0,0,0,1">
+                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.LoadedProfile.Name, Mode=OneWay}" />
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </UserControl>
