@@ -123,7 +123,7 @@
       <Version>4.1.4</Version>
     </PackageReference>
     <PackageReference Include="MahApps.Metro.IconPacks.Material">
-      <Version>2.3.0</Version>
+      <Version>3.0.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
@@ -147,7 +147,7 @@
       <Version>1.0.0-pre-03</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.SfInput.UWP">
-      <Version>17.3.0.34</Version>
+      <Version>17.4.0.39</Version>
     </PackageReference>
     <PackageReference Include="ValueOf">
       <Version>1.0.14</Version>
