@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using Caliburn.Micro;
+using EAShow.Shared.Events;
 using EAShow.Shared.Models;
 using GeneticSharp.Domain;
 using GeneticSharp.Domain.Chromosomes;
@@ -63,7 +66,7 @@ namespace EAShow.GeneticAlgorithms.Services
             else throw new InvalidOperationException(message: "Cannot load profile more than once. Use EjectProfile() to eject currently loaded profile.");
         }
 
-        private void GeneticAlgorithmOnGenerationRan(object sender, EventArgs e)
+        private async void GeneticAlgorithmOnGenerationRan(object sender, EventArgs e)
         {
             var geneticAlgorithm = sender as GeneticAlgorithm;
 
@@ -78,9 +81,12 @@ namespace EAShow.GeneticAlgorithms.Services
                 }
             }
 
-            // eventaggregator broadcasts data packet
+            var chromosomes = geneticAlgorithm.Population.Generations[geneticAlgorithm.GenerationsNumber].Chromosomes;
 
+            var fitnesses = chromosomes.Select(chromosome => geneticAlgorithm.Fitness.Evaluate(chromosome)).OrderByDescending(d => d).ToList();
 
+            await _eventAggregator.PublishOnBackgroundThreadAsync(message: new GAGenerationCompletedEvent(
+                dto: new FOGenerationCompletedDto(bestFitness: fitnesses.First(), averageFitness: fitnesses.Average(), worstFitness: fitnesses.Last()), sender: payloadKey));
         }
 
         public void EjectProfile()

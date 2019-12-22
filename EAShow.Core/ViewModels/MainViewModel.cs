@@ -161,33 +161,33 @@ namespace EAShow.Core.ViewModels
         private IEnumerable<Mutation> GetMutations()
         {
             if (MutationSettingsViewModel.IsMutation1Included)
-                yield return Mutation.From(item: MutationSettingsViewModel.Mutation1);
+                yield return new Mutation(value: MutationSettingsViewModel.Mutation1);
             if (MutationSettingsViewModel.IsMutation2Included)
-                yield return Mutation.From(item: MutationSettingsViewModel.Mutation2);
+                yield return new Mutation(value: MutationSettingsViewModel.Mutation2);
         }
 
         private IEnumerable<Selection> GetSelections()
         {
             if (SelectionSettingsViewModel.IsSelection1Included)
-                yield return Selection.From(item: SelectionSettingsViewModel.Selection1);
+                yield return new Selection(value: SelectionSettingsViewModel.Selection1);
             if (SelectionSettingsViewModel.IsSelection2Included)
-                yield return Selection.From(item: SelectionSettingsViewModel.Selection2);
+                yield return new Selection(value: SelectionSettingsViewModel.Selection2);
         }
 
         private IEnumerable<Population> GetPopulations()
         {
             if (PopulationSettingsViewModel.IsPopulation1Included)
-                yield return Population.From(item: (int)PopulationSettingsViewModel.Population1);
+                yield return new Population(value: (int)PopulationSettingsViewModel.Population1);
             if (PopulationSettingsViewModel.IsPopulation2Included)
-                yield return Population.From(item: (int)PopulationSettingsViewModel.Population2);
+                yield return new Population(value: (int)PopulationSettingsViewModel.Population2);
         }
 
         private IEnumerable<Crossover> GetCrossovers()
         {
             if (CrossoverSettingsViewModel.IsCrossover1Included)
-                yield return Crossover.From(item: CrossoverSettingsViewModel.Crossover1);
+                yield return new Crossover(value: CrossoverSettingsViewModel.Crossover1);
             if (CrossoverSettingsViewModel.IsCrossover2Included)
-                yield return Crossover.From(item: CrossoverSettingsViewModel.Crossover2);
+                yield return new Crossover(value: CrossoverSettingsViewModel.Crossover2);
         }
     }
 }

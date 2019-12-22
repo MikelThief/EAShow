@@ -9,12 +9,13 @@ using EAShow.Shared.Models;
 using EAShow.Core.Helpers;
 using EAShow.Infrastructure.Commands.AsyncCommand;
 using EAShow.Infrastructure.Commands.DelegateCommand;
+using EAShow.Shared.Events;
 using LiteDB;
 using Nito.Mvvm;
 
 namespace EAShow.Core.ViewModels
 {
-    public class RunnerInstanceViewModel : Screen
+    public class RunnerInstanceViewModel : Screen, IHandle<GAGenerationCompletedEvent>
     {
         private short _index;
         private string _header;
@@ -42,6 +43,8 @@ namespace EAShow.Core.ViewModels
 
         public BindableCollection<Profile> Profiles { get; }
 
+        public BindableCollection<double> Fitnesses { get; }
+
         public DelegateCommand<Profile> OpenProfileCommand { get; }
 
         public DelegateCommand<Profile> DeleteProfileCommand { get; }
@@ -52,6 +55,7 @@ namespace EAShow.Core.ViewModels
             Profiles = new BindableCollection<Profile>();
             DeleteProfileCommand = new DelegateCommand<Profile>(executeMethod: DeleteProfile);
             OpenProfileCommand = new DelegateCommand<Profile>(executeMethod: OpenProfile);
+            Fitnesses = new BindableCollection<double>();
         }
 
         private void OpenProfile(Profile selectedProfile)
@@ -90,6 +94,12 @@ namespace EAShow.Core.ViewModels
                 var profileToDelete = Profiles.Single(x => x.Id == selectedProfile.Id);
                 Profiles.Remove(item: profileToDelete);
             }
+        }
+
+        public Task HandleAsync(GAGenerationCompletedEvent message, CancellationToken cancellationToken)
+        {
+
+            return Task.CompletedTask;
         }
     }
 }
