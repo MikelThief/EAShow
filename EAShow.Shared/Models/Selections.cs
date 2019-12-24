@@ -6,7 +6,9 @@ namespace EAShow.Shared.Models
 {
     public enum Selections
     {
-        Elite =1,
-        Roulette = 2
+        Elite = 1,
+        Roulette = 2,
+        Tournament = 3,
+        StohasticUniversalSampling = 4
     }
 }

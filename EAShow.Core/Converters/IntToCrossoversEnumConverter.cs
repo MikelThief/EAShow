@@ -18,12 +18,12 @@ namespace EAShow.Core.Converters
         {
             switch ((Crossovers)value)
             {
-                case Crossovers.Both:
-                    return ResourceLoader.GetForCurrentView().GetString(resource: "CrossoversEnum_Both");
-                case Crossovers.OnlyX:
-                    return ResourceLoader.GetForCurrentView().GetString(resource: "CrossoversEnum_OnlyX");
-                case Crossovers.OnlyY:
-                    return ResourceLoader.GetForCurrentView().GetString(resource: "CrossoversEnum_OnlyY");
+                case Crossovers.Uniform:
+                    return ResourceLoader.GetForCurrentView().GetString(resource: "CrossoversEnum_Uniform");
+                case Crossovers.OnePoint:
+                    return ResourceLoader.GetForCurrentView().GetString(resource: "CrossoversEnum_OnePoint");
+                case Crossovers.ThreeParent:
+                    return ResourceLoader.GetForCurrentView().GetString(resource: "CrossoversEnum_ThreeParent");
                 default:
                     throw new ArgumentOutOfRangeException(paramName: nameof(value), actualValue: value,
                         message: nameof(IntToCrossoversEnumConverter) + "cannot process the value.");

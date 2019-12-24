@@ -20,6 +20,10 @@ namespace EAShow.Core.Converters
                     return ResourceLoader.GetForCurrentView().GetString(resource: "SelectionsEnum_Elite");
                 case Selections.Roulette:
                     return ResourceLoader.GetForCurrentView().GetString(resource: "SelectionsEnum_Roulette");
+                case Selections.Tournament:
+                    return ResourceLoader.GetForCurrentView().GetString(resource: "SelectionsEnum_Tournament");
+                case Selections.StohasticUniversalSampling:
+                    return ResourceLoader.GetForCurrentView().GetString(resource: "SelectionsEnum_StohasticUniversalSampling");
                 default:
                     throw new ArgumentOutOfRangeException(paramName: nameof(value), actualValue: value,
                         message: nameof(IntToSelectionsEnumConverter) + "cannot process the value.");

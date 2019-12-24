@@ -6,8 +6,8 @@ namespace EAShow.Shared.Models
 {
     public enum Crossovers : short
     {
-        Both = 1,
-        OnlyX = 2,
-        OnlyY = 3
+        Uniform = 1,
+        OnePoint = 2,
+        ThreeParent = 3
     }
 }
