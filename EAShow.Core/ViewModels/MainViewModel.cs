@@ -11,6 +11,7 @@ using EAShow.Shared.Models;
 using EAShow.Core.Helpers;
 using EAShow.Infrastructure.Commands;
 using EAShow.Infrastructure.Commands.DelegateCommand;
+using EAShow.Shared.Models.DTOs;
 using LiteDB;
 
 namespace EAShow.Core.ViewModels
@@ -38,7 +39,7 @@ namespace EAShow.Core.ViewModels
             CrossoverSettingsViewModel = crossoverSettingsViewModel;
             SelectionSettingsViewModel = selectionSettingsViewModel;
             _eventAggregator = eventAggregator;
-            SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfile, canExecuteMethod: CanSaveProfile);
+            SaveProfileCommand = new DelegateCommand(executeMethod: SaveProfileDto, canExecuteMethod: CanSaveProfile);
 
 
             SelectionSettingsViewModel.ConductWith(parent: this);
@@ -127,25 +128,20 @@ namespace EAShow.Core.ViewModels
             return Task.CompletedTask;
         }
 
-        public void SaveProfile()
+        public void SaveProfileDto()
         {
-            using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
+            using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetRoamingDbConnectionString()))
             {
                 var selections = GetSelections();
                 var crossovers = GetCrossovers();
                 var mutations = GetMutations();
                 var populations = GetPopulations();
 
-                var profile = new Profile
-                {
-                    Name = ProfileName,
-                    Mutations = mutations.ToList(),
-                    Selections = selections.ToList(),
-                    Crossovers = crossovers.ToList(),
-                    Populations = populations.ToList()
-                };
+                var profile = new Profile(id: ObjectId.NewObjectId(), name: ProfileName, mutations: mutations.ToList(),
+                    crossovers: crossovers.ToList(), selections: selections.ToList(),
+                    populations: populations.ToList());
 
-                db.Insert(entity: profile);
+                db.Insert(entity: ProfileDbDto.From(profileEntity: profile));
             }
 
             _eventAggregator.PublishOnBackgroundThreadAsync(message: new PresetResetRequestedEvent(), CancellationToken.None);

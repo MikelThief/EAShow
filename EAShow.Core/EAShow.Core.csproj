@@ -358,6 +358,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EAShow.GeneticAlgorithms\EAShow.GeneticAlgorithms.csproj">
+      <Project>{eae60d24-edbf-4357-b88a-a72ee2862697}</Project>
+      <Name>EAShow.GeneticAlgorithms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EAShow.Infrastructure\EAShow.Infrastructure.csproj">
       <Project>{8c98c43e-01f1-43f2-9022-99bc7e10e372}</Project>
       <Name>EAShow.Infrastructure</Name>

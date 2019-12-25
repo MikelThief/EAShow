@@ -12,6 +12,8 @@ namespace EAShow.GeneticAlgorithms.Fitnesses
         {
             var fpChromosome = chromosome as FloatingPointChromosome;
 
+            var intChromosome = chromosome as IntegerChromosome;
+
             var values = fpChromosome.ToFloatingPoints();
 
             var x1 = values[0];

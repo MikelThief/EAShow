@@ -9,6 +9,7 @@ using EAShow.Core.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
+using EAShow.GeneticAlgorithms.Services;
 using EAShow.Shared;
 using EAShow.Shared.Helpers;
 using Syncfusion.Licensing;
@@ -68,6 +69,7 @@ namespace EAShow.Core
 
             _container = new WinRTContainer();
             _container.RegisterWinRTServices();
+            _container.PerRequest<FunctionOptimizationGaService>();
 
             _container.EnablePropertyInjection = true;
 
@@ -83,6 +85,7 @@ namespace EAShow.Core
             _container.PerRequest<SelectionSettingsViewModel>();
             _container.PerRequest<RunnersSetViewModel>();
             _container.PerRequest<RunnerInstanceViewModel>();
+            _container.PerRequest<ProfileViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)

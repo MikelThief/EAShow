@@ -22,6 +22,10 @@ namespace EAShow.GeneticAlgorithms.Services
 {
     public class FunctionOptimizationGaService
     {
+        private float _maxWidth = 998f;
+
+        private float _maxHeight = 680f;
+
         private Profile _profile;
 
         private readonly IEventAggregator _eventAggregator;
@@ -41,14 +45,22 @@ namespace EAShow.GeneticAlgorithms.Services
         /// <exception cref="T:System.InvalidOperationException">Thrown when an attempt to load profile twice is made.</exception>
         public void InjectProfile(Profile profile)
         {
-            var capacity = profile.Crossovers.Count *
-                           _profile.Mutations.Count *
-                           _profile.Selections.Count *
-                           _profile.Populations.Count;
+            var chromosome = new FloatingPointChromosome(
+                minValue: new double[] { 0, 0, 0, 0 },
+                maxValue: new double[] { _maxWidth, _maxHeight, _maxWidth, _maxHeight },
+                totalBits: new int[] { 10, 10, 10, 10 },
+                fractionDigits: new int[] { 0, 0, 0, 0 });
 
             if (!IsReady)
             {
                 _profile = profile;
+
+                var capacity = _profile.Crossovers.Count *
+                               _profile.Mutations.Count *
+                               _profile.Selections.Count *
+                               _profile.Populations.Count;
+
+
                 _geneticAlgorithms = new Dictionary<Guid, GeneticAlgorithm>(
                     capacity: capacity);
 
@@ -91,7 +103,9 @@ namespace EAShow.GeneticAlgorithms.Services
                                     gaSelection = new RouletteWheelSelection();
                                     break;
                                 case Selections.Tournament:
-                                    gaSelection = new TournamentSelection(size: decimal.ToInt32(d: decimal.Multiply(population.Value, new decimal(0.2f))));
+                                    gaSelection = new TournamentSelection(
+                                        size: decimal.ToInt32(d: decimal.Multiply(population.Value,
+                                            new decimal(0.2f))));
                                     break;
                                 case Selections.StohasticUniversalSampling:
                                     gaSelection = new StochasticUniversalSamplingSelection();
@@ -102,72 +116,81 @@ namespace EAShow.GeneticAlgorithms.Services
                             }
 
                             var gaPopulation = new Population(minSize: (int) population.Value,
-                                maxSize: (int) population.Value, null);
+                                maxSize: (int) population.Value, adamChromosome: chromosome);
 
                             foreach (var mutation in _profile.Mutations)
                             {
                                 for (int counter = 0; counter < capacity; counter++)
                                 {
-                                    var ga = new GeneticAlgorithm(population: gaPopulation, fitness: new EuclideanDistanceFitness(), selection: gaSelection, crossover: gaCrossover, mutation: gaMutation);
+                                    var ga = new GeneticAlgorithm(population: gaPopulation,
+                                        fitness: new EuclideanDistanceFitness(), selection: gaSelection,
+                                        crossover: gaCrossover, mutation: gaMutation);
                                     ga.MutationProbability = (float) mutation.Value;
-                                    ga.GenerationRan += GeneticAlgorithmOnGenerationRan;
                                     ga.TaskExecutor = taskExecutor;
+                                    ga.GenerationRan += GeneticAlgorithmOnGenerationRan;
+                                    _geneticAlgorithms.Add(key: Guid.NewGuid(), value: ga);
                                 }
                             }
 
                         }
                     }
                 }
-
-                Parallel.ForEach(source: _geneticAlgorithms, body: (pair, _) => pair.Value.Start(),
-                    parallelOptions: new ParallelOptions()
-                    {
-                        MaxDegreeOfParallelism = Environment.ProcessorCount
-                    });
             }
-            else throw new InvalidOperationException(
+            else
+            {
+                throw new InvalidOperationException(
                     message:
                     "Cannot load profile more than once. Use EjectProfile() to eject currently loaded profile.");
             }
+        }
 
-            private async void GeneticAlgorithmOnGenerationRan(object sender, EventArgs e)
+        private async void GeneticAlgorithmOnGenerationRan(object sender, EventArgs e)
+        {
+            var geneticAlgorithm = sender as GeneticAlgorithm;
+
+            Guid payloadKey = default;
+
+            foreach (var element in _geneticAlgorithms)
             {
-                var geneticAlgorithm = sender as GeneticAlgorithm;
-
-                Guid payloadKey = default;
-
-                foreach (var element in _geneticAlgorithms)
+                if (element.Value == geneticAlgorithm)
                 {
-                    if (element.Value == geneticAlgorithm)
-                    {
-                        payloadKey = element.Key;
-                        break;
-                    }
-                }
-
-                var chromosomes = geneticAlgorithm.Population.Generations[geneticAlgorithm.GenerationsNumber]
-                    .Chromosomes;
-
-                var fitnesses = chromosomes.Select(chromosome => geneticAlgorithm.Fitness.Evaluate(chromosome))
-                    .OrderByDescending(d => d).ToList();
-
-                await _eventAggregator.PublishOnBackgroundThreadAsync(message: new GAGenerationCompletedEvent(
-                    dto: new FOGenerationCompletedDto(bestFitness: fitnesses.First(),
-                        averageFitness: fitnesses.Average(), worstFitness: fitnesses.Last()), sender: payloadKey));
-            }
-
-            public void EjectProfile()
-            {
-                if (IsReady)
-                {
-                    _profile = null;
-                    _geneticAlgorithms.Clear();
-                    _geneticAlgorithms = null;
+                    payloadKey = element.Key;
+                    break;
                 }
             }
 
+            var chromosomes = geneticAlgorithm.Population.Generations[geneticAlgorithm.GenerationsNumber-1]
+                .Chromosomes;
 
+            var fitnesses = chromosomes.Select(chromosome => geneticAlgorithm.Fitness.Evaluate(chromosome))
+                .OrderByDescending(d => d).ToList();
 
+            await _eventAggregator.PublishOnBackgroundThreadAsync(message: new GAGenerationCompletedEvent(
+                dto: new FOGenerationCompletedDto(bestFitness: fitnesses.First(),
+                    averageFitness: fitnesses.Average(), worstFitness: fitnesses.Last()), sender: payloadKey));
+        }
 
+        public void EjectProfile()
+        {
+            if (IsReady)
+            {
+                _profile = null;
+                _geneticAlgorithms.Clear();
+                _geneticAlgorithms = null;
+            }
+        }
+
+        public void Start()
+        {
+            if(!IsReady)
+            {
+                throw new InvalidOperationException(message: "Profile was not injected.");
+            }
+
+            foreach (var geneticAlgorithm in _geneticAlgorithms)
+            {
+                geneticAlgorithm.Value.Start();
+            }
         }
     }
+}

@@ -10,6 +10,7 @@ using EAShow.Core.Helpers;
 using EAShow.Infrastructure.Commands.AsyncCommand;
 using EAShow.Infrastructure.Commands.DelegateCommand;
 using EAShow.Shared.Events;
+using EAShow.Shared.Models.DTOs;
 using LiteDB;
 using Nito.Mvvm;
 
@@ -49,8 +50,11 @@ namespace EAShow.Core.ViewModels
 
         public DelegateCommand<Profile> DeleteProfileCommand { get; }
 
-        public RunnerInstanceViewModel()
+        public readonly WinRTContainer _container;
+
+        public RunnerInstanceViewModel(WinRTContainer container)
         {
+            _container = container;
             _cancellationTokenSource = new CancellationTokenSource();
             Profiles = new BindableCollection<Profile>();
             DeleteProfileCommand = new DelegateCommand<Profile>(executeMethod: DeleteProfile);
@@ -61,7 +65,9 @@ namespace EAShow.Core.ViewModels
         private void OpenProfile(Profile selectedProfile)
         {
             // load profile. switch to charts and start fun
-            LoadedProfile = new ProfileViewModel(profile: selectedProfile);
+            var profileVM = _container.GetInstance<ProfileViewModel>();
+            profileVM.InjectProfile(profile: selectedProfile);
+            LoadedProfile = profileVM;
             Header = selectedProfile.Name;
             Profiles.Clear();
         }
@@ -70,10 +76,12 @@ namespace EAShow.Core.ViewModels
         {
             if (LoadedProfile == null)
             {
-                using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
+                using (var db =
+                    new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetRoamingDbConnectionString()))
                 {
-                    var queryResult = db.Query<Profile>().ToEnumerable();
-                    Profiles.AddRange(items: queryResult);
+                    var queryResult = db.Query<ProfileDbDto>().ToEnumerable();
+                    Profiles.AddRange(items: queryResult.Select(selector: x => Profile.From(dto: x)));
+
                 }
             }
 
@@ -88,7 +96,7 @@ namespace EAShow.Core.ViewModels
 
         private void DeleteProfile(Profile selectedProfile)
         {
-            using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetConnectionString()))
+            using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetRoamingDbConnectionString()))
             {
                 db.Delete<Profile>(predicate: x => x.Id == selectedProfile.Id);
                 var profileToDelete = Profiles.Single(x => x.Id == selectedProfile.Id);

@@ -5,10 +5,10 @@ namespace EAShow.Core.Helpers
 {
     public static class LiteDbConnectionStringHelper
     {
-        public static string GetConnectionString()
+        public static string GetRoamingDbConnectionString()
         {
-            return Path.Combine(path1: ApplicationData.Current.LocalCacheFolder.Path,
-                path2: "Database.db");
+            return Path.Combine(path1: ApplicationData.Current.RoamingFolder.Path,
+                path2: "RoamingDatabase.db");
         }
     }
 }

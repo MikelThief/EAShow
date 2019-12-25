@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Caliburn.Micro;
+using EAShow.GeneticAlgorithms.Services;
 using EAShow.Shared.Models;
 
 namespace EAShow.Core.ViewModels
@@ -12,11 +13,20 @@ namespace EAShow.Core.ViewModels
     {
         private Profile _profile;
 
-        public string Name => _profile.Name;
+        public string Name => _profile == null ? _profile.Name : string.Empty;
 
-        public ProfileViewModel(Profile profile)
+        private readonly FunctionOptimizationGaService _gaService;
+
+        public ProfileViewModel(FunctionOptimizationGaService gaService)
+        {
+            _gaService = gaService;
+        }
+
+        public void InjectProfile(Profile profile)
         {
             _profile = profile;
+            _gaService.InjectProfile(profile: profile);
+            _gaService.Start();
         }
     }
 }

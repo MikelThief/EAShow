@@ -21,8 +21,12 @@ namespace EAShow.Core.ViewModels
         public DelegateCommand<TabClosingEventArgs> CloseTabCommand { get; }
 
         public DelegateCommand AddTabCommand { get; }
-        public RunnersSetViewModel()
+
+        private WinRTContainer _container;
+
+        public RunnersSetViewModel(WinRTContainer container)
         {
+            _container = container;
             CloseTabCommand = new DelegateCommand<TabClosingEventArgs>(executeMethod: CloseTab);
             AddTabCommand = new DelegateCommand(executeMethod: AddTab);
         }
@@ -39,11 +43,12 @@ namespace EAShow.Core.ViewModels
         {
             var newIndex = Items.Any() ? Items.Max((IScreen screen) => (screen as RunnerInstanceViewModel).Index) + 1 : 1;
 
-            Items.Add(new RunnerInstanceViewModel
-            {
-                Index = (short) newIndex,
-                Header = "RunnerInstance_EmptyHeader".GetLocalized()
-            });
+            var runnerInstanceVM = _container.GetInstance<RunnerInstanceViewModel>();
+            runnerInstanceVM.Index = (short) newIndex;
+            runnerInstanceVM.Header = "RunnerInstance_EmptyHeader".GetLocalized();
+
+
+            Items.Add(item: runnerInstanceVM);
         }
     }
 }

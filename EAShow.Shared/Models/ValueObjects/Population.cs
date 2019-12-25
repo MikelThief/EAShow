@@ -2,9 +2,9 @@
 
 namespace EAShow.Shared.Models
 {
-    public class Population : PrimitiveValueObject<decimal>
+    public class Population : PrimitiveValueObject<int>
     {
-        public Population(decimal value) : base(value)
+        public Population(int value) : base(value)
         {
         }
     }
