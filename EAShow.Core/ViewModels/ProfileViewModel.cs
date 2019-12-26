@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.GeneticAlgorithms.Services;
+using EAShow.Shared.DataStructures;
 using EAShow.Shared.Events;
 using EAShow.Shared.Models;
 using EAShow.Shared.Models.ValueObjects;
@@ -20,11 +21,13 @@ namespace EAShow.Core.ViewModels
 
         private IEventAggregator _eventAggregator;
 
-        private HashSet<Guid> SeenSenderIds;
+        private ConcurrentHashSet<Guid> SeenSenderIds;
 
         public BindableCollection<AdvancedCollectionView> FitnessFilterCollection { get; }
 
         public BindableCollection<FitnessDataPoint> FitnessDataPoints { get; }
+
+        private readonly Guid _invokerId;
 
         public string Name
         {
@@ -40,8 +43,9 @@ namespace EAShow.Core.ViewModels
             _eventAggregator = eventAggregator;
             FitnessFilterCollection = new BindableCollection<AdvancedCollectionView>();
             FitnessDataPoints = new BindableCollection<FitnessDataPoint>();
-            SeenSenderIds = new HashSet<Guid>();
-            _eventAggregator.SubscribeOnBackgroundThread(subscriber: this);
+            SeenSenderIds = new ConcurrentHashSet<Guid>();
+            _invokerId = Guid.NewGuid();
+            _eventAggregator.SubscribeOnUIThread(subscriber: this);
         }
 
         public void InjectProfile(Profile profile)
@@ -49,30 +53,39 @@ namespace EAShow.Core.ViewModels
             _profile = profile;
             Name = _profile.Name;
             _gaService.InjectProfile(profile: profile);
+            _gaService.InvokerId = _invokerId;
             _gaService.Start();
         }
 
         public Task HandleAsync(GAGenerationCompletedEvent message, CancellationToken cancellationToken)
         {
-           OnUIThread(() =>
-           {
-               if (!SeenSenderIds.Contains(item: message.Sender))
-               {
-                   SeenSenderIds.Add(item: message.Sender);
-                   var filter = new Predicate<object>(item => ((FitnessDataPoint)item).SenderId == message.Sender);
-                   var fitnessFilteringCollection = new AdvancedCollectionView(source: FitnessDataPoints, isLiveShaping: true);
-                   fitnessFilteringCollection.Filter = filter;
-                   FitnessFilterCollection.Add(item: fitnessFilteringCollection);
-               }
-           });
+            if (message.Invoker != _invokerId)
+            {
+                // message was meant to be handled by different VM
+                return Task.CompletedTask;
+            }
 
-           var fitnessDataPoint = new FitnessDataPoint(bestFitness: message.Dto.BestFitness,
-               worstFitness: message.Dto.WorstFitness, averageFitness: message.Dto.AverageFitness,
-               senderId: message.Sender, generation: message.Dto.Generation);
+            if (!SeenSenderIds.Contains(item: message.Sender))
+            {
+                SeenSenderIds.Add(item: message.Sender);
+                var filter =
+                    new Predicate<object>(item => ((FitnessDataPoint) item).SenderId == message.Sender);
+                var fitnessFilteringCollection =
+                    new AdvancedCollectionView(source: FitnessDataPoints, isLiveShaping: true);
 
-           FitnessDataPoints.Add(item: fitnessDataPoint);
+                fitnessFilteringCollection.SortDescriptions.Add(new SortDescription(direction: SortDirection.Ascending,
+                    propertyName: nameof(message.Dto.Generation)));
+                fitnessFilteringCollection.Filter = filter;
+                FitnessFilterCollection.Add(item: fitnessFilteringCollection);
+            }
 
-           return Task.CompletedTask;
+            var fitnessDataPoint = new FitnessDataPoint(bestFitness: message.Dto.BestFitness,
+                worstFitness: message.Dto.WorstFitness, averageFitness: message.Dto.AverageFitness,
+                senderId: message.Sender, generation: message.Dto.Generation);
+
+            FitnessDataPoints.Add(item: fitnessDataPoint);
+
+            return Task.CompletedTask;
         }
     }
 }

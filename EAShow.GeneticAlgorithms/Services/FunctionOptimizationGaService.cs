@@ -35,6 +35,8 @@ namespace EAShow.GeneticAlgorithms.Services
 
         private bool IsReady => _profile != null;
 
+        public Guid InvokerId { get; set; }
+
         public FunctionOptimizationGaService(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
@@ -117,17 +119,17 @@ namespace EAShow.GeneticAlgorithms.Services
 
                             foreach (var mutation in _profile.Mutations)
                             {
-                                for (int counter = 0; counter < capacity; counter++)
-                                {
-                                    var ga = new GeneticAlgorithm(population: gaPopulation,
-                                        fitness: new EuclideanDistanceFitness(), selection: gaSelection,
-                                        crossover: gaCrossover, mutation: gaMutation);
-                                    ga.MutationProbability = (float) mutation.Value;
-                                    ga.TaskExecutor = taskExecutor;
-                                    ga.GenerationRan += GeneticAlgorithmOnGenerationRan;
-                                    ga.Termination = new FitnessStagnationTermination(expectedStagnantGenerationsNumber: 100);
-                                    _geneticAlgorithms.Add(key: Guid.NewGuid(), value: ga);
-                                }
+
+                                var ga = new GeneticAlgorithm(population: gaPopulation,
+                                    fitness: new EuclideanDistanceFitness(), selection: gaSelection,
+                                    crossover: gaCrossover, mutation: gaMutation);
+                                ga.MutationProbability = (float) mutation.Value;
+                                ga.TaskExecutor = taskExecutor;
+                                ga.GenerationRan += GeneticAlgorithmOnGenerationRan;
+                                ga.Termination =
+                                    new FitnessStagnationTermination(expectedStagnantGenerationsNumber: 10);
+                                _geneticAlgorithms.Add(key: Guid.NewGuid(), value: ga);
+
                             }
 
                         }
@@ -166,7 +168,8 @@ namespace EAShow.GeneticAlgorithms.Services
 
             await _eventAggregator.PublishOnBackgroundThreadAsync(message: new GAGenerationCompletedEvent(
                 dto: new FOGenerationCompletedDto(bestFitness: fitnesses.First(),
-                    averageFitness: fitnesses.Average(), worstFitness: fitnesses.Last(), generation: geneticAlgorithm.GenerationsNumber), sender: payloadKey));
+                    averageFitness: fitnesses.Average(), worstFitness: fitnesses.Last(),
+                    generation: geneticAlgorithm.GenerationsNumber), sender: payloadKey, invoker: InvokerId));
         }
 
         public void EjectProfile()

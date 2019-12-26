@@ -11,10 +11,13 @@ namespace EAShow.Shared.Events
 
         public readonly Guid Sender;
 
-        public GAGenerationCompletedEvent(FOGenerationCompletedDto dto, Guid sender)
+        public readonly Guid Invoker;
+
+        public GAGenerationCompletedEvent(FOGenerationCompletedDto dto, Guid sender, Guid invoker)
         {
             Dto = dto;
             Sender = sender;
+            Invoker = invoker;
         }
     }
 }

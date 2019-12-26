@@ -138,14 +138,26 @@
                         ItemsSource="{x:Bind ViewModel.LoadedProfile.FitnessFilterCollection, Mode=OneWay}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <telerikChart:RadCartesianChart>
+                                <telerikChart:RadCartesianChart MinHeight="400">
+                                    <telerikChart:RadCartesianChart.Grid>
+                                        <telerikChart:CartesianChartGrid StripLinesVisibility="X">
+                                            <telerikChart:CartesianChartGrid.XStripeBrushes>
+                                                <SolidColorBrush Color="LightGray" />
+                                                <SolidColorBrush Color="Transparent" />
+                                            </telerikChart:CartesianChartGrid.XStripeBrushes>
+                                        </telerikChart:CartesianChartGrid>
+                                    </telerikChart:RadCartesianChart.Grid>
                                     <telerikChart:RadCartesianChart.HorizontalAxis>
-                                        <telerikChart:LinearAxis />
+                                        <telerikChart:LinearAxis MajorStep="1" />
                                     </telerikChart:RadCartesianChart.HorizontalAxis>
                                     <telerikChart:RadCartesianChart.VerticalAxis>
                                         <telerikChart:LinearAxis />
                                     </telerikChart:RadCartesianChart.VerticalAxis>
-                                    <telerikChart:ScatterLineSeries ItemsSource="{Binding}">
+                                    <telerikChart:ScatterLineSeries
+                                        x:Name="BestFitnessSeries"
+                                        ItemsSource="{Binding}"
+                                        Stroke="Green"
+                                        StrokeLineJoin="Miter">
                                         <telerikChart:ScatterLineSeries.XValueBinding>
                                             <telerikChart:PropertyNameDataPointBinding PropertyName="Generation" />
                                         </telerikChart:ScatterLineSeries.XValueBinding>
@@ -153,7 +165,11 @@
                                             <telerikChart:PropertyNameDataPointBinding PropertyName="BestFitness" />
                                         </telerikChart:ScatterLineSeries.YValueBinding>
                                     </telerikChart:ScatterLineSeries>
-                                    <telerikChart:ScatterLineSeries ItemsSource="{Binding}">
+                                    <telerikChart:ScatterLineSeries
+                                        x:Name="WorstFitnessSeries"
+                                        ItemsSource="{Binding}"
+                                        Stroke="Red"
+                                        StrokeLineJoin="Bevel">
                                         <telerikChart:ScatterLineSeries.XValueBinding>
                                             <telerikChart:PropertyNameDataPointBinding PropertyName="Generation" />
                                         </telerikChart:ScatterLineSeries.XValueBinding>
@@ -161,7 +177,11 @@
                                             <telerikChart:PropertyNameDataPointBinding PropertyName="WorstFitness" />
                                         </telerikChart:ScatterLineSeries.YValueBinding>
                                     </telerikChart:ScatterLineSeries>
-                                    <telerikChart:ScatterLineSeries ItemsSource="{Binding}">
+                                    <telerikChart:ScatterLineSeries
+                                        x:Name="AverageFitnessSeries"
+                                        ItemsSource="{Binding}"
+                                        Stroke="DarkGoldenrod"
+                                        StrokeLineJoin="Round">
                                         <telerikChart:ScatterLineSeries.XValueBinding>
                                             <telerikChart:PropertyNameDataPointBinding PropertyName="Generation" />
                                         </telerikChart:ScatterLineSeries.XValueBinding>
@@ -169,6 +189,9 @@
                                             <telerikChart:PropertyNameDataPointBinding PropertyName="AverageFitness" />
                                         </telerikChart:ScatterLineSeries.YValueBinding>
                                     </telerikChart:ScatterLineSeries>
+                                    <telerikChart:RadCartesianChart.Behaviors>
+                                        <telerikChart:ChartPanAndZoomBehavior PanMode="Both" ZoomMode="Both" />
+                                    </telerikChart:RadCartesianChart.Behaviors>
                                 </telerikChart:RadCartesianChart>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
