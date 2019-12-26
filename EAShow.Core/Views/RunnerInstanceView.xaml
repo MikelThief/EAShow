@@ -8,6 +8,8 @@
     xmlns:local="using:EAShow.Core.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:EAShow.Shared.Models"
+    xmlns:telerikChart="using:Telerik.UI.Xaml.Controls.Chart"
+    xmlns:valueObjects="using:EAShow.Shared.Models.ValueObjects"
     d:DesignHeight="200"
     d:DesignWidth="500"
     mc:Ignorable="d">
@@ -120,7 +122,57 @@
                     Grid.Row="0"
                     BorderBrush="DarkGray"
                     BorderThickness="0,0,0,1">
-                    <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" Text="{x:Bind ViewModel.LoadedProfile.Name, Mode=OneWay}" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        Style="{StaticResource SubtitleTextBlockStyle}"
+                        Text="{x:Bind ViewModel.LoadedProfile.Name, Mode=OneWay}" />
+                    <ItemsControl
+                        Grid.Row="1"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        ItemsSource="{x:Bind ViewModel.LoadedProfile.FitnessFilterCollection, Mode=OneWay}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <telerikChart:RadCartesianChart>
+                                    <telerikChart:RadCartesianChart.HorizontalAxis>
+                                        <telerikChart:LinearAxis />
+                                    </telerikChart:RadCartesianChart.HorizontalAxis>
+                                    <telerikChart:RadCartesianChart.VerticalAxis>
+                                        <telerikChart:LinearAxis />
+                                    </telerikChart:RadCartesianChart.VerticalAxis>
+                                    <telerikChart:ScatterLineSeries ItemsSource="{Binding}">
+                                        <telerikChart:ScatterLineSeries.XValueBinding>
+                                            <telerikChart:PropertyNameDataPointBinding PropertyName="Generation" />
+                                        </telerikChart:ScatterLineSeries.XValueBinding>
+                                        <telerikChart:ScatterLineSeries.YValueBinding>
+                                            <telerikChart:PropertyNameDataPointBinding PropertyName="BestFitness" />
+                                        </telerikChart:ScatterLineSeries.YValueBinding>
+                                    </telerikChart:ScatterLineSeries>
+                                    <telerikChart:ScatterLineSeries ItemsSource="{Binding}">
+                                        <telerikChart:ScatterLineSeries.XValueBinding>
+                                            <telerikChart:PropertyNameDataPointBinding PropertyName="Generation" />
+                                        </telerikChart:ScatterLineSeries.XValueBinding>
+                                        <telerikChart:ScatterLineSeries.YValueBinding>
+                                            <telerikChart:PropertyNameDataPointBinding PropertyName="WorstFitness" />
+                                        </telerikChart:ScatterLineSeries.YValueBinding>
+                                    </telerikChart:ScatterLineSeries>
+                                    <telerikChart:ScatterLineSeries ItemsSource="{Binding}">
+                                        <telerikChart:ScatterLineSeries.XValueBinding>
+                                            <telerikChart:PropertyNameDataPointBinding PropertyName="Generation" />
+                                        </telerikChart:ScatterLineSeries.XValueBinding>
+                                        <telerikChart:ScatterLineSeries.YValueBinding>
+                                            <telerikChart:PropertyNameDataPointBinding PropertyName="AverageFitness" />
+                                        </telerikChart:ScatterLineSeries.YValueBinding>
+                                    </telerikChart:ScatterLineSeries>
+                                </telerikChart:RadCartesianChart>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
             </Grid>
         </ScrollViewer>

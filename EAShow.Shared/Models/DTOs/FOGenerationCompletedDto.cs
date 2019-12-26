@@ -7,11 +7,12 @@ namespace EAShow.Shared.Models
 {
     public class FOGenerationCompletedDto
     {
-        public FOGenerationCompletedDto(double bestFitness, double averageFitness, double worstFitness)
+        public FOGenerationCompletedDto(double bestFitness, double averageFitness, double worstFitness, int generation)
         {
             BestFitness = bestFitness;
             AverageFitness = averageFitness;
             WorstFitness = worstFitness;
+            Generation = generation;
         }
 
         public double BestFitness { get; }
@@ -19,5 +20,7 @@ namespace EAShow.Shared.Models
         public double AverageFitness { get; }
 
         public double WorstFitness { get; }
+
+        public int Generation { get; }
     }
 }

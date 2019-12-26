@@ -44,7 +44,7 @@ namespace EAShow.Core.ViewModels
 
         public BindableCollection<Profile> Profiles { get; }
 
-        public BindableCollection<double> Fitnesses { get; }
+
 
         public DelegateCommand<Profile> OpenProfileCommand { get; }
 
@@ -59,7 +59,6 @@ namespace EAShow.Core.ViewModels
             Profiles = new BindableCollection<Profile>();
             DeleteProfileCommand = new DelegateCommand<Profile>(executeMethod: DeleteProfile);
             OpenProfileCommand = new DelegateCommand<Profile>(executeMethod: OpenProfile);
-            Fitnesses = new BindableCollection<double>();
         }
 
         private void OpenProfile(Profile selectedProfile)
@@ -80,7 +79,7 @@ namespace EAShow.Core.ViewModels
                     new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetRoamingDbConnectionString()))
                 {
                     var queryResult = db.Query<ProfileDbDto>().ToEnumerable();
-                    Profiles.AddRange(items: queryResult.Select(selector: x => Profile.From(dto: x)));
+                    Profiles.AddRange(items: queryResult.Select(selector: Profile.From));
 
                 }
             }

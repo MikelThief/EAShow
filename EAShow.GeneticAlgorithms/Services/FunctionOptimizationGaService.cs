@@ -166,7 +166,7 @@ namespace EAShow.GeneticAlgorithms.Services
 
             await _eventAggregator.PublishOnBackgroundThreadAsync(message: new GAGenerationCompletedEvent(
                 dto: new FOGenerationCompletedDto(bestFitness: fitnesses.First(),
-                    averageFitness: fitnesses.Average(), worstFitness: fitnesses.Last()), sender: payloadKey));
+                    averageFitness: fitnesses.Average(), worstFitness: fitnesses.Last(), generation: geneticAlgorithm.GenerationsNumber), sender: payloadKey));
         }
 
         public void EjectProfile()

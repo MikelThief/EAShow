@@ -152,6 +152,9 @@
     <PackageReference Include="Syncfusion.SfInput.UWP">
       <Version>17.4.0.39</Version>
     </PackageReference>
+    <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
+      <Version>1.0.1.7</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />
