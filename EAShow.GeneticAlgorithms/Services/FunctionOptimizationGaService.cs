@@ -15,6 +15,7 @@ using GeneticSharp.Domain.Crossovers;
 using GeneticSharp.Domain.Mutations;
 using GeneticSharp.Domain.Populations;
 using GeneticSharp.Domain.Selections;
+using GeneticSharp.Domain.Terminations;
 using GeneticSharp.Infrastructure.Framework.Threading;
 using Population = GeneticSharp.Domain.Populations.Population;
 
@@ -59,8 +60,6 @@ namespace EAShow.GeneticAlgorithms.Services
                                _profile.Mutations.Count *
                                _profile.Selections.Count *
                                _profile.Populations.Count;
-
-
                 _geneticAlgorithms = new Dictionary<Guid, GeneticAlgorithm>(
                     capacity: capacity);
 
@@ -69,8 +68,6 @@ namespace EAShow.GeneticAlgorithms.Services
                 ICrossover gaCrossover = default;
                 ISelection gaSelection = default;
                 var gaMutation = new FlipBitMutation();
-
-
 
                 foreach (var crossover in _profile.Crossovers)
                 {
@@ -128,6 +125,7 @@ namespace EAShow.GeneticAlgorithms.Services
                                     ga.MutationProbability = (float) mutation.Value;
                                     ga.TaskExecutor = taskExecutor;
                                     ga.GenerationRan += GeneticAlgorithmOnGenerationRan;
+                                    ga.Termination = new FitnessStagnationTermination(expectedStagnantGenerationsNumber: 100);
                                     _geneticAlgorithms.Add(key: Guid.NewGuid(), value: ga);
                                 }
                             }
@@ -140,7 +138,7 @@ namespace EAShow.GeneticAlgorithms.Services
             {
                 throw new InvalidOperationException(
                     message:
-                    "Cannot load profile more than once. Use EjectProfile() to eject currently loaded profile.");
+                    "Cannot load profile more than once. Use EjectProfile to eject currently loaded profile.");
             }
         }
 
@@ -159,7 +157,8 @@ namespace EAShow.GeneticAlgorithms.Services
                 }
             }
 
-            var chromosomes = geneticAlgorithm.Population.Generations[geneticAlgorithm.GenerationsNumber-1]
+            // geneticAlgorithm preserves only last 10 iterations
+            var chromosomes = geneticAlgorithm.Population.Generations[geneticAlgorithm.GenerationsNumber > 10 ? 9 : geneticAlgorithm.GenerationsNumber - 1]
                 .Chromosomes;
 
             var fitnesses = chromosomes.Select(chromosome => geneticAlgorithm.Fitness.Evaluate(chromosome))
