@@ -42,13 +42,13 @@ namespace EAShow.Core.ViewModels
             set => Set(oldValue: ref _header, newValue: value, nameof(Header));
         }
 
-        public BindableCollection<Profile> Profiles { get; }
+        public BindableCollection<PresetsProfile> Profiles { get; }
 
 
 
-        public DelegateCommand<Profile> OpenProfileCommand { get; }
+        public DelegateCommand<PresetsProfile> OpenProfileCommand { get; }
 
-        public DelegateCommand<Profile> DeleteProfileCommand { get; }
+        public DelegateCommand<PresetsProfile> DeleteProfileCommand { get; }
 
         public readonly WinRTContainer _container;
 
@@ -56,18 +56,18 @@ namespace EAShow.Core.ViewModels
         {
             _container = container;
             _cancellationTokenSource = new CancellationTokenSource();
-            Profiles = new BindableCollection<Profile>();
-            DeleteProfileCommand = new DelegateCommand<Profile>(executeMethod: DeleteProfile);
-            OpenProfileCommand = new DelegateCommand<Profile>(executeMethod: OpenProfile);
+            Profiles = new BindableCollection<PresetsProfile>();
+            DeleteProfileCommand = new DelegateCommand<PresetsProfile>(executeMethod: DeleteProfile);
+            OpenProfileCommand = new DelegateCommand<PresetsProfile>(executeMethod: OpenProfile);
         }
 
-        private void OpenProfile(Profile selectedProfile)
+        private void OpenProfile(PresetsProfile selectedPresetsProfile)
         {
-            // load profile. switch to charts and start fun
+            // load presetsProfile. switch to charts and start fun
             var profileVM = _container.GetInstance<ProfileViewModel>();
-            profileVM.InjectProfile(profile: selectedProfile);
+            profileVM.InjectProfile(profile: selectedPresetsProfile);
             LoadedProfile = profileVM;
-            Header = selectedProfile.Name;
+            Header = selectedPresetsProfile.Name;
             Profiles.Clear();
         }
 
@@ -79,7 +79,7 @@ namespace EAShow.Core.ViewModels
                     new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetRoamingDbConnectionString()))
                 {
                     var queryResult = db.Query<ProfileDbDto>().ToEnumerable();
-                    Profiles.AddRange(items: queryResult.Select(selector: Profile.From));
+                    Profiles.AddRange(items: queryResult.Select(selector: PresetsProfile.From));
 
                 }
             }
@@ -93,12 +93,12 @@ namespace EAShow.Core.ViewModels
             return base.OnDeactivateAsync(close, cancellationToken);
         }
 
-        private void DeleteProfile(Profile selectedProfile)
+        private void DeleteProfile(PresetsProfile selectedPresetsProfile)
         {
             using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetRoamingDbConnectionString()))
             {
-                db.Delete<Profile>(predicate: x => x.Id == selectedProfile.Id);
-                var profileToDelete = Profiles.Single(x => x.Id == selectedProfile.Id);
+                db.Delete<PresetsProfile>(predicate: x => x.Id == selectedPresetsProfile.Id);
+                var profileToDelete = Profiles.Single(x => x.Id == selectedPresetsProfile.Id);
                 Profiles.Remove(item: profileToDelete);
             }
         }

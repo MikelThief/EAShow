@@ -275,13 +275,13 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <value>Selection</value>
   </data>
   <data name="MainPage_Profile_Title.Text" xml:space="preserve">
-    <value>Profile</value>
+    <value>PresetsProfile</value>
   </data>
   <data name="MainPage_Presets_Title.Text" xml:space="preserve">
     <value>Presets</value>
   </data>
   <data name="MainPage_Profile_Description.Text" xml:space="preserve">
-    <value>Your profile consists of:</value>
+    <value>Your presetsProfile consists of:</value>
   </data>
   <data name="MainPage_Profile_Crossovers.Text" xml:space="preserve">
     <value>crossovers</value>
@@ -299,13 +299,13 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <value>Save</value>
   </data>
   <data name="MainPage_Profile_TextBox.PlaceholderText" xml:space="preserve">
-    <value>Profile1</value>
+    <value>PresetsProfile1</value>
   </data>
   <data name="MainPage_Profile_TextBoxDescription.Header" xml:space="preserve">
-    <value>Name of the profile</value>
+    <value>Name of the presetsProfile</value>
   </data>
   <data name="RunnerInstance_EmptyHeader" xml:space="preserve">
-    <value>Empty Profile</value>
+    <value>Empty PresetsProfile</value>
   </data>
   <data name="RunnerInstance_List_ContextDelete.Text" xml:space="preserve">
     <value>Delete</value>

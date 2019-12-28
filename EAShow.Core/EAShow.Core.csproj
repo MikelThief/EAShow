@@ -170,6 +170,7 @@
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\ResourceLoaderHelper.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
+    <Compile Include="POCO\ChartData.cs" />
     <Compile Include="Secrets.cs" />
     <Compile Include="Services\ActivationService.cs" />
     <Compile Include="Activation\DefaultActivationHandler.cs" />

@@ -137,11 +137,11 @@ namespace EAShow.Core.ViewModels
                 var mutations = GetMutations();
                 var populations = GetPopulations();
 
-                var profile = new Profile(id: ObjectId.NewObjectId(), name: ProfileName, mutations: mutations.ToList(),
+                var profile = new PresetsProfile(id: ObjectId.NewObjectId(), name: ProfileName, mutations: mutations.ToList(),
                     crossovers: crossovers.ToList(), selections: selections.ToList(),
                     populations: populations.ToList());
 
-                db.Insert(entity: ProfileDbDto.From(profileEntity: profile));
+                db.Insert(entity: ProfileDbDto.From(presetsProfileEntity: profile));
             }
 
             _eventAggregator.PublishOnBackgroundThreadAsync(message: new PresetResetRequestedEvent(), CancellationToken.None);

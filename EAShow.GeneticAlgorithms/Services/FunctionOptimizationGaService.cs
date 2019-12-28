@@ -9,6 +9,7 @@ using Caliburn.Micro;
 using EAShow.GeneticAlgorithms.Fitnesses;
 using EAShow.Shared.Events;
 using EAShow.Shared.Models;
+using EAShow.Shared.Models.DTOs;
 using GeneticSharp.Domain;
 using GeneticSharp.Domain.Chromosomes;
 using GeneticSharp.Domain.Crossovers;
@@ -27,26 +28,21 @@ namespace EAShow.GeneticAlgorithms.Services
 
         private float _maxHeight = 680f;
 
-        private Profile _profile;
-
         private readonly IEventAggregator _eventAggregator;
 
         private Dictionary<Guid, GeneticAlgorithm> _geneticAlgorithms;
 
-        private bool IsReady => _profile != null;
-
-        public Guid InvokerId { get; set; }
-
         public FunctionOptimizationGaService(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
+            _geneticAlgorithms = new Dictionary<Guid, GeneticAlgorithm>();
         }
 
         /// <summary>
-        /// Loads profile into service.
+        /// Loads presetsProfile into service.
         /// </summary>
-        /// <exception cref="T:System.InvalidOperationException">Thrown when an attempt to load profile twice is made.</exception>
-        public void InjectProfile(Profile profile)
+        /// <exception cref="T:System.InvalidOperationException">Thrown when an attempt to load presetsProfile twice is made.</exception>
+        public void AddGeneticAlgorithm(GADefinition definition, Guid Key)
         {
             var chromosome = new FloatingPointChromosome(
                 minValue: new double[] { 0, 0, 0, 0 },
@@ -54,94 +50,59 @@ namespace EAShow.GeneticAlgorithms.Services
                 totalBits: new int[] { 10, 10, 10, 10 },
                 fractionDigits: new int[] { 0, 0, 0, 0 });
 
-            if (!IsReady)
+            ICrossover gaCrossover = default;
+            switch (definition.Crossover)
             {
-                _profile = profile;
-
-                var capacity = _profile.Crossovers.Count *
-                               _profile.Mutations.Count *
-                               _profile.Selections.Count *
-                               _profile.Populations.Count;
-                _geneticAlgorithms = new Dictionary<Guid, GeneticAlgorithm>(
-                    capacity: capacity);
-
-                var taskExecutor = new LinearTaskExecutor();
-
-                ICrossover gaCrossover = default;
-                ISelection gaSelection = default;
-                var gaMutation = new FlipBitMutation();
-
-                foreach (var crossover in _profile.Crossovers)
-                {
-                    switch (crossover.Value)
-                    {
-                        case Crossovers.Uniform:
-                            gaCrossover = new UniformCrossover(mixProbability: 0.5f);
-                            break;
-                        case Crossovers.OnePoint:
-                            gaCrossover = new OnePointCrossover(swapPointIndex: 20);
-                            break;
-                        case Crossovers.ThreeParent:
-                            gaCrossover = new ThreeParentCrossover();
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException(paramName: nameof(profile.Crossovers),
-                                actualValue: crossover, message: "Crossover has wrong value");
-                    }
-
-                    foreach (var population in _profile.Populations)
-                    {
-                        foreach (var selection in _profile.Selections)
-                        {
-                            switch (selection.Value)
-                            {
-                                case Selections.Elite:
-                                    gaSelection = new EliteSelection();
-                                    break;
-                                case Selections.Roulette:
-                                    gaSelection = new RouletteWheelSelection();
-                                    break;
-                                case Selections.Tournament:
-                                    gaSelection = new TournamentSelection(
-                                        size: decimal.ToInt32(d: decimal.Multiply(population.Value,
-                                            new decimal(0.2f))));
-                                    break;
-                                case Selections.StohasticUniversalSampling:
-                                    gaSelection = new StochasticUniversalSamplingSelection();
-                                    break;
-                                default:
-                                    throw new ArgumentOutOfRangeException(paramName: nameof(profile.Selections),
-                                        actualValue: selection, message: "Selection has wrong value");
-                            }
-
-                            var gaPopulation = new Population(minSize: (int) population.Value,
-                                maxSize: (int) population.Value, adamChromosome: chromosome);
-
-                            foreach (var mutation in _profile.Mutations)
-                            {
-
-                                var ga = new GeneticAlgorithm(population: gaPopulation,
-                                    fitness: new EuclideanDistanceFitness(), selection: gaSelection,
-                                    crossover: gaCrossover, mutation: gaMutation);
-                                ga.MutationProbability = (float) mutation.Value;
-                                ga.TaskExecutor = taskExecutor;
-                                ga.GenerationRan += GeneticAlgorithmOnGenerationRan;
-                                ga.Termination =
-                                    new FitnessStagnationTermination(expectedStagnantGenerationsNumber: 10);
-                                _geneticAlgorithms.Add(key: Guid.NewGuid(), value: ga);
-
-                            }
-
-                        }
-                    }
-                }
+                case Crossovers.Uniform:
+                    gaCrossover = new UniformCrossover(mixProbability: 0.5f);
+                    break;
+                case Crossovers.OnePoint:
+                    gaCrossover = new OnePointCrossover(swapPointIndex: 20);
+                    break;
+                case Crossovers.ThreeParent:
+                    gaCrossover = new ThreeParentCrossover();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(paramName: nameof(definition.Crossover),
+                        actualValue: definition.Crossover, message: "Crossover has wrong value");
             }
-            else
+
+            ISelection gaSelection = default;
+            switch (definition.Selection)
             {
-                throw new InvalidOperationException(
-                    message:
-                    "Cannot load profile more than once. Use EjectProfile to eject currently loaded profile.");
+                case Selections.Elite:
+                    gaSelection = new EliteSelection();
+                    break;
+                case Selections.Roulette:
+                    gaSelection = new RouletteWheelSelection();
+                    break;
+                case Selections.Tournament:
+                    gaSelection = new TournamentSelection(
+                        size: decimal.ToInt32(d: decimal.Multiply(definition.Population, new decimal(0.2f))));
+                    break;
+                case Selections.StohasticUniversalSampling:
+                    gaSelection = new StochasticUniversalSamplingSelection();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(paramName: nameof(definition.Selection),
+                        actualValue: definition.Selection, message: "Selection has wrong value");
             }
+
+            var gaMutation = new FlipBitMutation();
+
+
+            var gaPopulation = new Population(minSize: definition.Population,
+                maxSize: definition.Population, adamChromosome: chromosome);
+
+            var ga = new GeneticAlgorithm(population: gaPopulation,
+                fitness: new EuclideanDistanceFitness(), selection: gaSelection,
+                crossover: gaCrossover, mutation: gaMutation);
+            ga.MutationProbability = (float)definition.Mutation;
+            ga.GenerationRan += GeneticAlgorithmOnGenerationRan;
+            ga.Termination =
+                new FitnessStagnationTermination(expectedStagnantGenerationsNumber: 5);
+
+            _geneticAlgorithms.Add(key: Key, value: ga);
         }
 
         private async void GeneticAlgorithmOnGenerationRan(object sender, EventArgs e)
@@ -169,30 +130,17 @@ namespace EAShow.GeneticAlgorithms.Services
             await _eventAggregator.PublishOnBackgroundThreadAsync(message: new GAGenerationCompletedEvent(
                 dto: new FOGenerationCompletedDto(bestFitness: fitnesses.First(),
                     averageFitness: fitnesses.Average(), worstFitness: fitnesses.Last(),
-                    generation: geneticAlgorithm.GenerationsNumber), sender: payloadKey, invoker: InvokerId));
-        }
-
-        public void EjectProfile()
-        {
-            if (IsReady)
-            {
-                _profile = null;
-                _geneticAlgorithms.Clear();
-                _geneticAlgorithms = null;
-            }
+                    generation: geneticAlgorithm.GenerationsNumber), sender: payloadKey));
         }
 
         public void Start()
         {
-            if(!IsReady)
+            if(_geneticAlgorithms.Count < 1)
             {
-                throw new InvalidOperationException(message: "Profile was not injected.");
+                throw new InvalidOperationException(message: "There are no GAs to run.");
             }
 
-            foreach (var geneticAlgorithm in _geneticAlgorithms)
-            {
-                geneticAlgorithm.Value.Start();
-            }
+            Parallel.ForEach(source: _geneticAlgorithms, (pair, _) => pair.Value.Start());
         }
     }
 }

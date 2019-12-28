@@ -8,10 +8,10 @@ using LiteDB;
 namespace EAShow.Shared.Models
 {
     [DebuggerDisplay(value: "Mutations={Mutations.Count}, Crossovers={Crossovers.Count}, Selections={Selections.Count}, Populations={Populations.Count}",
-        Name = "Profile {Name}")]
-    public class Profile
+        Name = "PresetsProfile {Name}")]
+    public class PresetsProfile
     {
-        public Profile(ObjectId id, string name, List<Mutation> mutations, List<Crossover> crossovers, List<Selection> selections, List<Population> populations)
+        public PresetsProfile(ObjectId id, string name, List<Mutation> mutations, List<Crossover> crossovers, List<Selection> selections, List<Population> populations)
         {
             Id = id;
             Name = name;
@@ -33,7 +33,7 @@ namespace EAShow.Shared.Models
 
         public List<Population> Populations { get; set; }
 
-        public static Profile From(ProfileDbDto dto)
+        public static PresetsProfile From(ProfileDbDto dto)
         {
             var mutations = new List<Mutation>(capacity: dto.Mutations.Capacity);
             mutations.AddRange(collection: dto.Mutations.Select(x => new Mutation(value: x)));
@@ -47,7 +47,7 @@ namespace EAShow.Shared.Models
             var crossovers = new List<Crossover>(capacity: dto.Crossovers.Capacity);
             crossovers.AddRange(collection: dto.Crossovers.Select(x => new Crossover(value: x)));
 
-            return new Profile(id: dto.Id, name: dto.Name, mutations: mutations, crossovers: crossovers, selections: selections, populations: populations);
+            return new PresetsProfile(id: dto.Id, name: dto.Name, mutations: mutations, crossovers: crossovers, selections: selections, populations: populations);
         }
     }
 }
