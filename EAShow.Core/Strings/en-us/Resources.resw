@@ -305,7 +305,7 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
     <value>Name of the Profile</value>
   </data>
   <data name="RunnerInstance_EmptyHeader" xml:space="preserve">
-    <value>Empty PresetsProfile</value>
+    <value>Empty Profile</value>
   </data>
   <data name="RunnerInstance_List_ContextDelete.Text" xml:space="preserve">
     <value>Delete</value>

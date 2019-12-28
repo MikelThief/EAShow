@@ -24,15 +24,17 @@ namespace EAShow.GeneticAlgorithms.Services
 {
     public class FunctionOptimizationGaService
     {
-        private float _maxWidth = 998f;
+        private float _maxWidth = 2000f;
 
-        private float _maxHeight = 680f;
+        private float _maxHeight = 1000f;
 
         private readonly IEventAggregator _eventAggregator;
 
         private Dictionary<Guid, GeneticAlgorithm> _geneticAlgorithms;
 
-        public FunctionOptimizationGaService(IEventAggregator eventAggregator)
+        private double[] _geneValues = {0, 0, 2, 2};
+
+    public FunctionOptimizationGaService(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _geneticAlgorithms = new Dictionary<Guid, GeneticAlgorithm>();
@@ -47,8 +49,8 @@ namespace EAShow.GeneticAlgorithms.Services
             var chromosome = new FloatingPointChromosome(
                 minValue: new double[] { 0, 0, 0, 0 },
                 maxValue: new double[] { _maxWidth, _maxHeight, _maxWidth, _maxHeight },
-                totalBits: new int[] { 10, 10, 10, 10 },
-                fractionDigits: new int[] { 0, 0, 0, 0 });
+                totalBits: new int[] { 20, 20, 20, 20 },
+                fractionDigits: new int[] { 0, 0, 0, 0 }, geneValues: _geneValues);
 
             ICrossover gaCrossover = default;
             switch (definition.Crossover)
@@ -123,6 +125,10 @@ namespace EAShow.GeneticAlgorithms.Services
             // geneticAlgorithm preserves only last 10 iterations
             var chromosomes = geneticAlgorithm.Population.Generations[geneticAlgorithm.GenerationsNumber > 10 ? 9 : geneticAlgorithm.GenerationsNumber - 1]
                 .Chromosomes;
+
+            var fa = geneticAlgorithm.BestChromosome as FloatingPointChromosome;
+
+            var lol = fa.ToFloatingPoints();
 
             var fitnesses = chromosomes.Select(chromosome => geneticAlgorithm.Fitness.Evaluate(chromosome))
                 .OrderByDescending(d => d).ToList();
