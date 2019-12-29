@@ -1,17 +1,15 @@
-﻿using System;
+﻿using EAShow.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Data;
-using EAShow.Shared.Models;
-using EAShow.Core.Helpers;
-using EAShow.Core.Views;
 
-namespace EAShow.Core.Converters
+namespace EAShow.Infrastructure.Converters
 {
-    public class IntToCrossoversEnumConverter : IValueConverter
+    public class CrossoversEnumToResourceConverter : IValueConverter
     {
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -26,7 +24,7 @@ namespace EAShow.Core.Converters
                     return ResourceLoader.GetForCurrentView().GetString(resource: "CrossoversEnum_ThreeParent");
                 default:
                     throw new ArgumentOutOfRangeException(paramName: nameof(value), actualValue: value,
-                        message: nameof(IntToCrossoversEnumConverter) + "cannot process the value.");
+                        message: nameof(CrossoversEnumToResourceConverter) + "cannot process the value.");
             }
         }
 

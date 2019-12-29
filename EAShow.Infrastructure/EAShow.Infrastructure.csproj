@@ -127,7 +127,10 @@
     <Compile Include="Commands\DelegateCommand\DelegateCommand{T}.cs" />
     <Compile Include="Commands\DelegateCommand\PropertyObserver.cs" />
     <Compile Include="Commands\DelegateCommand\PropertyObserverNode.cs" />
+    <Compile Include="Converters\CrossoversEnumToResourceConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Converters\SelectionsEnumToResourceConverter.cs" />
+    <Compile Include="Converters\StringFormatWithXConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EAShow.Infrastructure.rd.xml" />
   </ItemGroup>
@@ -142,7 +145,12 @@
       <Version>1.0.0-pre-03</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\EAShow.Shared\EAShow.Shared.csproj">
+      <Project>{95B7AD9D-4AEB-4F9F-9F90-5B75856E4DB8}</Project>
+      <Name>EAShow.Shared</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

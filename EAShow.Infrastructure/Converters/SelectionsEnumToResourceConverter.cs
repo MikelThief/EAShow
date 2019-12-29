@@ -7,9 +7,9 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml.Data;
 using EAShow.Shared.Models;
 
-namespace EAShow.Core.Converters
+namespace EAShow.Infrastructure.Converters
 {
-    public class IntToSelectionsEnumConverter : IValueConverter
+    public class SelectionsEnumToResourceConverter : IValueConverter
     {
         /// <inheritdoc />
         public object Convert(object value, Type targetType, object parameter, string language)
@@ -26,7 +26,7 @@ namespace EAShow.Core.Converters
                     return ResourceLoader.GetForCurrentView().GetString(resource: "SelectionsEnum_StohasticUniversalSampling");
                 default:
                     throw new ArgumentOutOfRangeException(paramName: nameof(value), actualValue: value,
-                        message: nameof(IntToSelectionsEnumConverter) + "cannot process the value.");
+                        message: nameof(SelectionsEnumToResourceConverter) + "cannot process the value.");
             }
         }
 

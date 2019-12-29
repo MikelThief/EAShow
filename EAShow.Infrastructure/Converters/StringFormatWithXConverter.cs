@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
-namespace EAShow.Core.Converters
+namespace EAShow.Infrastructure.Converters
 {
     /// <summary>
     /// This class provides a binding converter to display formatted strings

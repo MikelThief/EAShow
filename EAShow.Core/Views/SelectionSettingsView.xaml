@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-    xmlns:converters="using:EAShow.Core.Converters"
+    xmlns:converters="using:EAShow.Infrastructure.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:iconPacks="using:MahApps.Metro.IconPacks"
     xmlns:local="using:EAShow.Core.Views"
@@ -12,7 +12,7 @@
     d:DesignWidth="350"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <converters:IntToSelectionsEnumConverter x:Key="IntToSelectionsEnumConverter" />
+        <converters:SelectionsEnumToResourceConverter x:Key="IntToSelectionsEnumConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>

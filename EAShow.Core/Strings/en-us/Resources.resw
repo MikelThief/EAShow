@@ -328,4 +328,28 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="SelectionsEnum_Tournament" xml:space="preserve">
     <value>Tournament (20%)</value>
   </data>
+  <data name="RunnerInstance_Chart_MutationCoefficient.Text" xml:space="preserve">
+    <value>Mutation coefficient: </value>
+  </data>
+  <data name="RunnerInstance_Chart_PopulationSize.Text" xml:space="preserve">
+    <value>Population size: </value>
+  </data>
+  <data name="RunnerInstance_Chart_Crossover.Text" xml:space="preserve">
+    <value>Crossover type:</value>
+  </data>
+  <data name="RunnerInstance_Chart_Selection.Text" xml:space="preserve">
+    <value>Selection method:</value>
+  </data>
+  <data name="RunnerInstance_Legend.Header" xml:space="preserve">
+    <value>Fitness legend</value>
+  </data>
+  <data name="RunnerInstance_Legend_AverageFitness.Title" xml:space="preserve">
+    <value>Average</value>
+  </data>
+  <data name="RunnerInstance_Legend_BestFitness.Title" xml:space="preserve">
+    <value>Best</value>
+  </data>
+  <data name="RunnerInstance_Legend_WorstFitness.Title" xml:space="preserve">
+    <value>Worst</value>
+  </data>
 </root>

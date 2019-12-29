@@ -34,7 +34,7 @@ namespace EAShow.GeneticAlgorithms.Services
 
         private double[] _geneValues = {0, 0, 2, 2};
 
-    public FunctionOptimizationGaService(IEventAggregator eventAggregator)
+        public FunctionOptimizationGaService(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
             _geneticAlgorithms = new Dictionary<Guid, GeneticAlgorithm>();

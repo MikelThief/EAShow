@@ -161,9 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activation\ActivationHandler.cs" />
-    <Compile Include="Converters\IntToCrossoversEnumConverter.cs" />
-    <Compile Include="Converters\IntToSelectionsEnumConverter.cs" />
-    <Compile Include="Converters\StringFormatWithXConverter.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\LiteDBConnectionStringHelper.cs" />

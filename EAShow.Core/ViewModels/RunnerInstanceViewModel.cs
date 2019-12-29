@@ -16,7 +16,7 @@ using Nito.Mvvm;
 
 namespace EAShow.Core.ViewModels
 {
-    public class RunnerInstanceViewModel : Screen, IHandle<GAGenerationCompletedEvent>
+    public class RunnerInstanceViewModel : Screen
     {
         private short _index;
         private string _header;
@@ -97,16 +97,10 @@ namespace EAShow.Core.ViewModels
         {
             using (var db = new LiteRepository(connectionString: LiteDbConnectionStringHelper.GetRoamingDbConnectionString()))
             {
-                db.Delete<PresetsProfile>(predicate: x => x.Id == selectedPresetsProfile.Id);
+                db.Delete<ProfileDbDto>(predicate: x => x.Id == selectedPresetsProfile.Id);
                 var profileToDelete = Profiles.Single(x => x.Id == selectedPresetsProfile.Id);
                 Profiles.Remove(item: profileToDelete);
             }
-        }
-
-        public Task HandleAsync(GAGenerationCompletedEvent message, CancellationToken cancellationToken)
-        {
-
-            return Task.CompletedTask;
         }
     }
 }
