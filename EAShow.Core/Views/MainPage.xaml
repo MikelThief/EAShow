@@ -13,7 +13,6 @@
     <Page.Resources>
         <ResourceDictionary>
             <converters:StringFormatWithXConverter x:Key="StringFormatWithXConverter" />
-            <convertersMSToolkit:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ms-appx:///ResourceDictionaries/Margin.xaml" />
                 <ResourceDictionary Source="ms-appx:///ResourceDictionaries/SnapPoints.xaml" />

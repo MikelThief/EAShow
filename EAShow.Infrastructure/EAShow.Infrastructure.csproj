@@ -131,6 +131,7 @@
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="Converters\SelectionsEnumToResourceConverter.cs" />
     <Compile Include="Converters\StringFormatWithXConverter.cs" />
+    <Compile Include="DataStructures\SynchronizedObservableCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\EAShow.Infrastructure.rd.xml" />
   </ItemGroup>
@@ -151,6 +152,7 @@
       <Name>EAShow.Shared</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

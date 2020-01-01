@@ -343,13 +343,13 @@ Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Ma
   <data name="RunnerInstance_Legend.Header" xml:space="preserve">
     <value>Fitness legend</value>
   </data>
-  <data name="RunnerInstance_Legend_AverageFitness.Title" xml:space="preserve">
+  <data name="RunnerInstance_Legend_AverageSeries.Label" xml:space="preserve">
     <value>Average</value>
   </data>
-  <data name="RunnerInstance_Legend_BestFitness.Title" xml:space="preserve">
+  <data name="RunnerInstance_Legend_BestSeries.Label" xml:space="preserve">
     <value>Best</value>
   </data>
-  <data name="RunnerInstance_Legend_WorstFitness.Title" xml:space="preserve">
+  <data name="RunnerInstance_Legend_WorstSeries.Label" xml:space="preserve">
     <value>Worst</value>
   </data>
 </root>

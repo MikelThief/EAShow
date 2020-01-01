@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Caliburn.Micro;
 using EAShow.Core.POCO;
 using EAShow.GeneticAlgorithms.Services;
+using EAShow.Infrastructure.DataStructures;
 using EAShow.Shared.DataStructures;
 using EAShow.Shared.Events;
 using EAShow.Shared.Models;
@@ -28,7 +29,7 @@ namespace EAShow.Core.ViewModels
 
         public BindableCollection<ChartData> Charts { get; }
 
-        public BindableCollection<FitnessDataPoint> FitnessDataPoints { get; }
+        public SynchronizedObservableCollection<FitnessDataPoint> FitnessDataPoints { get; }
 
         public string Name
         {
@@ -43,9 +44,9 @@ namespace EAShow.Core.ViewModels
             _gaService = gaService;
             _eventAggregator = eventAggregator;
             Charts = new BindableCollection<ChartData>();
-            FitnessDataPoints = new BindableCollection<FitnessDataPoint>();
+            FitnessDataPoints = new SynchronizedObservableCollection<FitnessDataPoint>();
             GaKeys = new List<Guid>();
-            _eventAggregator.SubscribeOnUIThread(subscriber: this);
+            _eventAggregator.SubscribeOnPublishedThread(subscriber: this);
         }
 
         public void InjectProfile(PresetsProfile profile)
@@ -61,7 +62,6 @@ namespace EAShow.Core.ViewModels
             var fitnessDataPoint = new FitnessDataPoint(bestFitness: message.Dto.BestFitness,
                 worstFitness: message.Dto.WorstFitness, averageFitness: message.Dto.AverageFitness,
                 senderId: message.Sender, generation: message.Dto.Generation);
-
             FitnessDataPoints.Add(item: fitnessDataPoint);
             return Task.CompletedTask;
         }
@@ -90,7 +90,6 @@ namespace EAShow.Core.ViewModels
                                 new Predicate<object>(item => ((FitnessDataPoint)item).SenderId == gaKey);
                             var filteringCollection =
                                 new AdvancedCollectionView(source: FitnessDataPoints, isLiveShaping: true);
-
                             filteringCollection.SortDescriptions.Add(item: new SortDescription(direction: SortDirection.Ascending,
                                 propertyName: "Generation"));
                             filteringCollection.Filter = filter;

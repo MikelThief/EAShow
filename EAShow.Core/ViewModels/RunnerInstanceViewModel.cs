@@ -44,8 +44,6 @@ namespace EAShow.Core.ViewModels
 
         public BindableCollection<PresetsProfile> Profiles { get; }
 
-
-
         public DelegateCommand<PresetsProfile> OpenProfileCommand { get; }
 
         public DelegateCommand<PresetsProfile> DeleteProfileCommand { get; }

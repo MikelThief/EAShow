@@ -37,7 +37,7 @@ namespace EAShow.Core.Views
 
         private void Population2NumericUpDown_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            if ((decimal)Population2NumericUpDown.Value < 2M)
+            if ((decimal)Population2NumericUpDown.Value < 2)
                 Population2Switch.IsOn = false;
         }
 

@@ -32,7 +32,7 @@ namespace EAShow.GeneticAlgorithms.Services
 
         private Dictionary<Guid, GeneticAlgorithm> _geneticAlgorithms;
 
-        private double[] _geneValues = {0, 0, 2, 2};
+        private double[] _geneValues = {0, 0, 10, 10};
 
         public FunctionOptimizationGaService(IEventAggregator eventAggregator)
         {
@@ -59,7 +59,7 @@ namespace EAShow.GeneticAlgorithms.Services
                     gaCrossover = new UniformCrossover(mixProbability: 0.5f);
                     break;
                 case Crossovers.OnePoint:
-                    gaCrossover = new OnePointCrossover(swapPointIndex: 20);
+                    gaCrossover = new OnePointCrossover(swapPointIndex: 40);
                     break;
                 case Crossovers.ThreeParent:
                     gaCrossover = new ThreeParentCrossover();
@@ -90,7 +90,7 @@ namespace EAShow.GeneticAlgorithms.Services
                         actualValue: definition.Selection, message: "Selection has wrong value");
             }
 
-            var gaMutation = new FlipBitMutation();
+            var gaMutation = new UniformMutation(true);
 
 
             var gaPopulation = new Population(minSize: definition.Population,
@@ -123,13 +123,8 @@ namespace EAShow.GeneticAlgorithms.Services
             }
 
             // geneticAlgorithm preserves only last 10 iterations
-            var chromosomes = geneticAlgorithm.Population.Generations[geneticAlgorithm.GenerationsNumber > 10 ? 9 : geneticAlgorithm.GenerationsNumber - 1]
-                .Chromosomes;
-
-            var fa = geneticAlgorithm.BestChromosome as FloatingPointChromosome;
-
-            var lol = fa.ToFloatingPoints();
-
+            var chromosomes = geneticAlgorithm.Population
+                .Generations[geneticAlgorithm.GenerationsNumber > 10 ? 9 : geneticAlgorithm.GenerationsNumber - 1].Chromosomes;
             var fitnesses = chromosomes.Select(chromosome => geneticAlgorithm.Fitness.Evaluate(chromosome))
                 .OrderByDescending(d => d).ToList();
 
@@ -146,7 +141,10 @@ namespace EAShow.GeneticAlgorithms.Services
                 throw new InvalidOperationException(message: "There are no GAs to run.");
             }
 
-            Parallel.ForEach(source: _geneticAlgorithms, (pair, _) => pair.Value.Start());
+            foreach (var geneticAlgorithm in _geneticAlgorithms)
+            {
+                geneticAlgorithm.Value.Start();
+            }
         }
     }
 }

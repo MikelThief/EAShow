@@ -149,8 +149,11 @@
     <PackageReference Include="Nito.Mvvm.Async">
       <Version>1.0.0-pre-03</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.SfChart.UWP">
+      <Version>17.4.0.40</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.SfInput.UWP">
-      <Version>17.4.0.39</Version>
+      <Version>17.4.0.40</Version>
     </PackageReference>
     <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
       <Version>1.0.1.7</Version>

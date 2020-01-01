@@ -11,6 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:EAShow.Core.ViewModels"
     xmlns:views="using:EAShow.Core.Views"
+    NavigationCacheMode="Required"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Page.Resources>
