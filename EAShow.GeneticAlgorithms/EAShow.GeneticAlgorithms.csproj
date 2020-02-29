@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Caliburn.Micro.Core" Version="4.0.104-alpha" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.2.2" />
+    <PackageReference Include="Caliburn.Micro.Core" Version="4.0.114-alpha" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.3.0" />
     <PackageReference Include="GeneticSharp" Version="2.6.0" />
     <PackageReference Include="GeneticSharp.Extensions" Version="2.6.0" />
   </ItemGroup>
